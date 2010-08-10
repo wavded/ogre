@@ -1,0 +1,24 @@
+body, button {
+    font-family: serif;
+    font-size: 16px;
+}
+h1 {
+    margin-bottom: 0px;
+    font-size: 10em;
+    margin-top: 20px;
+}
+h2 {
+    font-size: 1em;
+    margin-top: -25px;
+    margin-bottom: 30px;
+}
+.ogre {
+    float: left;
+    padding-right: 20px;
+    width: 500px;
+}
+.help {
+    padding-top: 20px;
+    clear: both;
+}
+

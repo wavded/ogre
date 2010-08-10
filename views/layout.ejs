@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Oger</title>
+        <link href="style.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <img src="ogre.svg" class="ogre"/>
+        <h1>Ogre</h1>
+        <h2>ogr2ogr web client</h2>
+
+        <%-body%>
+
+        <div class="help">
+            <h3>What is Ogre?</h3>
+            <p>Ogre is a web client (service) that translates spatial files into <a href="http://geojson.org">GeoJSON</a> using the <a href="http://www.gdal.org/ogr2ogr.html">ogr2ogr</a> command line tool for use in JavaScript web applications and frameworks (like <a href="http://openlayers.org">OpenLayers</a>).
+            <h3>What formats does it support?</h3>
+            <p>Currently Ogre supports the following transformations:</p>
+            <ul>
+                <li>"ESRI Shapefile" (zip file containing at least .shp, .dbf)
+                <li>"MapInfo File"
+                <li>"TIGER"
+                <li>"S57"
+                <li>"DGN"
+                <li>"Memory"
+                <li>"BNA"
+                <li>"CSV"
+                <li>"GML"
+                <li>"GPX"
+                <li>"KML"
+                <li>"GMT"
+                <li>"DXF"
+                <li>"Geoconcept"
+                <li>"GeoRSS"
+                <li>"GPSTrackMaker"
+            </ul>
+            <h3>What are its limitations?</h3>
+            <p>Ogre currently has an output size limit, which should be only be problem with large datasets.  This tool is made for smaller datasets.</p>
+        </div>
+    </body>
+</html>
+
