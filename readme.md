@@ -16,3 +16,7 @@ You can easily install these modules using the [Node Package Manager (npm)](http
 To run the app (in the ogre directory):
 
 > $ node app.js
+
+And visit the following url in a browser:
+
+> http://localhost:3000
