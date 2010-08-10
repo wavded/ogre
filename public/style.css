@@ -1,6 +1,11 @@
 body, button {
-    font-family: serif;
+    font-family: times;
     font-size: 16px;
+}
+.wrap {
+    position: relative;
+    width: 960px;
+    margin: 0 auto;
 }
 h1 {
     margin-bottom: 0px;
@@ -14,8 +19,7 @@ h2 {
 }
 .ogre {
     float: left;
-    padding-right: 20px;
-    width: 500px;
+    padding-right: 50px;
 }
 .help {
     padding-top: 20px;

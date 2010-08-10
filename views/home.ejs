@@ -1,7 +1,36 @@
-<form action="convert" method="post" enctype="multipart/form-data">
-    File*: <input type="file" name="upload"/><br/>
-    Callback: <input name="callback"/>
-    <button>Go</button>
-</form>
-<small>* - must be a supported format listed below</small>
+<div class="help">
+    <h3>What is Ogre?</h3>
+    <p>Ogre is a web client (service) that translates spatial files into <a href="http://geojson.org">GeoJSON</a> using the <a href="http://www.gdal.org/ogr2ogr.html">ogr2ogr</a> command line tool for use in JavaScript web applications and frameworks (like <a href="http://openlayers.org">OpenLayers</a>).
+    <h3>What formats does it support?</h3>
+    <p>Currently Ogre supports the following transformations:</p>
+    <ul>
+        <li>"ESRI Shapefile" (zip file containing at least .shp, .dbf)
+        <li>"MapInfo File"
+        <li>"TIGER"
+        <li>"S57"
+        <li>"DGN"
+        <li>"Memory"
+        <li>"BNA"
+        <li>"CSV"
+        <li>"GML"
+        <li>"GPX"
+        <li>"KML"
+        <li>"GMT"
+        <li>"DXF"
+        <li>"Geoconcept"
+        <li>"GeoRSS"
+        <li>"GPSTrackMaker"
+    </ul>
+    <h3>What are its limitations?</h3>
+    <p>Ogre currently has an output size limit, which should be only be problem with large datasets.  This tool is made for smaller datasets.</p>
+    <p>I have no idea how this is going to scale!  So it may be down at times, but we plan to learn and scale with the growth accordingly.</p>
+    <h3>Accessing Ogre using a POST request</h3>
+    <p>You can perform Ogre transformations directly by making a HTTP POST request to <code>http://ogre.adc4gis.com/convert</code> with the following params:</p>
+    <ul>
+        <li><code>upload</code> - the file being uploaded
+        <li><code>callback</code> (optional) - a JSONP callback function name
+    </ul>
+    <h3>Where can I report issues, contribute, or fork the code?</h3>
+    <p>Issues and feature requests can be submitted <a href="http://github.com/wavded/ogre/issues">here</a> and to fork and/or contribute to the project, <a href="http://github.com/wavded/ogre">visit the github page</a>.
+</div>
 
