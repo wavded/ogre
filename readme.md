@@ -9,7 +9,7 @@
 
 You can easily install these modules using the [Node Package Manager (npm)](http://github.com/isaacs/npm).
 
-(2) Ogre also requires the command line tool [ogr2ogr](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries) which available as a part of the gdal tool.
+(2) Ogre also requires the command line tool *ogr2ogr* which available as a part of the [gdal package](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries).
 
 ### Running
 
