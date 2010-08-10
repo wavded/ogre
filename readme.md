@@ -8,6 +8,6 @@ Ogre requires that you already have installed:
 - Formidable
 - Connect
 
-To run the app:
+To run the app (in the ogre directory):
 
-  node app.js
+> node app.js
