@@ -14,4 +14,4 @@ You can easily install these (except Node) using the Node Package Manager (npm).
 
 To run the app (in the ogre directory):
 
-> node app.js
+> $ node app.js
