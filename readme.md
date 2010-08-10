@@ -1,3 +1,5 @@
+The instructions below are only if you are interested in running the project locally.  For help on how to use the web service, visit the [Ogre Homepage](http://ogre.adc4gis.com).
+
 ### Building
 
 (1) Ogre requires that you already have installed [NodeJS](http://nodejs.org) and the the following packages:
