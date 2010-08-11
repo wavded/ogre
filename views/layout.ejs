@@ -11,7 +11,8 @@
             <h2>ogr2ogr web client</h2>
             <form action="convert" method="post" enctype="multipart/form-data">
                 File*: <input type="file" name="upload"/><br/>
-                JSONP Callback: <input name="callback"/>
+                JSONP Callback: <input name="callback"/><br/>
+                Force Plain Text: <input type="checkbox" name="forcePlainText" value="true"/>
                 <button>Go</button>
             </form>
             <small>* - must be a supported format listed below</small>

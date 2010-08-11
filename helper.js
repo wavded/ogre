@@ -10,6 +10,7 @@ var ex = require('child_process').exec,
             var file = files.upload || {};
             file.callback = callback
             file.jsonCallbackFn = fields.callback
+            file.outputType = fields.forcePlainText ? "text/plain" : "application/json"
 
             err || !file.filename ? handleFileError(err,file) : processFile(file)
         })
@@ -73,13 +74,13 @@ var ex = require('child_process').exec,
     },
 
     handleCallback = function(file) {
-        file.callback(file.outputstream)
+        file.callback(file.outputstream,file.outputType)
         file.zipDirectory ? cleanupZip(file) : cleanupSingle(file)
     },
 
     handleJsonCallback = function(file) {
         file.outputstream = file.jsonCallbackFn + "(" + file.outputstream + ")"
-        file.callback(file.outputstream)
+        file.callback(file.outputstream,file.outputType)
         file.zipDirectory ? cleanupZip(file) : cleanupSingle(file)
     },
 

@@ -1,23 +1,23 @@
 var app = require('express').createServer(),
     helper = require('./helper'),
     connect = require('connect'),
-    ejs = require('ejs');
+    ejs = require('ejs')
 
 app.configure(function(){
-    app.use(connect.staticProvider(__dirname + '/public'));
+    app.use(connect.staticProvider(__dirname + '/public'))
 });
 
 app.set('view engine', 'ejs')
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/views')
 
 app.get('/', function(req, res){
     res.render('home')
 })
 
 app.post('/convert', function(req, res){
-    helper.upload(req,function(outputstream){
+    helper.upload(req,function(outputstream,contentType){
         if(outputstream){
-            res.header("Content-Type","application/json")
+            res.header("Content-Type",contentType)
             res.send(outputstream) }
         else res.send("Unable to perform transformation")
     })
