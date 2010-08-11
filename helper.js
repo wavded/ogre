@@ -38,10 +38,17 @@ var ex = require('child_process').exec,
         file.zipDirectory = file.path + '_zip'
         ex('unzip ' + file.path + ' -d ' + file.zipDirectory,
             function(err,stdout){
-                file.inputfile = stdout.match(/inflating: (.*.shp)/)[1]
-                runOgre(file)
+                try {
+                    file.inputfile = stdout.match(/inflating: (.*.shp)/)[1]
+                } catch (e) {}
+                err ? handleZipError(err,file) : runOgre(file)
             }
         )
+    },
+
+    handleZipError = function(err, file) {
+        file.error = "Ogre needs a valid zip file, is it corrupted?"
+        handleError(err,file)
     },
 
     runOgre = function(file) {
@@ -67,7 +74,7 @@ var ex = require('child_process').exec,
         sys.log(err)
         file.outputstream = JSON.stringify({
             filename: file.filename,
-            error: "Ogre couldn't convert this file",
+            error: file.error,
             message: err.message
         })
         file.jsonCallbackFn ? handleJsonCallback(file) : handleCallback(file)
