@@ -12,6 +12,10 @@ h1 {
     font-size: 10em;
     margin-top: 20px;
 }
+h1 a {
+    text-decoration: none;
+    color: #000;
+}
 h2 {
     font-size: 1em;
     margin-top: -25px;
@@ -21,8 +25,13 @@ h2 {
     float: left;
     padding-right: 50px;
 }
-.help {
+.content {
     padding-top: 20px;
     clear: both;
+}
+.map {
+    width: 100%;
+    height: 400px;
+    background-color: #eee;
 }
 

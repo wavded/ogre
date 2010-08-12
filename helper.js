@@ -10,8 +10,8 @@ var ex = require('child_process').exec,
             var file = files.upload || {};
             file.callback = callback
             file.jsonCallbackFn = fields.callback
-            file.outputType = fields.forcePlainText ? "text/plain" : "application/json"
-
+            file.launchViewer = "view" in fields
+            file.outputType = "forcePlainText" in fields ? "text/plain" : "application/json"
             err || !file.filename ? handleFileError(err,file) : processFile(file)
         })
     },
@@ -71,28 +71,28 @@ var ex = require('child_process').exec,
     },
 
     handleError = function(err,file){
-        sys.log(err)
+        sys.log(err || "")
         file.outputstream = JSON.stringify({
             filename: file.filename,
             error: file.error,
-            message: err.message
+            message: err && err.message
         })
         file.jsonCallbackFn ? handleJsonCallback(file) : handleCallback(file)
     },
 
     handleCallback = function(file) {
-        file.callback(file.outputstream,file.outputType)
+        file.callback(file.outputstream,file.outputType, file.launchViewer)
         file.zipDirectory ? cleanupZip(file) : cleanupSingle(file)
     },
 
     handleJsonCallback = function(file) {
         file.outputstream = file.jsonCallbackFn + "(" + file.outputstream + ")"
-        file.callback(file.outputstream,file.outputType)
+        file.callback(file.outputstream,file.outputType, file.launchViewer)
         file.zipDirectory ? cleanupZip(file) : cleanupSingle(file)
     },
 
     cleanupSingle = function(file){
-        fs.unlink(file.inputfile)
+        file.inputfile && fs.unlink(file.inputfile)
     },
 
     cleanupZip = function(file){

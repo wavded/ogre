@@ -15,17 +15,25 @@ app.get('/', function(req, res){
 })
 
 app.post('/convert', function(req, res){
-    helper.upload(req,function(outputstream,contentType){
-        if(outputstream){
-            res.header("Content-Type",contentType)
-            res.send(outputstream) }
-        else res.send("Unable to perform transformation")
-    })
+    helper.upload(req,
+        function(outputstream,contentType,launchViewer){
+            if(launchViewer)
+                res.render('viewer', {
+                    locals: {
+                        output: outputstream
+                    }
+                })
+            else {
+                res.header("Content-Type",contentType)
+                res.send(outputstream)
+            }
+        }
+    )
 })
 
 app.error(function(err, req, res, next){
     res.send(err.message, 500)
 })
 
-app.listen(3000);
+app.listen(4356);
 

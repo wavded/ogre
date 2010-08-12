@@ -7,15 +7,16 @@
     <body>
         <div class="wrap">
             <img src="ogre.png" class="ogre"/>
-            <h1>Ogre</h1>
+            <h1><a href="/">Ogre</a></h1>
             <h2>ogr2ogr web client</h2>
-            <form action="convert" method="post" enctype="multipart/form-data">
+            <form action="/convert" method="post" enctype="multipart/form-data">
                 File*: <input type="file" name="upload"/><br/>
                 JSONP Callback: <input name="callback"/><br/>
-                Force Plain Text: <input type="checkbox" name="forcePlainText" value="true"/>
-                <button>Go</button>
+                Force Plain Text: <input type="checkbox" name="forcePlainText" value="true"/><br/><br/>
+                <button name="convert">Convert</button>
+                <button name="view">View In Browser</button>
             </form>
-            <small>* - must be a supported format listed below</small>
+            <small>* - must be a supported format</small>
 
             <%-body%>
 
