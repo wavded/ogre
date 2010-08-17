@@ -24,7 +24,7 @@ var ex = require('child_process').exec,
     processFile = function(file) {
         file.ext = file.filename.replace(/^.*\.([A-Za-z0-9_]+)$/,"$1")
         file.outputfile = file.path + ".json"
-        file.ext == "zip" ? handleZip(file) : handleSingle(file)
+        file.ext.match(/(zip|kmz)/) ? handleZip(file) : handleSingle(file)
     },
 
     handleSingle = function(file) {
@@ -39,7 +39,11 @@ var ex = require('child_process').exec,
         ex('unzip ' + file.path + ' -d ' + file.zipDirectory,
             function(err,stdout){
                 try {
-                    file.inputfile = stdout.match(/inflating: (.*.shp)/)[1]
+                    var match = stdout.match(/inflating: (.*.shp)/)
+                    match || (match = stdout.match(/inflating: (.*.tab)/))
+                    match || (match = stdout.match(/inflating: (.*.kml)/))
+
+                    file.inputfile = match[1]
                 } catch (e) {}
                 err ? handleZipError(err,file) : runOgre(file)
             }
@@ -52,7 +56,7 @@ var ex = require('child_process').exec,
     },
 
     runOgre = function(file) {
-        ex('ogr2ogr -f "GeoJSON" stdout ' + file.inputfile, {maxBuffer: 1024 * 800},
+        ex('ogr2ogr -f "GeoJSON" stdout ' + file.inputfile, {maxBuffer: 1024 * 7500},
             function(err,stdout,stderr){
                 file.outputstream = stdout
                 err ? handleOgreError(err,file) : handleOgreSuccess(file)
@@ -67,7 +71,7 @@ var ex = require('child_process').exec,
 
     handleOgreSuccess = function(file) {
         sys.log(file.inputfile)
-        file.jsonCallbackFn ? handleJsonCallback(file) : handleCallback(file)
+        file.jsonCallbackFn && !file.launchViewer ? handleJsonCallback(file) : handleCallback(file)
     },
 
     handleError = function(err,file){
@@ -81,13 +85,13 @@ var ex = require('child_process').exec,
     },
 
     handleCallback = function(file) {
-        file.callback(file.outputstream,file.outputType, file.launchViewer)
+        file.callback(file.outputstream,file.outputType,file.launchViewer)
         file.zipDirectory ? cleanupZip(file) : cleanupSingle(file)
     },
 
     handleJsonCallback = function(file) {
         file.outputstream = file.jsonCallbackFn + "(" + file.outputstream + ")"
-        file.callback(file.outputstream,file.outputType, file.launchViewer)
+        file.callback(file.outputstream,file.outputType,file.launchViewer)
         file.zipDirectory ? cleanupZip(file) : cleanupSingle(file)
     },
 
