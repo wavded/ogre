@@ -11,7 +11,7 @@ The instructions below are only if you are interested in running the project loc
 
 You can easily install these modules using the [Node Package Manager (npm)](http://github.com/isaacs/npm).
 
-(2) Ogre also requires the command line tool *ogr2ogr* which available as a part of the [gdal package](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries).
+(2) Ogre also requires the command line tool *ogr2ogr* which available as a part of the [gdal package](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries).  You must download a recent version that includes support for "GeoJSON" format.
 
 ### Running
 
@@ -23,7 +23,7 @@ And visit the following url in a browser:
 
 > http://localhost:3000
 
-### License 
+### License
 
 (The MIT License)
 
@@ -47,3 +47,4 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
