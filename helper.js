@@ -42,6 +42,7 @@ var ex = require('child_process').exec,
                     var match = stdout.match(/inflating: (.*.shp)/)
                     match || (match = stdout.match(/inflating: (.*.tab)/))
                     match || (match = stdout.match(/inflating: (.*.kml)/))
+                    match || (match = stdout.match(/inflating: (.*.itf)/))
 
                     file.inputfile = match[1]
                 } catch (e) {}
