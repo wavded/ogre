@@ -1,7 +1,8 @@
 var app = require('express').createServer(),
-    helper = require('./helper'),
+    ogre = require('./src/ogre'),
     connect = require('connect'),
-    ejs = require('ejs')
+    ejs = require('ejs'),
+    port = process.argv[2] || 3000;
 
 app.configure(function(){
     app.use(connect.staticProvider(__dirname + '/public'))
@@ -15,7 +16,7 @@ app.get('/', function(req, res){
 })
 
 app.post('/convert', function(req, res){
-    helper.upload(req,
+    ogre.upload(req,
         function(outputstream,contentType,launchViewer){
             if(launchViewer)
                 res.render('viewer', {
@@ -35,5 +36,7 @@ app.error(function(err, req, res, next){
     res.send(err.message, 500)
 })
 
-app.listen(3000);
+app.listen(port);
+
+console.log("Ogre started, listening on port " + port);
 

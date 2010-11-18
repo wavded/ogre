@@ -3,37 +3,118 @@
     <p>Ogre is a web client (service) that translates spatial files into <a href="http://geojson.org">GeoJSON</a> using the <a href="http://www.gdal.org/ogr2ogr.html">ogr2ogr</a> command line tool for use in JavaScript web applications and frameworks (like <a href="http://openlayers.org">OpenLayers</a>).
     <h3>What formats does it support?</h3>
     <p>Currently Ogre supports the following transformations:</p>
-    <ul>
-        <li>"ESRI Shapefile"
-            <ul>
-                <li>a single .shp file <i>or</i>
-                <li>a .zip file containing at least .shp, .dbf, and .shx
-            </ul>
-        <li>"MapInfo File"
-            <ul>
-                <li>a .zip file containing a .tab, .map, .id, and .dat
-            </ul>
-        <li>"TIGER" - .rtx where x is any number
-        <li>"S57"
-        <li>"DGN"
-        <li>"BNA"
-        <li>"CSV"
-        <li>"GML"
-        <li>"GeoJSON"
-        <li>"GPX"
-        <li>"KML"
-        <li>"KMZ"
-        <li>"Interlis 1"
-            <ul>
-                <li>a single .itf file <i>or</i>
-                <li>a .zip file containing .itf and .ili
-            </ul>
-        <li>"GMT"
-        <li>"DXF"
-        <li>"Geoconcept"
-        <li>"GeoRSS"
-        <li>"GPSTrackMaker"
-    </ul>
+    <table border="1" cellpadding="5" width="100%">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Single File Format</th>
+                <th>Zipped (.zip) File Format</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>BNA</th>
+                <td>.bna</td>
+                <td>-</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>CSV</th>
+                <td>.csv</td>
+                <td>-</td>
+                <td>Geometry columns will not be spatially transformed unless you include a VRT file</td>            
+            </tr>
+            <tr>
+                <th>DGN</th>
+                <td>.dgn</td>
+                <td>-</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>DXF</th>
+                <td>.dxf</td>
+                <td>-</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>ESRI Shapefile</th>
+                <td>.shp</td>
+                <td>.shp, .dbf, and .shx (.prj optional)</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>GeoConcept</th>
+                <td>.gxt or .txt</td>
+                <td>-</td>
+                <td></td>            
+            </tr>            
+            <tr>
+                <th>GeoJSON</th>
+                <td>.json or .geojson</td>
+                <td>-</td>
+                <td></td>            
+            </tr>
+            <tr>
+                <th>GeoRSS</th>
+                <td>.rss, .georss, or .xml</td>
+                <td>-</td>
+                <td></td>            
+            </tr>
+            <tr>
+                <th>GML</th>
+                <td>.gml</td>
+                <td>.gml and .xsd</td>
+                <td></td>            
+            </tr>
+            <tr>
+                <th>GMT</th>
+                <td>.gmt</td>
+                <td>-</td>
+                <td></td>            
+            </tr>
+            <tr>
+                <th>GPX</th>
+                <td>.gpx</td>
+                <td>-</td>
+                <td>Known to return invalid JSON, use with caution, see <a href="http://trac.osgeo.org/gdal/ticket/3842">ticket</a>.</td>            
+            </tr>
+            <tr>
+                <th>Interlis 1</th>
+                <td>.itf</td>
+                <td>.itf and .ili (.fmt optional)</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>KML / KMZ</th>
+                <td>.kml or .kmz</td>
+                <td>-</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>MapInfo</th>
+                <td>-</td>
+                <td>.tab, .map, .id, and .dat</td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>S-57</th>
+                <td>.000</td>
+                <td>.000 (.001-.00N optional)</td>
+                <td>Known to return invalid JSON, use with caution, see <a href="http://trac.osgeo.org/gdal/ticket/3843">ticket</a>.</td>            
+            </tr>
+            <tr>
+                <th>TIGER</th>
+                <td>.rt1</td>
+                <td>-</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>What is a VRT File?</h3>
+    <p>As stated in the ogr2ogr documentation:</p>
+    <blockquote>"OGR Virtual Format is a driver that transforms features read from other drivers based on criteria specified in an XML control file. It is primarily used to derive spatial layers from flat tables with spatial information in attribute columns. It can also be used to associate coordinate system information with a datasource ..."</blockquote>
+    <p>For more information on how to use VRT files, see the <a href="http://www.gdal.org/ogr/drv_vrt.html">full VRT documentation</a>
     <h3>What are its limitations?</h3>
     <p>Ogre currently has an output size limit, which should be only be problem with large datasets.  This tool is made for smaller datasets.</p>
     <p>GPX, GeoConcept, and GPSTrackMaker have not been verified to work since I haven't been able to find any sample data.  My gut is they should work fine because of how ogr2ogr handles those files.  Please file an issue if you have any problems.
