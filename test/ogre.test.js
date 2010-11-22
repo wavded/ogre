@@ -97,6 +97,14 @@ module.exports['ogre'] = {
       });
     },
 
+  'should unzip and convert a VRT file and return GeoJSON':
+    function(assert){
+      curlToJson('-F "upload=@test/samples/sample.vrt.zip"',function(data){
+        assert.equals(data.type,"FeatureCollection");
+        assert.done();
+      });
+    },
+
   'should unzip and convert a GML file and return GeoJSON':
     function(assert){
       curlToJson('-F "upload=@test/samples/sample.gml.zip"',function(data){

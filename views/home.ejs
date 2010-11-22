@@ -23,7 +23,7 @@
                 <th>CSV</th>
                 <td>.csv</td>
                 <td>-</td>
-                <td>Geometry columns will not be spatially transformed unless you include a VRT file</td>            
+                <td>Geometry columns will not be spatially transformed unless bundled with a VRT file</td>            
             </tr>
             <tr>
                 <th>DGN</th>
@@ -109,12 +109,14 @@
                 <td>-</td>
                 <td></td>
             </tr>
+            <tr>
+                <th>VRT</th>
+                <td>-</td>
+                <td>.vrt with any other spatial file</td>
+                <td>For more information on how to use VRT files, see the <a href="http://www.gdal.org/ogr/drv_vrt.html">full VRT documentation</td>
+            </tr>
         </tbody>
     </table>
-    <h3>What is a VRT File?</h3>
-    <p>As stated in the ogr2ogr documentation:</p>
-    <blockquote>"OGR Virtual Format is a driver that transforms features read from other drivers based on criteria specified in an XML control file. It is primarily used to derive spatial layers from flat tables with spatial information in attribute columns. It can also be used to associate coordinate system information with a datasource ..."</blockquote>
-    <p>For more information on how to use VRT files, see the <a href="http://www.gdal.org/ogr/drv_vrt.html">full VRT documentation</a>
     <h3>What are its limitations?</h3>
     <p>Ogre currently has an output size limit, which should be only be problem with large datasets.  This tool is made for smaller datasets.</p>
     <p>GPX, GeoConcept, and GPSTrackMaker have not been verified to work since I haven't been able to find any sample data.  My gut is they should work fine because of how ogr2ogr handles those files.  Please file an issue if you have any problems.

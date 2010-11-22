@@ -65,6 +65,7 @@ var Ogrify = {
                         match || (match = stdout.match(/inflating: (.*.itf)/));
                         match || (match = stdout.match(/inflating: (.*.000)/));
                         match || (match = stdout.match(/inflating: (.*.gml)/));
+                        match || (match = stdout.match(/inflating: (.*.vrt)/));
 
                         d.inputFile = match[1];
                     } catch (e) {}
@@ -81,7 +82,8 @@ var Ogrify = {
         ex('ogr2ogr -f "GeoJSON" -skipfailures stdout ' + d.inputFile, {maxBuffer: 1024 * 157500},
             function(err,stdout,stderr){
                 if(err){
-                  cont("Ogre can't transform files of type: " + d.fileExt);
+                  cont(err);
+                  //cont("Ogre can't transform files of type: " + d.fileExt);
                 } else {
                   d.outputStream = stdout;
                   cont();
