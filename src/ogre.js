@@ -82,8 +82,7 @@ var Ogrify = {
         ex('ogr2ogr -f "GeoJSON" -skipfailures stdout ' + d.inputFile, {maxBuffer: 1024 * 157500},
             function(err,stdout,stderr){
                 if(err){
-                  cont(err);
-                  //cont("Ogre can't transform files of type: " + d.fileExt);
+                  cont("Ogre can't transform files of type: " + d.fileExt);
                 } else {
                   d.outputStream = stdout;
                   cont();
