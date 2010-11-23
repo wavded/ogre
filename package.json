@@ -1,0 +1,22 @@
+{
+    "name": "ogre",
+    "version": "0.0.2",
+    "description": "ogr2ogr web client",
+    "keywords": ["ogr2ogr", "GIS", "GeoJSON"],
+    "author": "Marc Harter <wavded@gmail.com>",
+    "repository" : {
+        "type" : "git",
+        "url" : "http://github.com/wavded/ogre.git"
+    },
+    "homepage": "http://github.com/wavded/ogre",
+    "bin": {
+        "ogre": "./bin/ogre"
+    },
+    "main": "./index.js",
+    "dependencies": {
+        "express": ">= 1.0.0",
+        "formidable": ">= 0.9.9",
+        "ejs": ">= 0.2.1"
+    },
+    "engines": { "node": ">= 0.2.0" }
+}
