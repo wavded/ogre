@@ -69,10 +69,29 @@ vows.describe('Ogre').addBatch({
         
         'should return GeoJSON': assertGeoJSON
     },
-    'when uploading a CVS file (.csv)': {
+    'when uploading a CSV file (.csv) with xy geometry': {
         topic: curl(['-F','"upload=@test/samples/sample.csv"']),
         
-        'should return GeoJSON': assertGeoJSON
+        'should return GeoJSON': assertGeoJSON,
+        'should have geometry': function(e,data){
+            assert.isNotNull(data.features[0].geometry);
+        }
+    },
+    'when uploading a CSV file (.csv) with wkt geometry': {
+        topic: curl(['-F','"upload=@test/samples/sample-geom.csv"']),
+        
+        'should return GeoJSON': assertGeoJSON,
+        'should have geometry': function(e,data){
+            assert.isNotNull(data.features[0].geometry);
+        }
+    },
+    'when uploading a CSV file (.csv) with no geometry': {
+        topic: curl(['-F','"upload=@test/samples/sample-nogeom.csv"']),
+        
+        'should return GeoJSON': assertGeoJSON,
+        'should not have geometry': function(e,data){
+            assert.isNull(data.features[0].geometry);
+        }
     },
     'when uploading a DGN file (.dgn)': {
         topic: curl(['-F','"upload=@test/samples/sample.dgn"']),

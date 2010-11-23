@@ -1,7 +1,8 @@
 var Step = require('step'),
     fm = require('formidable'),
     fs = require('fs'),
-    ex = require('child_process').exec;
+    ex = require('child_process').exec,
+    csv = require('./ogre-csv');
 
 var Ogrify = {
     processRequest: function(req){
@@ -75,6 +76,24 @@ var Ogrify = {
             )
         }
     },
+    handleVRTCandidates: function(err){
+        if(err) throw err;
+        var d = this.data, cont = this;
+        
+        if(d.fileExt == "csv"){
+            csv.generateVrt(d.inputFile,function(data){
+                if(data.vrtFile){
+                    d.altInputFile = d.inputFile;
+                    d.inputFile = data.vrtFile;
+                    cont(); //continue;
+                } else {
+                    cont(); //continue; not a vrt canditate
+                }
+            });
+        } else {
+            this(); //continue
+        }
+    },
     runOgre: function(err){
         if(err) throw err;
         var d = this.data, cont = this;
@@ -82,13 +101,39 @@ var Ogrify = {
         ex('ogr2ogr -f "GeoJSON" -skipfailures stdout ' + d.inputFile, {maxBuffer: 1024 * 157500},
             function(err,stdout,stderr){
                 if(err){
-                  cont("Ogre can't transform files of type: " + d.fileExt);
+                  cont('Ogre can\'t transform files of type: ' + d.fileExt);
                 } else {
                   d.outputStream = stdout;
-                  cont();
+                  cont(); //continue
                 }
             }
         );
+    },
+    cleanUp: function(err){
+        var d = this.data, cont = this;
+        if(d.zipDirectory){
+            fs.readdir(d.zipDirectory,function(err,files){
+                var len = files.length,
+                    completed = 0;
+                while(len--)
+                fs.unlink(d.zipDirectory + "/" + files[len],function(){
+                    completed++;
+                    if(completed == files.length) {
+                        fs.rmdir(d.zipDirectory);
+                        cont(); //continue
+                    }
+                })
+            })
+            fs.unlink(d.file.path);
+        } else if(d.inputFile){
+            //this();
+            fs.unlink(d.inputFile,this);
+            
+            if(d.altInputFile) fs.unlink(d.altInputFile);
+            if(d.fileExt == "gml") fs.unlink(d.file.path + '.gfs'); //clean up gfs file created
+        }
+
+        if(err) throw err;
     }
 }
 
