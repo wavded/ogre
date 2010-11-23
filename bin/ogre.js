@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-var ogre = require('../src/ogre');
+var ogre = require('ogre');
 
 var args = process.argv.slice(2);
-    version = "0.0.2";
+    version = "0.0.4";
 
 var usage = ''
     + '\n\x1b[1mUsage\x1b[0m: ogre [options]\n'
@@ -29,12 +29,12 @@ while (args.length) {
             process.exit(1);
             break;
         case '-p':
-        case '--pipe':
-            port = arg;
+        case '--port':
+            port = args.shift();
             break;
         case '-b':
         case '--buffer':
-            buffer = arg;
+            buffer = args.shift();
             break;
         default:
     }

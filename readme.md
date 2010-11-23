@@ -1,27 +1,29 @@
 The instructions below are only if you are interested in running the project locally.  For help on how to use the web service, visit the [Ogre Homepage](http://ogre.adc4gis.com).
 
-### Building
+## Requirements
 
-(1) Ogre requires that you already have installed [NodeJS](http://nodejs.org) and the the following packages:
+Ogre requires the command line tool *ogr2ogr* to be installed:
 
-- [Express](http://expressjs.com)
-- [ejs](http://github.com/visionmedia/ejs)
-- [node-formidable](http://github.com/felixge/node-formidable)
-- [connect](http://github.com/senchalabs/connect)
+Ubuntu 9.04+
+    $ sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable && sudo apt-get update && sudo apt-get install gdal-bin
 
-You can easily install these modules using the [Node Package Manager (npm)](http://github.com/isaacs/npm).
+Other Operating Systems - [gdal install page](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries).
 
-(2) Ogre also requires the command line tool *ogr2ogr* which available as a part of the [gdal package](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries).  You must download a recent version that includes support for "GeoJSON" format.
+## Installation
 
-### Running
+[npm](http://github.com/isaacs/npm):
 
-To run the app (in the ogre directory):
+    $ npm install ogre
 
-> $ node app.js
+## Running
+
+To run the app:
+
+    $ ogre
 
 And visit the following url in a browser:
 
-> http://localhost:3000
+    http://localhost:3000
 
 ### License
 
