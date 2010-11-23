@@ -1,6 +1,6 @@
 var vows = require('vows'),
     assert = require('assert'),
-    csv = require('../src/ogre-csv');
+    csv = require('../src/csv');
     
 vows.describe('Ogre CSV').addBatch({
     'when given a xy csv file': {

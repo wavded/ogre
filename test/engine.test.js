@@ -1,39 +1,24 @@
-var vows = require('vows'),
+var suite = require('vows'),
     assert = require('assert'),
-    childp = require('child_process');
- 
-var testUrl = 'http://localhost:3001/convert';
+    childp = require('child_process'),
+    ogre = require('../src/ogre.js');
     
-process.on("exit",function(){
-    ogre.kill('SIGHUP');
-});
+ogre.createServer(3001);
 
 function curl(params){
     return function(){
         var callback = this.callback;
-        childp.exec('curl -s ' + params.join(' ') + ' ' + testUrl,{maxBuffer: 1024 * 7500},function(e,data){
+        childp.exec('curl -s ' + params.join(' ') + ' http://localhost:3001/convert',{maxBuffer: 1024 * 7500},function(e,data){
             if(data.charAt(0) == "{") data = JSON.parse(data);
             callback(e,data);
         });
     }
 }
-
 function assertGeoJSON(e,data){
     assert.equal(data.type,"FeatureCollection");
 }
 
-vows.describe('Ogre').addBatch({
-    'set up': {
-        topic: function(){
-            ogre = childp.spawn('node',['app.js',3001]);
-            setTimeout(this.callback,1000);
-        },
-        
-        'should set a pid': function(){
-            assert.isNumber(ogre.pid);
-        }
-    }
-}).addBatch({
+suite.describe('Ogre').addBatch({
     'when no file is provided': {
         topic: curl(['-d','""']),
         
@@ -193,16 +178,4 @@ vows.describe('Ogre').addBatch({
         
         'should return GeoJSON': assertGeoJSON
     }
-}).addBatch({
-    'tear down': {
-    	topic: function(){
-    	    ogre.on('exit',this.callback);
-    	    ogre.kill('SIGHUP');
-    	},
-    	
-    	'should return killed == true': function(){
-    	    assert.isTrue(ogre.killed);
-    	}
-    }
 }).export(module);
-
