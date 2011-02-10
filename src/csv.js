@@ -2,7 +2,7 @@ var Step = require('step'),
     fs = require('fs'),
     ex = require('child_process').exec,
     uid = +new Date,
-    
+
     baseVRT =   '<OGRVRTDataSource>\n\
                     <OGRVRTLayer name="%NAME%">\n\
                         <SrcDataSource relativeToVRT="1">%FILE%</SrcDataSource>\n\
@@ -21,17 +21,17 @@ var OgreCSV = {
     parseHeaders: function(err, stdout){
         if(err) throw err;
         var d = this.data;
-        
+
         d.headers = stdout.replace(/\n|\r/g,"").split(",")
         this(); //continue
     },
     locateGeometryColumns: function(err){
         if(err) throw err;
         var d = this.data, matches = {};
-        
+
         d.headers.forEach(function(header){
             var ht = header.trim();
-            
+
             switch(true){
                 case /lon|longitude|lng|x/i.test(ht):
                     matches.x = header;
@@ -45,7 +45,7 @@ var OgreCSV = {
                 default:
             }
         });
-        
+
         d.matches = matches;
         this(); //continue
     },
@@ -53,19 +53,19 @@ var OgreCSV = {
         if(err) throw err;
         var d = this.data;
         d.vrtText = baseVRT.replace('%FILE%',d.file).replace('%NAME%',d.name);
-        
+
         if(d.matches.geom)
             d.vrtText = d.vrtText.replace('%ENC%','WKT').replace('%ENCOPT%','field="'+d.matches.geom+'"');
         else if(d.matches.x && d.matches.y)
             d.vrtText = d.vrtText.replace('%ENC%','PointFromColumns').replace('%ENCOPT%','x="'+d.matches.x+'" y="'+d.matches.y+'"');
         else d.vrtText = null;
-            
+
         this(); //continue
     },
     writeVRTFile: function(err){
         if(err) throw err;
         var d = this.data;
-        
+
         if(d.vrtText){
             d.vrtFile = '/tmp/ogre_vrt_'+(uid++)+'.vrt';
             fs.writeFile(d.vrtFile, d.vrtText, this);
@@ -83,13 +83,13 @@ module.exports = {
     generateVrt: function(file,callback){
         OgreCSVProcess(file,function(err){
             var data = this.data;
-            
+
             if(err) {
                 callback(err);
             } else {
                 output = data.outputStream;
             }
-            
+
             callback(data);
         });
     },

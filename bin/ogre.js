@@ -3,18 +3,19 @@
 var ogre = require('ogre');
 
 var args = process.argv.slice(2);
-    version = "0.0.5";
+    version = "0.0.6";
 
 var usage = ''
     + '\n\x1b[1mUsage\x1b[0m: ogre [options]\n'
     + '\n'
     + '\x1b[1mOptions:\x1b[0m\n'
+    + ' -a, --analytics enter Google Analytics code for tracking\n'
+    + ' -b, --buffer    maximum buffer size allowed in kilobytes (default 150000)\n'
     + ' -h, --help      help\n'
     + ' -p, --port      port number (default 3000)\n'
-    + ' -b, --buffer    maximum buffer size allowed in kilobytes (default 150000)\n'
     + ' -v, --version   version number\n';
-    
-var arg, buffer, port;
+
+var arg, buffer, port, analytics;
 while (args.length) {
     arg = args.shift();
     switch (arg) {
@@ -32,6 +33,10 @@ while (args.length) {
         case '--port':
             port = args.shift();
             break;
+        case '-a':
+        case '--analytics':
+            analytics = args.shift();
+            break;
         case '-b':
         case '--buffer':
             buffer = args.shift();
@@ -40,4 +45,4 @@ while (args.length) {
     }
 }
 
-ogre.createServer(port,buffer);
+ogre.createServer(port,buffer,analytics);
