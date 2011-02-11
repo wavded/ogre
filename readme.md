@@ -25,7 +25,9 @@ And visit the following url in a browser:
 
     http://localhost:3000
 
-### License
+Type `ogre --help` to get a list of additional flags (like buffer size, Google Analytics settings)
+
+## License
 
 (The MIT License)
 
