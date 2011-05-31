@@ -1,6 +1,5 @@
 var express = require('express'),
     ogre_engine = require('./engine'),
-    connect = require('connect'),
     ejs = require('ejs');
 
 var app = null;
@@ -12,7 +11,7 @@ exports.createServer = function(port,maxBuffer,gaCode){
     if(maxBuffer) ogre_engine.setMaxBuffer(maxBuffer);
 
     app.configure(function(){
-        app.use(connect.static(__dirname + '/public'))
+        app.use(express.static(__dirname + '/public'))
     });
 
     app.set('view engine', 'ejs');
