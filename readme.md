@@ -5,6 +5,7 @@ The instructions below are only if you are interested in running the project loc
 Ogre requires the command line tool *ogr2ogr* to be installed:
 
 Ubuntu 9.04+
+
     $ sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable && sudo apt-get update && sudo apt-get install gdal-bin
 
 Other Operating Systems - [gdal install page](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries).
