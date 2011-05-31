@@ -12,7 +12,7 @@ exports.createServer = function(port,maxBuffer,gaCode){
     if(maxBuffer) ogre_engine.setMaxBuffer(maxBuffer);
 
     app.configure(function(){
-        app.use(connect.staticProvider(__dirname + '/public'))
+        app.use(connect.static(__dirname + '/public'))
     });
 
     app.set('view engine', 'ejs');
