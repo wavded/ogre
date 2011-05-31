@@ -13,7 +13,7 @@ Other Operating Systems - [gdal install page](http://trac.osgeo.org/gdal/wiki/Do
 
 [npm](http://github.com/isaacs/npm):
 
-    $ npm install ogre
+    $ npm install -g ogre
 
 ## Running
 
