@@ -12,8 +12,6 @@ Other Operating Systems - [gdal install page](http://trac.osgeo.org/gdal/wiki/Do
 
 ## Installation
 
-[npm](http://github.com/isaacs/npm):
-
     npm install -g ogre
 
 ## Running
