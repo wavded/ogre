@@ -6,7 +6,7 @@ Ogre requires the command line tool *ogr2ogr* to be installed: (for best support
 
 Ubuntu 9.04+
 
-    $ sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable && sudo apt-get update && sudo apt-get install gdal-bin
+    sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable && sudo apt-get update && sudo apt-get install gdal-bin
 
 Other Operating Systems - [gdal install page](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries).
 
@@ -14,13 +14,13 @@ Other Operating Systems - [gdal install page](http://trac.osgeo.org/gdal/wiki/Do
 
 [npm](http://github.com/isaacs/npm):
 
-    $ npm install -g ogre
+    npm install -g ogre
 
 ## Running
 
 To run the app:
 
-    $ ogre
+    ogre
 
 And visit the following url in a browser:
 
