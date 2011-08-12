@@ -6,7 +6,7 @@ var Step = require('step'),
 
 var bufferKB = 150000;
 
-var OgreEngine = {
+var OgreConvertToJSON = {
     processRequest: function(req){
         new fm.IncomingForm().parse(req,this);
     },
@@ -62,13 +62,14 @@ var OgreEngine = {
                     var match;
 
                     try {
-                        match = stdout.match(/inflating: (.*.shp)/);
-                        match || (match = stdout.match(/inflating: (.*.tab)/));
-                        match || (match = stdout.match(/inflating: (.*.kml)/));
-                        match || (match = stdout.match(/inflating: (.*.itf)/));
-                        match || (match = stdout.match(/inflating: (.*.000)/));
-                        match || (match = stdout.match(/inflating: (.*.gml)/));
-                        match || (match = stdout.match(/inflating: (.*.vrt)/));
+                        match = stdout.match(/inflating: (.*.shp)/i);
+                        match || (match = stdout.match(/inflating: (.*.tab)/i));
+                        match || (match = stdout.match(/inflating: (.*.kml)/i));
+                        match || (match = stdout.match(/inflating: (.*.itf)/i));
+                        match || (match = stdout.match(/inflating: (.*.000)/i));
+                        match || (match = stdout.match(/inflating: (.*.rt1)/i));
+                        match || (match = stdout.match(/inflating: (.*.gml)/i));
+                        match || (match = stdout.match(/inflating: (.*.vrt)/i));
 
                         d.inputFile = match[1];
                     } catch (e) {}
@@ -139,7 +140,7 @@ var OgreEngine = {
 }
 
 var steps = [];
-for (var step in OgreEngine) steps.push(OgreEngine[step]);
+for (var step in OgreConvertToJSON) steps.push(OgreConvertToJSON[step]);
 var OgreProcess = Step.fn.apply(null,steps);
 
 module.exports = {
@@ -164,7 +165,7 @@ module.exports = {
 
             if(jsonCallback) output = jsonCallback + "(" + output + ");";
 
-            callback(output,outputType);
+            callback(output,outputType,data.launchViewer);
         });
     }
 };

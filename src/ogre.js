@@ -1,6 +1,8 @@
 var express = require('express'),
-    ogre_engine = require('./engine'),
-    ejs = require('ejs');
+    stylus = require('stylus'),
+    nib = require('nib'),
+    toJson = require('./convert-to-json'),
+    fromJson = require('./convert-from-json');
 
 var app = null;
 
@@ -10,12 +12,23 @@ exports.createServer = function(port,maxBuffer,gaCode){
 
     if(maxBuffer) ogre_engine.setMaxBuffer(maxBuffer);
 
+    function compile(str, path, fn) {
+      return stylus(str)
+        .set('filename', path)
+        .set('compress', true)
+        .use(nib());
+    };
+
     app.configure(function(){
+        app.set('views', __dirname + '/views');
+        app.set('view engine', 'jade');
+        app.use(stylus.middleware({
+            src: __dirname + '/views',
+            dest: __dirname + '/public',
+            compile: compile
+        }));
         app.use(express.static(__dirname + '/public'))
     });
-
-    app.set('view engine', 'ejs');
-    app.set('views', __dirname + '/views');
 
     app.get('/', function(req, res){
         res.render('home',{
@@ -26,7 +39,7 @@ exports.createServer = function(port,maxBuffer,gaCode){
     })
 
     app.post('/convert', function(req, res){
-        ogre_engine.upload(req,
+        toJson.upload(req,
             function(outputstream,contentType,launchViewer){
                 if(launchViewer)
                     res.render('viewer', {
@@ -43,7 +56,22 @@ exports.createServer = function(port,maxBuffer,gaCode){
         )
     })
 
+    app.post('/convertJson', express.bodyParser(), function(req, res){
+        fromJson.upload(req,
+            function(err, outputZipFile){
+                if(err){
+                    res.send(err);
+                } else {
+                    res.download(outputZipFile, function(err){
+                        fromJson.removeOutputFile(outputZipFile);
+                    });
+                }
+            }
+        )
+    })
+
     app.error(function(err, req, res, next){
+        console.log(err);
         res.send(err.message, 500);
     })
 

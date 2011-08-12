@@ -1,6 +1,6 @@
 {
     "name": "ogre",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "ogr2ogr web client",
     "keywords": ["ogr2ogr", "GIS", "GeoJSON"],
     "author": "Marc Harter <wavded@gmail.com>",
@@ -15,9 +15,14 @@
     "main": "./index.js",
     "dependencies": {
         "express": ">= 2.0.0 <3.0.0",
-        "formidable": ">= 0.9.9",
-        "step": ">= 0.0.3",
-        "ejs": ">= 0.2.1"
+        "formidable": "latest",
+        "step": "latest",
+        "jade": "latest",
+        "stylus": "latest",
+        "nib": "latest"
     },
-    "engines": { "node": ">= 0.2.0" }
+    "devDependencies": {
+        "vows": "latest"
+    },
+    "engines": { "node": ">=0.4.0 <0.5.0" }
 }

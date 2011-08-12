@@ -1,0 +1,82 @@
+!!! 5
+html
+  head
+    title Ogre - ogr2ogr web client
+    link(href='http://fonts.googleapis.com/css?family=Ubuntu', rel='stylesheet', type='text/css')
+    link(href='http://fonts.googleapis.com/css?family=Rock+Salt', rel='stylesheet', type='text/css')
+    link(href="style.css", rel="stylesheet")
+    script
+      var trackcode = '<%-trackcode%>';
+      if(trackcode){
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', trackcode]);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+         })();
+      }
+  body
+    .wrap
+      //if IE
+        img.ogre_ie(src="ogre.png")
+      img.ogre(src="ogre.svg")
+      h1: a(href="/") Ogre
+      h2 ogr2ogr web client
+      .converter
+        .column
+          h3 Convert to GeoJSON
+          form(action="/convert", method="post", enctype="multipart/form-data")
+            p File*: 
+              input(type="file", name="upload")
+            p JSONP Callback: 
+              input(name="callback")
+            p Force Plain Text: 
+              input(type="checkbox", name="forcePlainText", value="true")
+            button(name="convert") Convert
+            | 
+            button(name="view") View In Browser
+            p: small * - must be a supported format
+
+        .column
+          h3 Convert from GeoJSON
+          form(action="/convertJson", method="post")
+            p GeoJSON:
+            textarea(name="json")
+              { "type": "FeatureCollection",
+                "features": [
+                  { "type": "Feature",
+                    "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
+                    "properties": {"prop0": "value0"}
+                    },
+                  { "type": "Feature",
+                    "geometry": {
+                      "type": "LineString",
+                      "coordinates": [
+                        [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
+                        ]
+                      },
+                    "properties": {
+                      "prop0": "value0",
+                      "prop1": 0.0
+                      }
+                    },
+                  { "type": "Feature",
+                     "geometry": {
+                       "type": "Polygon",
+                       "coordinates": [
+                         [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0],
+                           [100.0, 1.0], [100.0, 0.0] ]
+                         ]
+                     },
+                     "properties": {
+                       "prop0": "value0",
+                       "prop1": {"this": "that"}
+                       }
+                     }
+                   ]
+                 }
+            p: button(name="convert") Convert to Shapefile
+      .details!= body

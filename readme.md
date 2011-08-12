@@ -2,7 +2,7 @@ The instructions below are only if you are interested in running the project loc
 
 ## Requirements
 
-Ogre requires the command line tool *ogr2ogr* to be installed:
+Ogre requires the command line tool *ogr2ogr* to be installed: (for best support install the latest version)
 
 Ubuntu 9.04+
 
