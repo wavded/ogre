@@ -33,13 +33,13 @@ var OgreCSV = {
             var ht = header.trim();
 
             switch(true){
-                case /lon|longitude|lng|x/i.test(ht):
+                case /\b(lon|longitude|lng|x)\b/i.test(ht):
                     matches.x = header;
                     break;
-                case /lat|latitude|y/i.test(ht):
+                case /\b(lat|latitude|y)\b/i.test(ht):
                     matches.y = header;
                     break;
-                case /the_geom/i.test(ht):
+                case /\bthe_geom\b/i.test(ht):
                     matches.geom = header;
                     break;
                 default:
