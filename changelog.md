@@ -1,4 +1,10 @@
 
+0.2.2 / 2011-09-08 
+==================
+
+  * added optional output name to geojson to shp
+  * added note about convert to shapefile
+
 0.2.1 / 2011-08-24 
 ==================
 
