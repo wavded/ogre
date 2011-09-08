@@ -57,12 +57,13 @@ exports.createServer = function(port,maxBuffer,gaCode){
     })
 
     app.post('/convertJson', express.bodyParser(), function(req, res){
+        outputName = (req.body.name || 'ogreToShape') + '.zip';
         fromJson.upload(req,
             function(err, outputZipFile){
                 if(err){
                     res.send(err);
                 } else {
-                    res.download(outputZipFile, function(err){
+                    res.download(outputZipFile, outputName, function(err){
                         fromJson.removeOutputFile(outputZipFile);
                     });
                 }
