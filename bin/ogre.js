@@ -3,7 +3,7 @@
 var ogre = require('ogre');
 
 var args = process.argv.slice(2);
-    version = "0.2.2";
+    version = "0.2.3";
 
 var usage = ''
     + '\n\x1b[1mUsage\x1b[0m: ogre [options]\n'
