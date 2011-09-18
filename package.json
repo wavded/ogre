@@ -19,7 +19,6 @@
         "step": "latest",
         "jade": "latest",
         "stylus": "latest",
-        "bootstrap-stylus": "latest",
         "nib": "latest"
     },
     "devDependencies": {
