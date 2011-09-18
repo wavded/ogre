@@ -19,67 +19,81 @@ html
          })();
       }
   body
-    .wrap
-      //if IE
-        img.ogre_ie(src="ogre.png")
+    .container
       img.ogre(src="ogre.svg")
       h1: a(href="/") Ogre
-      h2 ogr2ogr web client
-      .converter
-        .column
-          h3 Convert to GeoJSON
+      p ogr2ogr web client
+      br
+      hr
+      .row
+        .span8
           form(action="/convert", method="post", enctype="multipart/form-data")
-            p File*: 
-              input(type="file", name="upload")
-            p JSONP Callback: 
-              input(name="callback")
-            p Force Plain Text: 
-              input(type="checkbox", name="forcePlainText", value="true")
-            button(name="convert") Convert
-            | 
-            button(name="view") View In Browser
-            p: small * - must be a supported format
+            fieldset
+              legend Convert to GeoJSON
+              .clearfix
+                label(for='upload') File*:
+                .input
+                  input#upload(type="file", name="upload")
+                  span.help-block Must be a supported format
+              .clearfix
+                label(for='callback') JSONP Callback: 
+                .input: input#callback(name="callback")
+              .clearfix
+                label Force Plain Text: 
+                .input
+                  input(type="checkbox", name="forcePlainText", value="true")
+              .clearfix
+                .input
+                  button.btn.primary(name="convert") Convert
+                  | 
+                  button.btn.success(name="view") View In Browser
 
-        .column
-          h3 Convert from GeoJSON
+        .span8
           form(action="/convertJson", method="post")
-            p GeoJSON:
-            textarea(name="json")
-              { "type": "FeatureCollection",
-                "features": [
-                  { "type": "Feature",
-                    "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
-                    "properties": {"prop0": "value0"}
-                    },
-                  { "type": "Feature",
-                    "geometry": {
-                      "type": "LineString",
-                      "coordinates": [
-                        [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
-                        ]
-                      },
-                    "properties": {
-                      "prop0": "value0",
-                      "prop1": 0.0
-                      }
-                    },
-                  { "type": "Feature",
-                     "geometry": {
-                       "type": "Polygon",
-                       "coordinates": [
-                         [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0],
-                           [100.0, 1.0], [100.0, 0.0] ]
-                         ]
-                     },
-                     "properties": {
-                       "prop0": "value0",
-                       "prop1": {"this": "that"}
-                       }
+            fieldset
+              legend Convert from GeoJSON
+              div.clearfix
+                label(for='json') GeoJSON:
+                div.input: textarea#json.xlarge(name="json", rows=3)
+                  { "type": "FeatureCollection",
+                    "features": [
+                      { "type": "Feature",
+                        "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
+                        "properties": {"prop0": "value0"}
+                        },
+                      { "type": "Feature",
+                        "geometry": {
+                          "type": "LineString",
+                          "coordinates": [
+                            [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
+                            ]
+                          },
+                        "properties": {
+                          "prop0": "value0",
+                          "prop1": 0.0
+                          }
+                        },
+                      { "type": "Feature",
+                         "geometry": {
+                           "type": "Polygon",
+                           "coordinates": [
+                             [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0],
+                               [100.0, 1.0], [100.0, 0.0] ]
+                             ]
+                         },
+                         "properties": {
+                           "prop0": "value0",
+                           "prop1": {"this": "that"}
+                           }
+                         }
+                       ]
                      }
-                   ]
-                 }
-            p Output Name: 
-              input(name="name")
-            p: button(name="convert") Convert to Shapefile*
-            p: small * - shapefiles only store the first geom type found
-      .details!= body
+              .clearfix
+                label(for='name') Output Name:
+                .input: input#(name="name")
+              .clearfix
+                .input
+                  button.btn.primary(name="convert") Convert to Shapefile
+                  p: small Shapefiles can only support one geometry type
+      hr
+      != body

@@ -9,7 +9,11 @@ function curl(params){
     return function(){
         var callback = this.callback;
         childp.exec('curl -s ' + params.join(' ') + ' http://localhost:3001/convert',{maxBuffer: 1024 * 7500},function(e,data){
-            if(data.charAt(0) == "{") data = JSON.parse(data);
+            try {
+              if(data.charAt(0) == "{") data = JSON.parse(data);
+            } catch(e){
+              console.log('\n\nUnable to Parse JSON for: ' + params + ': ogr2ogr support may be lacking.');
+            }
             callback(e,data);
         });
     }
