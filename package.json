@@ -1,6 +1,6 @@
 {
     "name": "ogre",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "description": "ogr2ogr web client",
     "keywords": ["ogr2ogr", "GIS", "GeoJSON"],
     "author": "Marc Harter <wavded@gmail.com>",
@@ -24,5 +24,5 @@
     "devDependencies": {
         "vows": "latest"
     },
-    "engines": { "node": ">=0.4.0 <0.5.0" }
+    "engines": { "node": ">= 0.4.0" }
 }

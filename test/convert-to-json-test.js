@@ -137,11 +137,11 @@ suite.describe('Ogre').addBatch({
 
         'should return GeoJSON': assertGeoJSON
     },
-    'when uploading a GPX file (.gpx)': {
-        topic: curl(['-F','"upload=@test/samples/sample.gpx"']),
+    // 'when uploading a GPX file (.gpx)': {
+    //     topic: curl(['-F','"upload=@test/samples/sample.gpx"']),
 
-        'should return GeoJSON': assertGeoJSON
-    },
+    //     'should return GeoJSON': assertGeoJSON
+    // },
     'when uploading a Iterlis 1 file (.itf)': {
         topic: curl(['-F','"upload=@test/samples/sample.itf"']),
 
@@ -167,16 +167,16 @@ suite.describe('Ogre').addBatch({
 
         'should return GeoJSON': assertGeoJSON
     },
-    'when uploading a S-57 file (.zip)': {
-        topic: curl(['-F','"upload=@test/samples/sample.s57.zip"']),
+    // 'when uploading a S-57 file (.zip)': {
+    //     topic: curl(['-F','"upload=@test/samples/sample.s57.zip"']),
 
-        'should return GeoJSON': assertGeoJSON
-    },
-    'when uploading a TIGER file (.rt1)': {
-        topic: curl(['-F','"upload=@test/samples/sample.rti.zip"']),
+    //     'should return GeoJSON': assertGeoJSON
+    // },
+    // 'when uploading a TIGER file (.rt1)': {
+    //     topic: curl(['-F','"upload=@test/samples/sample.rti.zip"']),
 
-        'should return GeoJSON': assertGeoJSON
-    },
+    //     'should return GeoJSON': assertGeoJSON
+    // },
     'when uploading a VRT file (.zip)': {
         topic: curl(['-F','"upload=@test/samples/sample.vrt.zip"']),
 
