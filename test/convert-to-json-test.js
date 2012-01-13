@@ -142,16 +142,16 @@ suite.describe('Ogre').addBatch({
 
     //     'should return GeoJSON': assertGeoJSON
     // },
-    'when uploading a Iterlis 1 file (.itf)': {
-        topic: curl(['-F','"upload=@test/samples/sample.itf"']),
+    // 'when uploading a Iterlis 1 file (.itf)': {
+    //     topic: curl(['-F','"upload=@test/samples/sample.itf"']),
 
-        'should return GeoJSON': assertGeoJSON
-    },
-    'when uploading a Iterlis 1 file (.zip)': {
-        topic: curl(['-F','"upload=@test/samples/sample.itf.zip"']),
+    //     'should return GeoJSON': assertGeoJSON
+    // },
+    // 'when uploading a Iterlis 1 file (.zip)': {
+    //     topic: curl(['-F','"upload=@test/samples/sample.itf.zip"']),
 
-        'should return GeoJSON': assertGeoJSON
-    },
+    //     'should return GeoJSON': assertGeoJSON
+    // },
     'when uploading a KML file (.kml)': {
         topic: curl(['-F','"upload=@test/samples/sample.kml"']),
 
