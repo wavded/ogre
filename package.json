@@ -1,6 +1,6 @@
 {
     "name": "ogre",
-    "version": "0.2.6",
+    "version": "0.3.0",
     "description": "ogr2ogr web client",
     "keywords": ["ogr2ogr", "GIS", "GeoJSON"],
     "author": "Marc Harter <wavded@gmail.com>",

@@ -1,10 +1,15 @@
 
+0.3.0 / 2012-01-13 
+==================
+
+  * updated; version lockdown for deps
+  * added; Travis CI
+
 0.2.5 / 2011-11-12 
 ==================
 
   * node 0.6 support
   * failing test cleanup
-
 
 0.2.4 / 2011-09-17 
 ==================
