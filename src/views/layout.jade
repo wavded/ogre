@@ -26,35 +26,35 @@ html
       br
       hr
       .row
-        .span8
-          form(action="/convert", method="post", enctype="multipart/form-data")
+        .span6
+          form.form-horizontal(action="/convert", method="post", enctype="multipart/form-data")
             fieldset
               legend Convert to GeoJSON
-              .clearfix
-                label(for='upload') File*:
-                .input
+              .control-group
+                label.control-label(for='upload') File*:
+                .controls
                   input#upload(type="file", name="upload")
-                  span.help-block Must be a supported format
-              .clearfix
-                label(for='callback') JSONP Callback: 
-                .input: input#callback(name="callback")
-              .clearfix
-                label Force Plain Text: 
-                .input
+                  p.help-block Must be a supported format
+              .control-group
+                label.control-label(for='callback') JSONP Callback: 
+                .controls: input#callback(name="callback")
+              .control-group
+                label.control-label Force Plain Text: 
+                .controls
                   input(type="checkbox", name="forcePlainText", value="true")
-              .clearfix
-                .input
+              .control-group
+                .controls
                   button.btn.primary(name="convert") Convert
                   | 
                   button.btn.success(name="view") View In Browser
 
-        .span8
-          form(action="/convertJson", method="post")
+        .span6
+          form.form-horizontal(action="/convertJson", method="post")
             fieldset
               legend Convert from GeoJSON
-              div.clearfix
-                label(for='json') GeoJSON:
-                div.input: textarea#json.xlarge(name="json", rows=3)
+              .control-group
+                label.control-label(for='json') GeoJSON:
+                .controls: textarea#json.xlarge(name="json", rows=3)
                   | { "type": "FeatureCollection",
                   |   "features": [
                   |     { "type": "Feature",
@@ -88,11 +88,11 @@ html
                   |        }
                   |      ]
                   |    }
-              .clearfix
-                label(for='name') Output Name:
-                .input: input#(name="name")
-              .clearfix
-                .input
+              .control-group
+                label.control-label(for='name') Output Name:
+                .controls: input#(name="name")
+              .control-group
+                .controls
                   button.btn.primary(name="convert") Convert to Shapefile
                   p: small Shapefiles can only support one geometry type
       hr
