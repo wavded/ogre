@@ -1,6 +1,6 @@
 {
   "name": "ogre",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "ogr2ogr web client",
   "keywords": [
     "ogr2ogr",
@@ -21,7 +21,7 @@
   },
   "main": "./index.js",
   "dependencies": {
-    "express": ">= 2.0.0 <3.0.0",
+    "express": "~2",
     "formidable": "1.0.9",
     "step": "0.0.5",
     "jade": "0.20.3",
