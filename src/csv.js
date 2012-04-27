@@ -22,7 +22,7 @@ var OgreCSV = {
         if(err) throw err;
         var d = this.data;
 
-        d.headers = stdout.replace(/\n|\r/g,"").split(",")
+        d.headers = stdout.replace(/\n|\r|"/g,"").split(",")
         this(); //continue
     },
     locateGeometryColumns: function(err){
@@ -30,7 +30,7 @@ var OgreCSV = {
         var d = this.data, matches = {};
 
         d.headers.forEach(function(header){
-            var ht = header.trim();
+            var ht = header.trim()
 
             switch(true){
                 case /\b(lon|longitude|lng|x)\b/i.test(ht):

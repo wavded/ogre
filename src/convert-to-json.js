@@ -101,9 +101,10 @@ var OgreConvertToJSON = {
         if(err) throw err;
         var d = this.data, cont = this;
 
-        ex('ogr2ogr -f "GeoJSON" -skipfailures stdout ' + d.inputFile, {maxBuffer: 1024 * bufferKB},
+        ex('ogr2ogr -f "GeoJSON" -skipfailures /vsistdout/ ' + d.inputFile, {maxBuffer: 1024 * bufferKB},
             function(err,stdout,stderr){
                 if(err){
+                  console.error(err)
                   cont('Ogre can\'t transform files of type: ' + d.fileExt);
                 } else {
                   d.outputStream = stdout;
