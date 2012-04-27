@@ -1,4 +1,10 @@
 
+0.3.3 / 2012-04-27 
+==================
+
+  * updated; force express 2.x
+  * fixed; stdout changed, csv parsing of "
+
 0.3.1 / 2012-03-02 
 ==================
 
