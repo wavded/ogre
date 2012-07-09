@@ -2,4 +2,5 @@ language: node_js
 node_js:
    - 0.4
    - 0.6
+   - 0.8
 before_install: echo "" | sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable && sudo apt-get update && sudo apt-get install gdal-bin
