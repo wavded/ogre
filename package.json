@@ -22,14 +22,14 @@
   "main": "./index.js",
   "dependencies": {
     "express": "~2",
-    "formidable": "1.0.9",
+    "formidable": "1.0.11",
     "step": "0.0.5",
-    "jade": "0.20.3",
-    "stylus": "0.24.0",
-    "nib": "0.3.2"
+    "jade": "0.26.3",
+    "stylus": "0.28.1",
+    "nib": "0.6.0"
   },
   "devDependencies": {
-    "vows": "0.6.2"
+    "vows": "0.6.3"
   },
   "engines": {
     "node": ">= 0.4.0"
