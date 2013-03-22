@@ -1,6 +1,4 @@
 var express = require('express'),
-    stylus = require('stylus'),
-    nib = require('nib'),
     toJson = require('./convert-to-json'),
     fromJson = require('./convert-from-json');
 
@@ -12,21 +10,9 @@ exports.createServer = function(port,maxBuffer,gaCode){
 
     if(maxBuffer) ogre_engine.setMaxBuffer(maxBuffer);
 
-    function compile(str, path, fn) {
-      return stylus(str)
-        .set('filename', path)
-        .set('compress', true)
-        .use(nib());
-    };
-
     app.configure(function(){
         app.set('views', __dirname + '/views');
         app.set('view engine', 'jade');
-        app.use(stylus.middleware({
-            src: __dirname + '/views',
-            dest: __dirname + '/public',
-            compile: compile
-        }));
         app.use(express.static(__dirname + '/public'))
     });
 
