@@ -1,4 +1,11 @@
 
+0.4.0 / 2013-04-09 
+==================
+
+  * updated; express 3
+  * updated; app dependencies
+  * added; node 0.10 travis support
+
 0.3.5 / 2013-03-22 
 ==================
 
