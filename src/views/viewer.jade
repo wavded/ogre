@@ -1,58 +1,61 @@
-.content
-  h3 OpenLayers Viewer (Unprojected)
-  #map-unprojected.map
+extends layout
 
-  h3 OpenLayers Viewer (Projected onto OSM)
-  #map-projected.map
+block body
+  .content
+    h3 OpenLayers Viewer (Unprojected)
+    #map-unprojected.map
 
-script(src="openlayers-2.9.1-proj4.min.js")
-script
-  var geojson = !{output};
+    h3 OpenLayers Viewer (Projected onto OSM)
+    #map-projected.map
 
-  OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
-  OpenLayers.Util.onImageLoadErrorColor = "transparent";
-  OpenLayers._getScriptLocation = function(){
-      return "http://rs1.adc4gis.com/js/openlayers/2.9.1/";
-  };
+  script(src="openlayers-2.9.1-proj4.min.js")
+  script
+    var geojson = !{output};
 
-  window.onload = function(){
+    OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
+    OpenLayers.Util.onImageLoadErrorColor = "transparent";
+    OpenLayers._getScriptLocation = function(){
+        return "http://rs1.adc4gis.com/js/openlayers/2.9.1/";
+    };
 
-      // unprojected map
+    window.onload = function(){
 
-      (function(){
+        // unprojected map
 
-          var parser = new OpenLayers.Format.GeoJSON(),
-              map = new OpenLayers.Map('map-unprojected', {allOverlays: true}),
-              vector = new OpenLayers.Layer.Vector("Upload"),
-              features
+        (function(){
 
-          map.addLayer(vector)
-          features = parser.read(geojson)
-          vector.addFeatures(features)
+            var parser = new OpenLayers.Format.GeoJSON(),
+                map = new OpenLayers.Map('map-unprojected', {allOverlays: true}),
+                vector = new OpenLayers.Layer.Vector("Upload"),
+                features
 
-          map.zoomToExtent(vector.getDataExtent())
+            map.addLayer(vector)
+            features = parser.read(geojson)
+            vector.addFeatures(features)
 
-      }());
+            map.zoomToExtent(vector.getDataExtent())
 
-      // projected on osm
+        }());
 
-      (function(){
+        // projected on osm
 
-          var parser = new OpenLayers.Format.GeoJSON({
-                  externalProjection: new OpenLayers.Projection("EPSG:4326"),
-                  internalProjection: new OpenLayers.Projection("EPSG:900913")
-              }),
-              map = new OpenLayers.Map('map-projected'),
-              osm = new OpenLayers.Layer.OSM(),
-              vector = new OpenLayers.Layer.Vector("Upload"),
-              features
+        (function(){
 
-          map.addLayers([osm,vector])
-          features = parser.read(geojson)
-          vector.addFeatures(features)
+            var parser = new OpenLayers.Format.GeoJSON({
+                    externalProjection: new OpenLayers.Projection("EPSG:4326"),
+                    internalProjection: new OpenLayers.Projection("EPSG:900913")
+                }),
+                map = new OpenLayers.Map('map-projected'),
+                osm = new OpenLayers.Layer.OSM(),
+                vector = new OpenLayers.Layer.Vector("Upload"),
+                features
 
-          map.zoomToExtent(vector.getDataExtent())
+            map.addLayers([osm,vector])
+            features = parser.read(geojson)
+            vector.addFeatures(features)
 
-      }())
-  }
+            map.zoomToExtent(vector.getDataExtent())
+
+        }())
+    }
 

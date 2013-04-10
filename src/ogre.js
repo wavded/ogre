@@ -5,35 +5,25 @@ var express = require('express'),
 var app = null;
 
 exports.createServer = function(port,maxBuffer,gaCode){
-    app = express.createServer();
+    app = express();
     port || (port = 3000);
 
     if(maxBuffer) ogre_engine.setMaxBuffer(maxBuffer);
 
-    app.configure(function(){
-        app.set('views', __dirname + '/views');
-        app.set('view engine', 'jade');
-        app.use(express.static(__dirname + '/public'))
-    });
+    app.set('views', __dirname + '/views');
+    app.set('view engine', 'jade');
+    app.use(express.static(__dirname + '/public'))
+    app.use(express.bodyParser())
 
     app.get('/', function(req, res){
-        res.render('home',{
-            locals: {
-                trackcode: gaCode || ''
-            }
-        });
+        res.render('home', { trackcode: gaCode || '' })
     })
 
     app.post('/convert', function(req, res){
         toJson.upload(req,
             function(outputstream,contentType,launchViewer){
                 if(launchViewer)
-                    res.render('viewer', {
-                        locals: {
-                            output: outputstream,
-                            trackcode: gaCode || ''
-                        }
-                    });
+                    res.render('viewer', { output: outputstream, trackcode: gaCode || '' });
                 else {
                     res.header("Content-Type",contentType);
                     res.send(outputstream);
@@ -42,7 +32,7 @@ exports.createServer = function(port,maxBuffer,gaCode){
         )
     })
 
-    app.post('/convertJson', express.bodyParser(), function(req, res){
+    app.post('/convertJson', function(req, res){
         outputName = (req.body.name || 'ogreToShape') + '.zip';
         fromJson.upload(req,
             function(err, outputZipFile){
@@ -57,7 +47,7 @@ exports.createServer = function(port,maxBuffer,gaCode){
         )
     })
 
-    app.error(function(err, req, res, next){
+    app.use(function(err, req, res, next){
         console.log(err);
         res.send(err.message, 500);
     })

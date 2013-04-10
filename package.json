@@ -21,13 +21,13 @@
   },
   "main": "./index.js",
   "dependencies": {
-    "express": "~2",
-    "formidable": "1.0.11",
+    "express": "3.1.1",
+    "formidable": "1.0.13",
     "step": "0.0.5",
-    "jade": "0.26.3"
+    "jade": "0.28.2"
   },
   "devDependencies": {
-    "vows": "0.6.3"
+    "vows": "0.7.0"
   },
   "engines": {
     "node": ">= 0.6.0"

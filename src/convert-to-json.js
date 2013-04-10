@@ -7,18 +7,13 @@ var Step = require('step'),
 var bufferKB = 150000;
 
 var OgreConvertToJSON = {
-    processRequest: function(req){
-        new fm.IncomingForm().parse(req,this);
-    },
-    createDataObject: function(err, fields, files){
-        if(err) throw err;
-
+    createDataObject: function(req) {
         this.data = {
-            file: files && files.upload,
-            vrtFile: files && files.vrt,
-            jsonCallback: fields.callback,
-            launchViewer: "view" in fields,
-            outputType: "forcePlainText" in fields ? "text/plain" : "application/json"
+            file: req.files.upload,
+            vrtFile: req.files.vrt,
+            jsonCallback: req.body.callback,
+            launchViewer: "view" in req.body,
+            outputType: "forcePlainText" in req.body ? "text/plain" : "application/json"
         };
 
         this(); //continue
