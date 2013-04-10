@@ -48,7 +48,7 @@ exports.createServer = function(port,maxBuffer,gaCode){
     })
 
     app.use(function(err, req, res, next){
-        console.log(err);
+        console.log(err.message, err.stack);
         res.send(err.message, 500);
     })
 

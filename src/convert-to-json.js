@@ -9,8 +9,8 @@ var bufferKB = 150000;
 var OgreConvertToJSON = {
     createDataObject: function(req) {
         this.data = {
-            file: req.files.upload,
-            vrtFile: req.files.vrt,
+            file: req.files && req.files.upload,
+            vrtFile: req.files && req.files.vrt,
             jsonCallback: req.body.callback,
             launchViewer: "view" in req.body,
             outputType: "forcePlainText" in req.body ? "text/plain" : "application/json"
@@ -18,8 +18,7 @@ var OgreConvertToJSON = {
 
         this(); //continue
     },
-    checkFormErrors: function(err){
-        if(err) throw err;
+    checkFormErrors: function(){
         var d = this.data;
 
         if(!d.file)
