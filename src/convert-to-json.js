@@ -13,7 +13,9 @@ var OgreConvertToJSON = {
             vrtFile: req.files && req.files.vrt,
             jsonCallback: req.body.callback,
             launchViewer: "view" in req.body,
-            outputType: "forcePlainText" in req.body ? "text/plain" : "application/json"
+            outputType: "forcePlainText" in req.body ? "text/plain" : "application/json",
+            sSrs: req.body.sSrs,
+	    tSrs: req.body.tSrs
         };
 
         this(); //continue
@@ -94,8 +96,16 @@ var OgreConvertToJSON = {
     runOgre: function(err){
         if(err) throw err;
         var d = this.data, cont = this;
+        var sSrs=d.sSrs;
+        var tSrs=d.tSrs;
 
-        ex('ogr2ogr -f "GeoJSON" -skipfailures /vsistdout/ ' + d.inputFile, {maxBuffer: 1024 * bufferKB},
+        if(sSrs){
+          sSrs="-s_srs \""+sSrs+"\" ";
+	}
+        if(tSrs){
+	  tSrs="-t_srs \""+tSrs+"\" ";
+	}
+        ex('ogr2ogr -f "GeoJSON" -skipfailures /vsistdout/ ' + sSrs + tSrs + d.inputFile, {maxBuffer: 1024 * bufferKB},
             function(err,stdout,stderr){
                 if(err){
                   console.error(err)
