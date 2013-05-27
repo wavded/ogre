@@ -104,12 +104,6 @@ var OgreConvertToJSON = {
         var sSrs=d.sSrs!=null?"-s_srs \""+d.sSrs+"\" ":"";
         var tSrs=d.tSrs!=null?"-t_srs \""+d.tSrs+"\" ":"";
 
-<<<<<<< HEAD
-=======
-        if(sSrs){console.error(sSrs)}
-        if(tSrs){console.error(tSrs)}
-
->>>>>>> f36d79a75176a35906d3ae73a58472f0bc556119
 	ex('ogr2ogr -f "GeoJSON" -skipfailures /vsistdout/ ' + sSrs + tSrs + d.inputFile, {maxBuffer: 1024 * bufferKB},
             function(err,stdout,stderr){
                 if(err){
