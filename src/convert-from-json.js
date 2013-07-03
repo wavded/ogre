@@ -1,5 +1,7 @@
 var Step = require('step'),
     fs = require('fs'),
+    os = require('os'),
+    path = require('path'),
     ex = require('child_process').exec,
     jsonId = 'ogre_json_' + (+new Date()) + '_',
     jsonInc = 0;
@@ -27,12 +29,10 @@ var OgreConvertFromJSON = {
         var d = this.data;
 
         d.fileExt = 'json';
-        d.inputFile = '/tmp/' + d.fileId + '.json';
-        d.outputFolder = '/tmp/' + d.fileId;
+        d.inputFile = path.join(os.tmpDir, d.fileId + '.json');
+        d.outputFolder = path.join(os.tmpDir(), d.fileId);
 
-        fs.writeFileSync(d.inputFile, d.json);
-        fs.mkdirSync(d.outputFolder);
-        this();
+        fs.writeFile(d.inputFile, d.json, this);
     },
     runOgre: function(err){
         if(err) throw err;
