@@ -29,8 +29,8 @@ var OgreConvertFromJSON = {
         var d = this.data;
 
         d.fileExt = 'json';
-        d.inputFile = path.join(os.tmpdir(), d.fileId + '.json');
-        d.outputFolder = path.join(os.tmpdir(), d.fileId);
+        d.inputFile = path.join(os.tmpDir(), d.fileId + '.json');
+        d.outputFolder = path.join(os.tmpDir(), d.fileId);
 
         fs.writeFile(d.inputFile, d.json, this);
     },
