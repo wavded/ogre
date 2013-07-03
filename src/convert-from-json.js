@@ -30,7 +30,9 @@ var OgreConvertFromJSON = {
         d.inputFile = '/tmp/' + d.fileId + '.json';
         d.outputFolder = '/tmp/' + d.fileId;
 
-        fs.writeFile(d.inputFile, d.json, this);
+        fs.writeFileSync(d.inputFile, d.json);
+        fs.mkdirSync(d.outputFolder);
+        this();
     },
     runOgre: function(err){
         if(err) throw err;

@@ -1,4 +1,5 @@
 var express = require('express'),
+    http = require('http'), https = require('https'), url = require('url'),
     toJson = require('./convert-to-json'),
     fromJson = require('./convert-from-json');
 
@@ -32,7 +33,22 @@ exports.createServer = function(port,maxBuffer,gaCode){
         )
     })
 
-    app.post('/convertJson', function(req, res){
+    app.post('/convertJson', 
+     function(req, res, next) {
+         if (req.body.jsonUrl) {
+            var parsedUrl = url.parse(req.body.jsonUrl), 
+                prot = parsedUrl.protocol === "http:" ? http : https;
+            prot.get(req.body.jsonUrl, function (response) {
+                var data = '';
+                response.on('data', function (chunk) { data += chunk; });                            
+                response.on('end', function () {
+                    req.body.json = data;
+                    next();                
+                });  
+            });             
+         } else { next(); }
+     },
+     function(req, res){
         outputName = (req.body.name || 'ogreToShape') + '.zip';
         fromJson.upload(req,
             function(err, outputZipFile){
