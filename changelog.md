@@ -1,4 +1,12 @@
 
+0.5.0 / 2013-07-10 
+==================
+
+ * updated; jade compatability
+ * updated; adjust temp dir location to use os.tmpDir()
+ * removed; support for node 0.6
+ * added; allow a jsonUrl to be POSTed. Get the URL content and then continue
+
 0.4.0 / 2013-04-09 
 ==================
 
