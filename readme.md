@@ -15,6 +15,8 @@ Other Operating Systems - [gdal install page](http://trac.osgeo.org/gdal/wiki/Do
 ## Installation
 
     npm install -g ogre
+    
+[![NPM](https://nodei.co/npm/ogre.png?downloads=true)](https://nodei.co/npm/ogre)
 
 ## Running
 
