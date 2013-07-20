@@ -5,6 +5,18 @@ var express = require('express'),
 
 var app = null;
 
+function enableCors(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'POST');
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    
+    if (req.method === "OPTIONS") {
+        res.send(200);
+    } else {
+        next();
+    }
+}
+
 exports.createServer = function(port,maxBuffer,gaCode){
     app = express();
     port || (port = 3000);
@@ -20,7 +32,7 @@ exports.createServer = function(port,maxBuffer,gaCode){
         res.render('home', { trackcode: gaCode || '' })
     })
 
-    app.post('/convert', function(req, res){
+    app.post('/convert', enableCors, function(req, res){
         toJson.upload(req,
             function(outputstream,contentType,launchViewer){
                 if(launchViewer)
@@ -33,7 +45,7 @@ exports.createServer = function(port,maxBuffer,gaCode){
         )
     })
 
-    app.post('/convertJson', 
+    app.post('/convertJson', enableCors, 
      function(req, res, next) {
          if (req.body.jsonUrl) {
             var parsedUrl = url.parse(req.body.jsonUrl), 
