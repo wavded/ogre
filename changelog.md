@@ -1,4 +1,10 @@
 
+0.5.1 / 2013-09-06 
+==================
+
+ * enable CORS on convert routes [rclark]
+ * added; npm badge
+
 0.5.0 / 2013-07-10 
 ==================
 
