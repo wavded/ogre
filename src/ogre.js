@@ -9,7 +9,7 @@ function enableCors(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header('Access-Control-Allow-Methods', 'POST');
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    
+
     if (req.method === "OPTIONS") {
         res.send(200);
     } else {
@@ -45,19 +45,19 @@ exports.createServer = function(port,maxBuffer,gaCode){
         )
     })
 
-    app.post('/convertJson', enableCors, 
+    app.post('/convertJson', enableCors,
      function(req, res, next) {
          if (req.body.jsonUrl) {
-            var parsedUrl = url.parse(req.body.jsonUrl), 
+            var parsedUrl = url.parse(req.body.jsonUrl),
                 prot = parsedUrl.protocol === "http:" ? http : https;
             prot.get(req.body.jsonUrl, function (response) {
                 var data = '';
-                response.on('data', function (chunk) { data += chunk; });                            
+                response.on('data', function (chunk) { data += chunk; });
                 response.on('end', function () {
                     req.body.json = data;
-                    next();                
-                });  
-            });             
+                    next();
+                });
+            });
          } else { next(); }
      },
      function(req, res){

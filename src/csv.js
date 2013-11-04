@@ -1,6 +1,6 @@
 var Step = require('step'),
     fs = require('fs'),
-    ex = require('child_process').exec,
+    cp = require('child_process'),
     uid = +new Date,
 
     baseVRT =   '<OGRVRTDataSource>\n\
@@ -16,7 +16,7 @@ var OgreCSV = {
             file: file,
             name: file.replace(".csv","").replace("/tmp/","")
         };
-        ex("head -1 " + file,this);
+        cp.execFile('head', [ '-1', file ], this);
     },
     parseHeaders: function(err, stdout){
         if(err) throw err;

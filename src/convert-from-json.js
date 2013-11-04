@@ -2,7 +2,7 @@ var Step = require('step'),
     fs = require('fs'),
     os = require('os'),
     path = require('path'),
-    ex = require('child_process').exec,
+    cp = require('child_process'),
     jsonId = 'ogre_json_' + (+new Date()) + '_',
     jsonInc = 0;
 
@@ -38,7 +38,7 @@ var OgreConvertFromJSON = {
         if(err) throw err;
         var d = this.data, cont = this;
 
-        ex('ogr2ogr -skipfailures -f "ESRI Shapefile" ' + d.outputFolder + ' ' + d.inputFile,
+        cp.execFile('ogr2ogr', [ '-skipfailures', '-f', 'ESRI Shapefile', d.outputFolder, d.inputFile ],
             function(err,stdout,stderr){
                 if(err){
                   cont('Ogre can\'t transform files of type: ' + d.format);
@@ -54,7 +54,7 @@ var OgreConvertFromJSON = {
 
         d.outputZipFile = d.outputFolder + '.zip';
 
-        ex('cd ' + d.outputFolder + ' && zip ' + d.outputZipFile + ' *',
+        cp.execFile('zip', [ d.outputZipFile, '*' ], { cwd: d.outputFolder },
             function(err,stdout){
                 cont(err);
             }

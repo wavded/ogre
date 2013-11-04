@@ -1,7 +1,7 @@
 var Step = require('step'),
     fm = require('formidable'),
     fs = require('fs'),
-    ex = require('child_process').exec,
+    cp = require('child_process'),
     csv = require('./csv');
 
 var bufferKB = 150000;
@@ -49,7 +49,7 @@ var OgreConvertToJSON = {
             d.zipDirectory = d.file.path + '_zip';
             var cont = this;
 
-            ex('unzip ' + d.file.path + ' -d ' + d.zipDirectory,
+            cp.execFile('unzip', [ d.file.path, '-d', d.zipDirectory ],
                 function(err,stdout){
                     if(err) throw err;
 
@@ -95,7 +95,7 @@ var OgreConvertToJSON = {
         if(err) throw err;
         var d = this.data, cont = this;
 
-        ex('ogr2ogr -f "GeoJSON" -skipfailures /vsistdout/ ' + d.inputFile, {maxBuffer: 1024 * bufferKB},
+        cp.execFile('ogr2ogr', [ '-f', 'GeoJSON', '-skipfailures', '/vsistdout/', d.inputFile ], { maxBuffer: 1024 * bufferKB },
             function(err,stdout,stderr){
                 if(err){
                   console.error(err)
