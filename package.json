@@ -17,7 +17,7 @@
     "ogre": "./bin/ogre.js"
   },
   "scripts": {
-    "test": "vows --spec",
+    "test": "tap -d test/",
     "start": "node run.js"
   },
   "main": "./index.js",
@@ -28,9 +28,8 @@
     "ogr2ogr": "0.1.0"
   },
   "devDependencies": {
-    "vows": "0.7.0",
-    "mocha": "~1.14.0",
-    "supertest": "~0.8.1"
+    "supertest": "~0.8.1",
+    "tap": "~0.4.4"
   },
   "engines": {
     "node": ">= 0.8.0"
