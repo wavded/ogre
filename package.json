@@ -1,6 +1,6 @@
 {
   "name": "ogre",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "ogr2ogr web client",
   "keywords": [
     "ogr2ogr",
@@ -24,12 +24,12 @@
   "dependencies": {
     "express": "3.4.4",
     "jade": "0.35.0",
-    "connect-multiparty": "~1.0.1",
+    "connect-multiparty": "1.0.1",
     "ogr2ogr": "0.1.1"
   },
   "devDependencies": {
-    "supertest": "~0.8.1",
-    "tap": "~0.4.4"
+    "supertest": "0.8.1",
+    "tap": "0.4.4"
   },
   "engines": {
     "node": ">= 0.10.0"
