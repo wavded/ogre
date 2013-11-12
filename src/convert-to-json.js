@@ -5,15 +5,22 @@ var Step = require('step'),
     csv = require('./csv');
 
 var bufferKB = 150000;
-
+function sanitizer(toSanitize){
+	var inputSanitizer=/^EPSG:[0-9]{1,10}$|ESRI:[0-9]{1,10}$|IAU2000:[0-9]{1,10}$|SR-ORG:[0-9]{1,10}$/;
+	if(toSanitize!="undefined")
+           return toSanitize.match(inputSanitizer);
+	}
 var OgreConvertToJSON = {
     createDataObject: function(req) {
+	
         this.data = {
             file: req.files && req.files.upload,
             vrtFile: req.files && req.files.vrt,
             jsonCallback: req.body.callback,
             launchViewer: "view" in req.body,
-            outputType: "forcePlainText" in req.body ? "text/plain" : "application/json"
+            outputType: "forcePlainText" in req.body ? "text/plain" : "application/json",
+            sSrs: sanitizer(req.body.sSrs),
+	    tSrs: sanitizer(req.body.tSrs)
         };
 
         this(); //continue
@@ -94,8 +101,10 @@ var OgreConvertToJSON = {
     runOgre: function(err){
         if(err) throw err;
         var d = this.data, cont = this;
+        var sSrs=d.sSrs!=null?"-s_srs \""+d.sSrs+"\" ":"";
+        var tSrs=d.tSrs!=null?"-t_srs \""+d.tSrs+"\" ":"";
 
-        ex('ogr2ogr -f "GeoJSON" -skipfailures /vsistdout/ ' + d.inputFile, {maxBuffer: 1024 * bufferKB},
+	ex('ogr2ogr -f "GeoJSON" -skipfailures /vsistdout/ ' + sSrs + tSrs + d.inputFile, {maxBuffer: 1024 * bufferKB},
             function(err,stdout,stderr){
                 if(err){
                   console.error(err)
