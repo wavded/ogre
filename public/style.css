@@ -1,0 +1,12 @@
+body {
+  font-family: Ubuntu;
+}
+h1 {
+  margin-top: 20px;
+  font-family: "Rock Salt", serif;
+}
+.ogre {
+  margin-top: 10px;
+  width: 100px;
+  float: right;
+}

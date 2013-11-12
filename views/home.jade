@@ -3,7 +3,7 @@ extends layout
 block body
   .content
     h3 What is Ogre?
-    p Ogre is a web client (service) that translates spatial files into <a href="http://geojson.org">GeoJSON</a> using the <a href="http://www.gdal.org/ogr2ogr.html">ogr2ogr</a> command line tool for use in JavaScript web applications and frameworks (like <a href="http://openlayers.org">OpenLayers</a>).
+    p Ogre is a web client (service) that translates spatial files into <a href="http://geojson.org">GeoJSON</a> using the <a href="http://www.gdal.org/ogr2ogr.html">ogr2ogr</a> command line tool for use in JavaScript web applications and frameworks.
 
     h3 What formats does it support?
     p Currently Ogre supports the following transformations:
@@ -65,16 +65,16 @@ block body
           td .gmt
           td -
           td 
-        // tr
-        //   th GPX
-        //   td .gpx
-        //   td -
-        //   td 
-        // tr
-        //   th Interlis 1
-        //   td .itf
-        //   td .itf and .ili (.fmt optional)
-        //   td 
+        tr
+          th GPX
+          td .gpx
+          td -
+          td 
+        tr
+          th Interlis 1
+          td .itf
+          td .itf and .ili (.fmt optional)
+          td 
         tr
           th KML / KMZ
           td .kml or .kmz
@@ -85,24 +85,21 @@ block body
           td -
           td .tab, .map, .id, and .dat
           td 
-        // tr
-        //   th S-57
-        //   td .000
-        //   td .000 (.001-.00N optional)
-        //   td 
-        // tr
-        //   th TIGER
-        //   td -
-        //   td at least an .rt1
-        //   td 
+        tr
+          th S-57
+          td .000
+          td .000 (.001-.00N optional)
+          td 
+        tr
+          th TIGER
+          td -
+          td at least an .rt1
+          td 
         tr
           th VRT
           td -
           td .vrt with any other spatial file
           td For more information on how to use VRT files, see the <a href="http://www.gdal.org/ogr/drv_vrt.html">full VRT documentation</a>
-
-    h3 What are its limitations?
-    p Ogre currently has an output size limit of 15MB.
 
     h3 Accessing Ogre using a POST request
     p You can perform Ogre transformations directly by making a HTTP POST request:
@@ -110,18 +107,19 @@ block body
     code http://ogre.adc4gis.com/convert</code> with the following params:
     ul
       li <code>upload</code> - the file being uploaded
+      li <code>sourceSrs</code> (optional) - the original projection
+      li <code>targetSrs</code> (optional) - the target projection
       li <code>callback</code> (optional) - a JSONP callback function name
-      li <code>forcePlainText</code> (optional) - force return type to "text/plain" instead of "application/json"
 
     p: b Convert from GeoJSON to Shapefile
     p: code http://ogre.adc4gis.com/convertJson</code> with <b>one of the following</b> params:
     ul
       li <code>json</code> - text of the GeoJSON file
       li <code>jsonUrl</code> - the URL for a remote GeoJSON file
+      li <code>outputName</code> (optional) - the name for the resulting zip file
 
     h3 Where can I watch the project status, report issues, contribute, or fork the code?
     p Issues and feature requests can be submitted <a href="http://github.com/wavded/ogre/issues">here</a> and to watch, fork and/or contribute to the project, <a href="http://github.com/wavded/ogre">visit the github page</a>.
 
-    h3 Where did you get that sweet logo?
-    p "Orc Head" drawing by <a href="http://www.openclipart.org/detail/71203">Jason J. Patterson</a>
+    p.text-muted "Orc Head" drawing by <a href="http://www.openclipart.org/detail/71203">Jason J. Patterson</a>
 

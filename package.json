@@ -1,6 +1,6 @@
 {
   "name": "ogre",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "ogr2ogr web client",
   "keywords": [
     "ogr2ogr",
@@ -17,19 +17,21 @@
     "ogre": "./bin/ogre.js"
   },
   "scripts": {
-    "test": "vows --spec"
+    "test": "tap -d test/",
+    "start": "node run.js"
   },
   "main": "./index.js",
   "dependencies": {
-    "express": "3.1.1",
-    "formidable": "1.0.13",
-    "step": "0.0.5",
-    "jade": "0.28.2"
+    "express": "3.4.4",
+    "jade": "0.35.0",
+    "connect-multiparty": "~1.0.1",
+    "ogr2ogr": "0.1.0"
   },
   "devDependencies": {
-    "vows": "0.7.0"
+    "supertest": "~0.8.1",
+    "tap": "~0.4.4"
   },
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 0.10.0"
   }
 }
