@@ -12,6 +12,8 @@ test('create server', function (t) {
 })
 
 test('convert', function (t) {
+  t.plan(2)
+
   request(server)
     .post('/convert')
     .attach('upload', __dirname+'/samples/sample.shp.zip')
@@ -20,7 +22,18 @@ test('convert', function (t) {
 
       var data = res.body
       t.equals(data.type, 'FeatureCollection', 'is geojson')
-      t.end()
+    })
+
+  request(server)
+    .post('/convert')
+    .field('sourceSrs', 'EPSG:4326')
+    .field('targetSrs', 'EPSG:3857')
+    .attach('upload', __dirname+'/samples/sample.shp.zip')
+    .end(function (er, res) {
+      if (er) throw er
+
+      var data = res.body
+      t.ok(data.crs.properties.name.match(/3857/), 'is reprojected')
     })
 })
 

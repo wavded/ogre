@@ -32,7 +32,12 @@ exports.createServer = function (opts) {
   app.get('/', function (req, res) { res.render('home', { trackcode: opts.gaCode || '' }) })
 
   app.post('/convert', enableCors, function (req, res, next) {
-    var sf = ogr2ogr(req.files.upload.path).stream()
+    var ogr = ogr2ogr(req.files.upload.path)
+
+    if (req.body.targetSrs)
+      ogr.project(req.body.targetSrs, req.body.sourceSrs)
+
+    var sf = ogr.stream()
     sf.on('error', next)
     res.on('end', function () { fs.unlink(req.files.upload.path) })
 

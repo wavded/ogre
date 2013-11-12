@@ -4,73 +4,55 @@ html
     title Ogre - ogr2ogr web client
     link(href='http://fonts.googleapis.com/css?family=Ubuntu', rel='stylesheet', type='text/css')
     link(href='http://fonts.googleapis.com/css?family=Rock+Salt', rel='stylesheet', type='text/css')
+    link(href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css' rel='stylesheet')
     link(href="style.css", rel="stylesheet")
-    script.
-      var trackcode = '<%-trackcode%>';
-      if(trackcode){
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', trackcode]);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-         })();
-      }
   body
     .container
       img.ogre(src="ogre.svg")
       h1: a(href="/") Ogre
       p ogr2ogr web client
       br
-      hr
       .row
-        .span6
-          form.form-horizontal(action="/convert", method="post", enctype="multipart/form-data")
-            fieldset
-              legend Convert to GeoJSON
-              .control-group
-                label.control-label(for='upload') File*:
-                .controls
-                  input#upload(type="file", name="upload")
-                  p.help-block Must be a supported format
-              .control-group
-                label.control-label(for='callback') JSONP Callback: 
-                .controls: input#callback(name="callback")
-              .control-group
-                label.control-label Force Plain Text: 
-                .controls
-                  input(type="checkbox", name="forcePlainText", value="true")
-              .control-group
-                .controls
-                  button.btn.primary(name="convert") Convert
-                  | 
-                  button.btn.success(name="view") View In Browser
+        .col-md-6
+          form(role="form" action="/convert", method="post", enctype="multipart/form-data")
+            legend Convert to GeoJSON
+            .form-group
+              label(for='upload') File*:
+              input#upload.form-control(type="file", name="upload")
+              p.help-block Must be a supported format
+            .form-group
+              label(for='callback') JSONP Callback:
+              input#callback.form-control(name="callback")
+            .form-group
+              label(for='sourceSrs') Source SRS:
+              input#sourceSrs.form-control(name="sourceSrs", placeholder="e.g. EPSG:4326")
+            .form-group
+              label(for='targetSrs') Target SRS:
+              input#targetSrs.form-control(name="targetSrs", placeholder="e.g. EPSG:4326")
+            .form-group
+              button.btn.btn-primary(name="convert") Convert to GeoJSON
 
-        .span6
-          form.form-horizontal(action="/convertJson", method="post")
-            fieldset
-              legend Convert from GeoJSON
-              .control-group
-                label.control-label(for='json') GeoJSON:
-                .controls: textarea#json.xlarge(name="json", rows=3).
-                  { "type": "FeatureCollection",
-                    "features": [{
-                      "type": "Feature",
-                      "geometry": { "type": "Point", "coordinates": [102.0, 0.5] },
-                      "properties": { "prop0": "value0" }
-                    }]
-                  }
-              .control-group
-                label.control-label(for='jsonUrl') Remote URL (optional)
-                .controls: input#jsonUrl(name="jsonUrl")
-              .control-group
-                label.control-label(for='name') Output Name:
-                .controls: input#name(name="outputName")
-              .control-group
-                .controls
-                  button.btn.primary(name="convert") Convert to Shapefile
-                  p: small Shapefiles can only support one geometry type
+        .col-md-6
+          form(role="form" action="/convertJson", method="post")
+            legend Convert from GeoJSON
+            .form-group
+              label(for='json') GeoJSON:
+              textarea#json.form-control(name="json", rows=10).
+                { "type": "FeatureCollection",
+                  "features": [{
+                    "type": "Feature",
+                    "geometry": { "type": "Point", "coordinates": [102.0, 0.5] },
+                    "properties": { "prop0": "value0" }
+                  }]
+                }
+            .form-group
+              label(for='jsonUrl') GeoJSON URL:
+              input#jsonUrl.form-control(name="jsonUrl", type="url", placeholder="e.g. http://path.to/sample.json")
+            .form-group
+              label(for='name') Output Name:
+              input#name.form-control(name="outputName", placeholder="e.g. myfile.zip")
+            .form-group
+              button.btn.btn-primary(name="convert") Convert to Shapefile
+              p.help-block Shapefiles can only support one geometry type
       hr
       block body
