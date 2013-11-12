@@ -1,4 +1,10 @@
 
+0.6.0 / 2013-11-11 
+==================
+
+ * update; broke ogr2ogr wrapper into a separate project
+ * add; source/target srs reprojection
+
 0.5.1 / 2013-09-06 
 ==================
 
