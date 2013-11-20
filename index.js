@@ -42,7 +42,7 @@ exports.createServer = function (opts) {
     res.on('end', function () { fs.unlink(req.files.upload.path) })
 
     if (!req.body.callback) {
-      res.header('Content-Type', 'application/json')
+      res.header('Content-Type', 'forcePlainText' in req.body ? 'text/plain' : 'application/json')
       return sf.pipe(res)
     }
 

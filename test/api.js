@@ -12,7 +12,7 @@ test('create server', function (t) {
 })
 
 test('convert', function (t) {
-  t.plan(2)
+  t.plan(4)
 
   request(server)
     .post('/convert')
@@ -29,11 +29,19 @@ test('convert', function (t) {
     .field('sourceSrs', 'EPSG:4326')
     .field('targetSrs', 'EPSG:3857')
     .attach('upload', __dirname+'/samples/sample.shp.zip')
+    .expect('Content-Type', 'application/json')
     .end(function (er, res) {
-      if (er) throw er
+      t.notOk(er, 'no error', { error: er })
+      t.ok(res.body.crs.properties.name.match(/3857/), 'is reprojected')
+    })
 
-      var data = res.body
-      t.ok(data.crs.properties.name.match(/3857/), 'is reprojected')
+  request(server)
+    .post('/convert')
+    .field('forcePlainText', '')
+    .attach('upload', __dirname+'/samples/sample.shp.zip')
+    .expect('Content-Type', 'text/plain')
+    .end(function (er, res) {
+      t.notOk(er, 'no error', { error: er })
     })
 })
 
