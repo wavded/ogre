@@ -37,7 +37,7 @@ exports.createServer = function (opts) {
     if (req.body.targetSrs)
       ogr.project(req.body.targetSrs, req.body.sourceSrs)
 
-    var sf = ogr.stream()
+    var sf = ogr.skipfailures().stream()
     sf.on('error', next)
     res.on('end', function () { fs.unlink(req.files.upload.path) })
 
@@ -64,7 +64,7 @@ exports.createServer = function (opts) {
       ogr = ogr2ogr(JSON.parse(req.body.json))
     }
 
-    var sf = ogr.format('shp').stream()
+    var sf = ogr.skipfailures().format('shp').stream()
     sf.on('error', next)
 
     res.header('Content-Type', 'application/zip')
