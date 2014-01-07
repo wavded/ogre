@@ -1,6 +1,6 @@
 # ogre [![Build Status](https://secure.travis-ci.org/wavded/ogre.png)](http://travis-ci.org/wavded/ogre)
 
-The instructions below are only if you are interested in running the project locally.  For help on how to use the web service, visit the [Ogre Homepage](http://ogre.adc4gis.com).  Ogre makes use of the [ogr2ogr](https://github.com/wavded/ogr2ogr) module.
+The instructions below are only if you are interested in running the project locally.  For help on how to use the web service, visit the [Ogre homepage](http://ogre.adc4gis.com).  Ogre makes use of the [ogr2ogr](https://github.com/wavded/ogr2ogr) module.
 
 ## Requirements
 
@@ -27,7 +27,7 @@ And visit the following url in a browser:
 
 (The MIT License)
 
-Copyright (c) 2013 Marc Harter &lt;wavded@gmail.com&gt;
+Copyright (c) 2014 Marc Harter &lt;wavded@gmail.com&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
