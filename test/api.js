@@ -32,6 +32,7 @@ test('convert', function (t) {
     .expect('Content-Type', 'application/json')
     .end(function (er, res) {
       t.notOk(er, 'no error', { error: er })
+      console.error(res.body)
       t.ok(res.body.crs.properties.name.match(/3857/), 'is reprojected')
     })
 
