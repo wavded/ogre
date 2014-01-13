@@ -23,13 +23,13 @@
   "main": "./index.js",
   "dependencies": {
     "express": "3.4.7",
-    "jade": "1.0.2",
+    "jade": "1.1.4",
     "connect-multiparty": "1.0.1",
-    "ogr2ogr": "0.2.0"
+    "ogr2ogr": "0.2.1"
   },
   "devDependencies": {
-    "supertest": "0.8.2",
-    "tap": "0.4.6"
+    "supertest": "0.8.3",
+    "tap": "0.4.8"
   },
   "engines": {
     "node": ">= 0.10.0"
