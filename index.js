@@ -8,8 +8,14 @@ function enableCors (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*")
   res.header('Access-Control-Allow-Methods', 'POST')
   res.header("Access-Control-Allow-Headers", "X-Requested-With")
-  if (req.method === "OPTIONS") return res.send(200)
   next()
+}
+
+function optionsHandler(methods) {
+  return function(req, res, next) {
+    res.header('Allow', methods)
+    res.send(methods)
+  }
 }
 
 exports.createServer = function (opts) {
@@ -31,6 +37,7 @@ exports.createServer = function (opts) {
 
   app.get('/', function (req, res) { res.render('home', { trackcode: opts.gaCode || '' }) })
 
+  app.options('/convert', enableCors, optionsHandler('POST'))
   app.post('/convert', enableCors, function (req, res, next) {
     var ogr = ogr2ogr(req.files.upload.path)
 
@@ -54,6 +61,7 @@ exports.createServer = function (opts) {
     })
   })
 
+  app.options('/convertJson', enableCors, optionsHandler('POST'))
   app.post('/convertJson', enableCors, function (req, res, next) {
     if (!req.body.jsonUrl && !req.body.json) return next(new Error('No json provided'))
 
