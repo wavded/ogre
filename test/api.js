@@ -12,7 +12,7 @@ test('create server', function (t) {
 })
 
 test('convert', function (t) {
-  t.plan(4)
+  t.plan(5)
 
   request(server)
     .post('/convert')
@@ -54,9 +54,14 @@ test('convert', function (t) {
     .expect('Allow', 'POST')
     .expect('Content-Type', 'text/html; charset=utf-8')
     .expect('POST')
+    .end(function (er, res) {
+      if (er) throw er
+      t.ok(res, 'responded')
+    })
 })
 
 test('convertJson', function (t) {
+  t.plan(2)
   request(server)
     .post('/convertJson')
     .type('form')
@@ -66,7 +71,6 @@ test('convertJson', function (t) {
 
       var buf = res.text
       t.equal(buf[0], 'P', 'is zip')
-      t.end()
     })
 
   request(server)
@@ -77,6 +81,10 @@ test('convertJson', function (t) {
     .expect('Allow', 'POST')
     .expect('Content-Type', 'text/html; charset=utf-8')
     .expect('POST')
+    .end(function (er, res) {
+      if (er) throw er
+      t.ok(res, 'responded')
+    })
 })
 
 test('close server', function (t) {
