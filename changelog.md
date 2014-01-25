@@ -1,4 +1,9 @@
 
+0.6.6 / 2014-01-25
+==================
+
+ * add; respond to OPTIONS requests with CORS headers to allow preflighted requests [bilts](https://github.com/bilts)
+
 0.6.5 / 2014-01-12
 ==================
 
