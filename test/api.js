@@ -45,6 +45,15 @@ test('convert', function (t) {
     .end(function (er, res) {
       t.notOk(er, 'no error', { error: er })
     })
+
+  request(server)
+    .options('/convert')
+    .expect('Access-Control-Allow-Origin', '*')
+    .expect('Access-Control-Allow-Methods', 'POST')
+    .expect('Access-Control-Allow-Headers', 'X-Requested-With')
+    .expect('Allow', 'POST')
+    .expect('Content-Type', 'text/html; charset=utf-8')
+    .expect('POST')
 })
 
 test('convertJson', function (t) {
@@ -59,6 +68,15 @@ test('convertJson', function (t) {
       t.equal(buf[0], 'P', 'is zip')
       t.end()
     })
+
+  request(server)
+    .options('/convertJson')
+    .expect('Access-Control-Allow-Origin', '*')
+    .expect('Access-Control-Allow-Methods', 'POST')
+    .expect('Access-Control-Allow-Headers', 'X-Requested-With')
+    .expect('Allow', 'POST')
+    .expect('Content-Type', 'text/html; charset=utf-8')
+    .expect('POST')
 })
 
 test('close server', function (t) {
