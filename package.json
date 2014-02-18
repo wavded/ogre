@@ -22,13 +22,13 @@
   },
   "main": "./index.js",
   "dependencies": {
-    "express": "3.4.7",
-    "jade": "1.1.4",
-    "connect-multiparty": "1.0.1",
-    "ogr2ogr": "0.2.1"
+    "express": "3.4.8",
+    "jade": "1.1.5",
+    "connect-multiparty": "1.0.3",
+    "ogr2ogr": "0.2.2"
   },
   "devDependencies": {
-    "supertest": "0.8.3",
+    "supertest": "0.9.0",
     "tap": "0.4.8"
   },
   "engines": {
