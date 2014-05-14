@@ -13,6 +13,8 @@ It is recommended to use the latest version.
 
 [![NPM](https://nodei.co/npm/ogre.png?downloads=true)](https://nodei.co/npm/ogre)
 
+For specific OS installation help, see the [wiki](https://github.com/wavded/ogre/wiki).
+
 ## Running
 
 To run the app:
