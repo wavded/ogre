@@ -18,7 +18,9 @@
   },
   "scripts": {
     "test": "tap -d test/",
-    "start": "node run.js"
+    "start": "node run.js",
+    "docker-build": "docker build --rm -t wavded/ogre .",
+    "docker-start": "docker run -i -t -p 3000:3000 -v `pwd`:/src wavded/ogre /usr/bin/node /src/run.js"
   },
   "main": "./index.js",
   "dependencies": {
