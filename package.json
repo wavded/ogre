@@ -20,7 +20,8 @@
     "test": "tap -d test/",
     "start": "node run.js",
     "docker-build": "docker build --rm -t wavded/ogre .",
-    "docker-start": "docker run -i -t -p 3000:3000 -v `pwd`:/src wavded/ogre /usr/bin/node /src/run.js"
+    "docker-start": "docker run -i -t -p 3000:3000 -v `pwd`:/src -w /src wavded/ogre /usr/bin/node run.js",
+    "docker-test": "docker run -i -t -p 3000:3000 -v `pwd`:/src -w /src wavded/ogre /usr/bin/npm test"
   },
   "main": "./index.js",
   "dependencies": {
