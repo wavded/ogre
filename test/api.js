@@ -29,7 +29,7 @@ test('convert', function (t) {
     .field('sourceSrs', 'EPSG:4326')
     .field('targetSrs', 'EPSG:3857')
     .attach('upload', __dirname+'/samples/sample.shp.zip')
-    .expect('Content-Type', 'application/json')
+    .expect('Content-Type', 'application/json; charset=utf-8')
     .end(function (er, res) {
       t.notOk(er, 'no error', { error: er })
       if (res.body.crs) // testable on gdal 0.10.x or greater
@@ -41,7 +41,7 @@ test('convert', function (t) {
     .post('/convert')
     .field('forcePlainText', '')
     .attach('upload', __dirname+'/samples/sample.shp.zip')
-    .expect('Content-Type', 'text/plain')
+    .expect('Content-Type', 'text/plain; charset=utf-8')
     .end(function (er, res) {
       t.notOk(er, 'no error', { error: er })
     })
