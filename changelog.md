@@ -1,4 +1,11 @@
 
+0.7.1 / 2014-06-19
+==================
+
+ * mod; switch to utf8 responses
+ * add; docker support
+ * mod; readme to link to wiki
+
 0.6.6 / 2014-01-25
 ==================
 
