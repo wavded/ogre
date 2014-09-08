@@ -19,7 +19,12 @@ For specific OS installation help, see the [wiki](https://github.com/wavded/ogre
 
 To run the app:
 
-    ogre -p 3000
+    ogre -p 3000 [options]
+
+Options:
+    --format=fmt    set output format (defaults to: "GeoJSON")
+    --timeout=ms    milliseconds before ogr2ogr is killed (defaults to: 15000)
+    --skipfailures  skip failures (continue after failure, skipping failed feature -- false by default)
 
 And visit the following url in a browser:
 
