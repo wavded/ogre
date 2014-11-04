@@ -26,7 +26,7 @@ while (args.length) {
 
     case '-v':
     case '--version':
-      console.log("ogre " + version)
+      console.log('ogre ' + version)
       process.exit(0)
       break
 

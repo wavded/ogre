@@ -1,13 +1,13 @@
-"use strict"
 var express = require('express')
 var multiparty = require('connect-multiparty')
 var ogr2ogr = require('ogr2ogr')
 var fs = require('fs')
+var urlencoded = require('body-parser').urlencoded
 
 function enableCors (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
+  res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Methods', 'POST')
-  res.header("Access-Control-Allow-Headers", "X-Requested-With")
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With')
   next()
 }
 
@@ -19,25 +19,21 @@ function optionsHandler(methods) {
 }
 
 exports.createServer = function (opts) {
-  opts || (opts = {})
+  if (!opts) opts = {}
 
   var app = express()
   app.set('views', __dirname + '/views')
   app.set('view engine', 'jade')
 
-  app.use(express.static(__dirname + '/public'))
-  app.use(express.urlencoded())
-  app.use(multiparty())
-  app.use(app.router)
-  app.use(function (er, req, res, next) {
-    console.error(er.stack)
-    res.header('Content-Type', 'application/json')
-    res.json({ error: true, msg: er.message })
-  })
+  app.options('/convert', enableCors, optionsHandler('POST'))
+  app.options('/convertJson', enableCors, optionsHandler('POST'))
 
+  app.use(express.static(__dirname + '/public'))
   app.get('/', function (req, res) { res.render('home', { trackcode: opts.gaCode || '' }) })
 
-  app.options('/convert', enableCors, optionsHandler('POST'))
+  app.use(urlencoded({ extended: false }))
+  app.use(multiparty())
+
   app.post('/convert', enableCors, function (req, res, next) {
     var ogr = ogr2ogr(req.files.upload.path)
 
@@ -55,13 +51,15 @@ exports.createServer = function (opts) {
 
     res.header('Content-Type', 'text/javascript')
     res.write(req.body.callback+'(')
-    sf.on('data', function (data) { res.write(data) })
-    sf.on('end', function () {
-      res.end(')');
-    })
+
+    sf.on('data', function (data) {
+        res.write(data)
+      })
+      .on('end', function () {
+        res.end(')')
+      })
   })
 
-  app.options('/convertJson', enableCors, optionsHandler('POST'))
   app.post('/convertJson', enableCors, function (req, res, next) {
     if (!req.body.jsonUrl && !req.body.json) return next(new Error('No json provided'))
 
@@ -78,6 +76,12 @@ exports.createServer = function (opts) {
     res.header('Content-Type', 'application/zip')
     res.header('Content-Disposition', 'filename='+ (req.body.outputName || 'ogre.zip'))
     sf.pipe(res)
+  })
+
+  app.use(function (er, req, res, next) {
+    console.error(er.stack)
+    res.header('Content-Type', 'application/json')
+    res.json({ error: true, msg: er.message })
   })
 
   return app
