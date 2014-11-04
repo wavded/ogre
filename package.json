@@ -17,11 +17,12 @@
     "ogre": "./bin/ogre.js"
   },
   "scripts": {
-    "test": "tap -d test/",
+    "test": "tape \"test/*-test.js\"",
     "start": "node run.js",
     "docker-build": "docker build --rm -t wavded/ogre .",
-    "docker-start": "docker run -i -t -p 3000:3000 -v `pwd`:/src -w /src wavded/ogre node run.js",
-    "docker-test": "docker run -i -t -p 3000:3000 -v `pwd`:/src -w /src wavded/ogre npm test"
+    "docker-start": "docker run -t -p 3000:3000 -v `pwd`:/src -w /src wavded/ogre node run.js",
+    "docker-test": "docker run -t -p 3000:3000 -v `pwd`:/src -w /src wavded/ogre npm test",
+    "ci-test": "npm run docker-build && npm run docker-test > test.tap"
   },
   "main": "./index.js",
   "dependencies": {
@@ -32,7 +33,7 @@
   },
   "devDependencies": {
     "supertest": "0.9.0",
-    "tap": "0.4.8"
+    "tape": "^3.0.1"
   },
   "engines": {
     "node": ">= 0.10.0"

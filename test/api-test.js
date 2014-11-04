@@ -1,5 +1,5 @@
 var ogre = require('../')
-var test = require('tap').test
+var test = require('tape')
 var request = require('supertest')
 var server
 
