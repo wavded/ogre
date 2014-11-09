@@ -45,7 +45,13 @@ exports.createServer = function (opts) {
     res.on('end', function () { fs.unlink(req.files.upload.path) })
 
     if (!req.body.callback) {
-      res.header('Content-Type', 'forcePlainText' in req.body ? 'text/plain; charset=utf-8' : 'application/json; charset=utf-8')
+	  if (req.body.responseType && req.body.responseType == "download"){
+	    res.header('Content-Type', 'forcePlainText' in req.body ? 'text/plain; charset=utf-8' : 'application/octet-stream; charset=utf-8')
+	    res.header('Content-Disposition', 'attachment; filename='+req.files.upload.originalFilename+'.geojson')
+	  }else{
+	    // standard JSON response
+	    res.header('Content-Type', 'forcePlainText' in req.body ? 'text/plain; charset=utf-8' : 'application/json; charset=utf-8')
+	  }
       return sf.pipe(res)
     }
 
