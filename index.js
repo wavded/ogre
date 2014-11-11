@@ -21,6 +21,10 @@ function optionsHandler(methods) {
 exports.createServer = function (opts) {
   if (!opts) opts = {}
 
+  var format = opts['format'] || 'GeoJSON'
+  var timeout = opts['timeout'] || 15000
+  var skipfailures = opts['skipfailures'] || false
+
   var app = express()
   app.set('views', __dirname + '/views')
   app.set('view engine', 'jade')
@@ -36,11 +40,13 @@ exports.createServer = function (opts) {
 
   app.post('/convert', enableCors, function (req, res, next) {
     var ogr = ogr2ogr(req.files.upload.path)
+      .format(format)
+      .timeout(timeout)
 
     if (req.body.targetSrs)
       ogr.project(req.body.targetSrs, req.body.sourceSrs)
 
-    var sf = ogr.skipfailures().stream()
+    var sf = ogr.skipfailures(skipfailures).stream()
     sf.on('error', next)
     res.on('end', function () { fs.unlink(req.files.upload.path) })
 

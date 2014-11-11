@@ -11,8 +11,14 @@ var usage = ''
     + ' -h, --help      help\n'
     + ' -p, --port      port number (default 3000)\n'
     + ' -v, --version   version number\n'
+    + ' -f, --format    output format (default "GeoJSON")\n'
+    + ' -t, --timeout   timeout in ms (default 15000)\n'
+    + ' --skipfailures  toggle continue after failure, skipping failed feature (default false)\n'
 
 var port = 3000
+var format = 'GeoJSON'
+var timeout = 15000
+var skipfailures = false
 
 var arg
 while (args.length) {
@@ -35,9 +41,29 @@ while (args.length) {
       port = args.shift()
       break
 
+    case '-f':
+    case '--format':
+      format = args.shift()
+      break
+
+    case '-t':
+    case '--timeout':
+      timeout = args.shift()
+      break
+
+    case '--skipfailures':
+      skipfailures = true
+      break
+
     default:
   }
 }
 
-ogre.createServer().listen(port)
+var options = {
+  format: format,
+  timeout: timeout,
+  skipfailures: skipfailures
+}
+
+ogre.createServer(options).listen(port)
 console.log('Ogre listening on port', port)
