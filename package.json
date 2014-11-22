@@ -23,7 +23,7 @@
     "dtest": "docker run -t -p 3000:3000 -v `pwd`:/src -w /src wavded/ogre npm test",
     "dbuild": "docker build --rm -t wavded/ogre .",
     "ddev": "docker run -i -t -v `pwd`:/src -w /src wavded/ogre /bin/bash",
-    "ci-test": "npm run docker-build && npm run docker-test > test.tap"
+    "ci-test": "npm run dbuild && npm run dtest > test.tap"
   },
   "main": "./index.js",
   "dependencies": {
