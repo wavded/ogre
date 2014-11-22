@@ -29,72 +29,72 @@ block body
           th DGN
           td .dgn
           td -
-          td 
+          td
         tr
           th DXF
           td .dxf
           td -
-          td 
+          td
         tr
           th ESRI Shapefile
           td -
           td .shp, .dbf, and .shx (.prj optional)
-          td 
+          td
         tr
           th GeoConcept
           td .gxt or .txt
           td -
-          td 
+          td
         tr
           th GeoJSON
           td .json or .geojson
           td -
-          td 
+          td
         tr
           th GeoRSS
           td .rss, .georss, or .xml
           td -
-          td 
+          td
         tr
           th GML
           td .gml
           td .gml and .xsd
-          td 
+          td
         tr
           th GMT
           td .gmt
           td -
-          td 
+          td
         tr
           th GPX
           td .gpx
           td -
-          td 
+          td
         tr
           th Interlis 1
           td .itf
           td .itf and .ili (.fmt optional)
-          td 
+          td
         tr
           th KML / KMZ
           td .kml or .kmz
           td -
-          td 
+          td
         tr
           th MapInfo
           td -
           td .tab, .map, .id, and .dat
-          td 
+          td
         tr
           th S-57
           td .000
           td .000 (.001-.00N optional)
-          td 
+          td
         tr
           th TIGER
           td -
           td at least an .rt1
-          td 
+          td
         tr
           th VRT
           td -
@@ -110,6 +110,7 @@ block body
       li <code>sourceSrs</code> (optional) - the original projection
       li <code>targetSrs</code> (optional) - the target projection
       li <code>forcePlainText</code> (optional) - force `text/plain` instead of `application/json`
+      li <code>skipFailures</code> (optional) - skip failures
       li <code>callback</code> (optional) - a JSONP callback function name
 
     p: b Convert from GeoJSON to Shapefile
