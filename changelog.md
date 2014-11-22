@@ -1,4 +1,9 @@
 
+1.0.0 / 2014-11-21
+==================
+
+  * add; skip failures as an option (not default) [breaking]
+
 0.8.0 / 2014-11-04
 ==================
 
