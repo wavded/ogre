@@ -29,7 +29,7 @@ And visit the following url in a browser:
 
 (The MIT License)
 
-Copyright (c) 2014 Marc Harter &lt;wavded@gmail.com&gt;
+Copyright (c) 2015 Marc Harter &lt;wavded@gmail.com&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
