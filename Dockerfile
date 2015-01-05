@@ -1,4 +1,4 @@
-FROM homme/gdal
+FROM homme/gdal:v1.11.1
 MAINTAINER Marc Harter <wavded@gmail.com
 
 RUN add-apt-repository -y ppa:chris-lea/node.js

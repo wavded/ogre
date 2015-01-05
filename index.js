@@ -34,7 +34,7 @@ exports.createServer = function (opts) {
     res.render('home', { trackcode: opts.gaCode || '' })
   })
 
-  app.use(urlencoded({ extended: false }))
+  app.use(urlencoded({ extended: false, limit: 3000000 }))
   app.use(multiparty())
 
   app.post('/convert', enableCors, function (req, res, next) {
