@@ -25,6 +25,18 @@ And visit the following url in a browser:
 
     http://localhost:3000
 
+Options include:
+
+```
+Usage: ogre [options]
+
+Options:
+ -h, --help      help
+ -p, --port      port number (default 3000)
+ -v, --version   version number
+ -t, --timeout   timeout before ogre kills a job in ms (default 15000)
+ ```
+
 ## License
 
 (The MIT License)
