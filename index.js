@@ -19,8 +19,7 @@ function optionsHandler (methods) {
 }
 
 exports.createServer = function (opts) {
-  if (!opts)
-    opts = {}
+  if (!opts) opts = {}
 
   var app = express()
   app.set('views', __dirname + '/views')
@@ -31,7 +30,7 @@ exports.createServer = function (opts) {
 
   app.use(express.static(__dirname + '/public'))
   app.get('/', function (req, res) {
-    res.render('home', { trackcode: opts.gaCode || '' })
+    res.render('home')
   })
 
   app.use(urlencoded({ extended: false, limit: 3000000 }))
@@ -46,6 +45,10 @@ exports.createServer = function (opts) {
 
     if ('skipFailures' in req.body) {
       ogr.skipfailures()
+    }
+
+    if (opts.timeout) {
+      ogr.timeout(opts.timeout)
     }
 
     res.header('Content-Type', 'forcePlainText' in req.body ? 'text/plain; charset=utf-8' : 'application/json; charset=utf-8')
@@ -70,8 +73,13 @@ exports.createServer = function (opts) {
     else {
       ogr = ogr2ogr(JSON.parse(req.body.json))
     }
+
     if ('skipFailures' in req.body) {
       ogr.skipfailures()
+    }
+
+    if (opts.timeout) {
+      ogr.timeout(opts.timeout)
     }
 
     ogr.format('shp').exec(function (er, buf) {

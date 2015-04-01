@@ -11,8 +11,10 @@ var usage = ''
     + ' -h, --help      help\n'
     + ' -p, --port      port number (default 3000)\n'
     + ' -v, --version   version number\n'
+    + ' -t, --timeout   timeout before ogre kills a job in ms (default 15000)\n'
 
 var port = 3000
+var timeout
 
 var arg
 while (args.length) {
@@ -35,9 +37,14 @@ while (args.length) {
       port = args.shift()
       break
 
+    case '-t':
+    case '--timeout':
+      timeout = Number(args.shift())
+      break
+
     default:
   }
 }
 
-ogre.createServer().listen(port)
+ogre.createServer({ timeout: timeout }).listen(port)
 console.log('Ogre listening on port', port)
