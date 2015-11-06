@@ -8,6 +8,7 @@ function enableCors (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Methods', 'POST')
   res.header('Access-Control-Allow-Headers', 'X-Requested-With')
+  res.header('Access-Control-Expose-Headers', 'Content-Disposition')
   next()
 }
 
@@ -72,6 +73,10 @@ exports.createServer = function (opts) {
     }
     else {
       ogr = ogr2ogr(JSON.parse(req.body.json))
+    }
+
+    if (req.body.fileName) {
+      ogr.options(['-nln', req.body.fileName])
     }
 
     if ('skipFailures' in req.body) {
