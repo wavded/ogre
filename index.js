@@ -89,8 +89,12 @@ exports.createServer = function (opts) {
 
     ogr.format('shp').exec(function (er, buf) {
       if (er) return res.json({ errors: er.message.replace('\n\n','').split('\n') })
+      if (req.body.attachment) {
+        res.header('Content-Disposition', 'attachment; filename=' + (req.body.outputName || 'ogre.zip'))
+      } else {
+        res.header('Content-Disposition', 'filename=' + (req.body.outputName || 'ogre.zip'))
+      }
       res.header('Content-Type', 'application/zip')
-      res.header('Content-Disposition', 'filename=' + (req.body.outputName || 'ogre.zip'))
       res.end(buf)
     })
   })
