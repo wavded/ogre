@@ -87,7 +87,9 @@ exports.createServer = function (opts) {
       ogr.timeout(opts.timeout)
     }
 
-    ogr.format('shp').exec(function (er, buf) {
+    var format = req.body.format || 'shp'
+
+    ogr.format(format).exec(function (er, buf) {
       if (er) return res.json({ errors: er.message.replace('\n\n','').split('\n') })
       res.header('Content-Type', 'application/zip')
       res.header('Content-Disposition', 'filename=' + (req.body.outputName || 'ogre.zip'))
