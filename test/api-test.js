@@ -12,7 +12,7 @@ test('create server', function (t) {
 })
 
 test('convert', function (t) {
-  t.plan(5)
+  t.plan(7)
 
   request(server)
     .post('/convert')
@@ -58,10 +58,29 @@ test('convert', function (t) {
       if (er) throw er
       t.ok(res, 'responded')
     })
+
+  request(server)
+    .post('/convert')
+    .expect('Content-Type', 'application/json; charset=utf-8')
+    .expect(400, { error: true, msg: 'No file provided' })
+    .end(function (er, res) {
+      if (er) throw er
+      t.ok(res, 'bad request when no file uploaded')
+    })
+
+  request(server)
+    .post('/convert')
+    .attach('upload', __dirname+'/samples/sample.bad')
+    .expect('Content-Type', 'application/json; charset=utf-8')
+    .expect(400)
+    .end(function (er, res) {
+      if (er) throw er
+      t.ok(res.body.errors.length > 0, 'bad request on failure')
+    })
 })
 
 test('convertJson', function (t) {
-  t.plan(2)
+  t.plan(5)
   request(server)
     .post('/convertJson')
     .type('form')
@@ -84,6 +103,37 @@ test('convertJson', function (t) {
     .end(function (er, res) {
       if (er) throw er
       t.ok(res, 'responded')
+    })
+
+  request(server)
+    .post('/convertJson')
+    .expect('Content-Type', 'application/json; charset=utf-8')
+    .expect(400, { error: true, msg: 'No json provided' })
+    .end(function (er, res) {
+      if (er) throw er
+        t.ok(res, 'bad request when no json sent')
+    })
+
+  request(server)
+    .post('/convertJson')
+    .type('form')
+    .send({ json: '{' })
+    .expect('Content-Type', 'application/json; charset=utf-8')
+    .expect(400, { error: true, msg: 'Invalid json provided' })
+    .end(function (er, res) {
+      if (er) throw er
+      t.ok(res, 'bad request on invalid json')
+    })
+
+  request(server)
+    .post('/convertJson')
+    .type('form')
+    .send({ json: '{ "invalid": "geojson" }' })
+    .expect('Content-Type', 'application/json; charset=utf-8')
+    .expect(400)
+    .end(function (er, res) {
+      if (er) throw er
+      t.ok(res.body.errors.length > 0, 'bad request on failure')
     })
 })
 
