@@ -19,6 +19,16 @@ function optionsHandler (methods) {
   }
 }
 
+function isOgreFailureError(er) {
+  return er && er.message && er.message.indexOf('FAILURE:') !== -1;
+}
+
+function safelyParseJson(json) {
+  try {
+    if (json) return JSON.parse(json)
+  } catch (e) { }
+}
+
 exports.createServer = function (opts) {
   if (!opts) opts = {}
 
@@ -38,6 +48,8 @@ exports.createServer = function (opts) {
   app.use(multiparty())
 
   app.post('/convert', enableCors, function (req, res, next) {
+    if (!req.files.upload || !req.files.upload.name) return res.status(400).json({ error: true, msg: 'No file provided' })
+
     var ogr = ogr2ogr(req.files.upload.path)
 
     if (req.body.targetSrs) {
@@ -56,7 +68,10 @@ exports.createServer = function (opts) {
 
     ogr.exec(function (er, data) {
       fs.unlink(req.files.upload.path)
-      if (er) return res.json({ errors: er.message.replace('\n\n','').split('\n') })
+
+      if (isOgreFailureError(er)) return res.status(400).json({ errors: er.message.replace('\n\n','').split('\n') })
+      if (er) return next(er)
+
       if (req.body.callback) res.write(req.body.callback + '(')
       res.write(JSON.stringify(data))
       if (req.body.callback) res.write(')')
@@ -65,14 +80,19 @@ exports.createServer = function (opts) {
   })
 
   app.post('/convertJson', enableCors, function (req, res, next) {
-    if (!req.body.jsonUrl && !req.body.json) return next(new Error('No json provided'))
+    if (!req.body.jsonUrl && !req.body.json) return res.status(400).json({ error: true, msg: 'No json provided' })
+
+    var json = safelyParseJson(req.body.json);
+    
+    if (req.body.json && !json) return res.status(400).json({ error: true, msg: 'Invalid json provided' })
 
     var ogr
+
     if (req.body.jsonUrl) {
       ogr = ogr2ogr(req.body.jsonUrl)
     }
     else {
-      ogr = ogr2ogr(JSON.parse(req.body.json))
+      ogr = ogr2ogr(json)
     }
 
     if (req.body.fileName) {
@@ -90,7 +110,8 @@ exports.createServer = function (opts) {
     var format = req.body.format || 'shp'
 
     ogr.format(format).exec(function (er, buf) {
-      if (er) return res.json({ errors: er.message.replace('\n\n','').split('\n') })
+      if (isOgreFailureError(er)) return res.status(400).json({ errors: er.message.replace('\n\n','').split('\n') })
+      if (er) return next(er)
       res.header('Content-Type', 'application/zip')
       res.header('Content-Disposition', 'filename=' + (req.body.outputName || 'ogre.zip'))
       res.end(buf)
@@ -100,7 +121,7 @@ exports.createServer = function (opts) {
   app.use(function (er, req, res, next) {
     console.error(er.stack)
     res.header('Content-Type', 'application/json')
-    res.json({ error: true, msg: er.message })
+    res.status(500).json({ error: true, msg: er.message })
   })
 
   return app
