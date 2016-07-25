@@ -75,6 +75,10 @@ exports.createServer = function(opts) {
         : 'application/json; charset=utf-8'
     )
 
+    if ('forceDownload' in req.body) {
+      res.attachment()
+    }
+
     ogr.exec(function(er, data) {
       fs.unlink(req.files.upload.path)
 
