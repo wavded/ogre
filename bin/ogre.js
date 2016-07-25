@@ -20,31 +20,31 @@ var arg
 while (args.length) {
   arg = args.shift()
   switch (arg) {
-    case '-h':
-    case '--help':
-      console.log(usage)
-      process.exit(0)
-      break
+  case '-h':
+  case '--help':
+    console.log(usage)
+    process.exit(0)
+    break
 
-    case '-v':
-    case '--version':
-      console.log('ogre ' + version)
-      process.exit(0)
-      break
+  case '-v':
+  case '--version':
+    console.log('ogre ' + version)
+    process.exit(0)
+    break
 
-    case '-p':
-    case '--port':
-      port = args.shift()
-      break
+  case '-p':
+  case '--port':
+    port = args.shift()
+    break
 
-    case '-t':
-    case '--timeout':
-      timeout = Number(args.shift())
-      break
+  case '-t':
+  case '--timeout':
+    timeout = Number(args.shift())
+    break
 
-    default:
+  default:
   }
 }
 
-ogre.createServer({ timeout: timeout }).listen(port)
+ogre.createServer({timeout: timeout}).listen(port)
 console.log('Ogre listening on port', port)
