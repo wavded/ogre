@@ -1,4 +1,13 @@
 
+1.2.0 / 2016-07-25
+==================
+
+  * Add force download option
+  * Add 400 and 500 status codes [itjope]
+  * Add optional format option in convertJson [itjope]
+  * Expose Content-Disposition header [btfou]
+  * Add extra param to name shp files in zip [btfou]
+
 1.1.0 / 2015-06-17
 ==================
 
