@@ -61,6 +61,10 @@ exports.createServer = function(opts) {
       ogr.project(req.body.targetSrs, req.body.sourceSrs)
     }
 
+    if ('rfc7946' in req.body) {
+      ogr.options(['-lco', 'RFC7946=YES'])
+    }
+
     if ('skipFailures' in req.body) {
       ogr.skipfailures()
     }
