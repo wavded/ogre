@@ -3,6 +3,7 @@ var multiparty = require('connect-multiparty')
 var ogr2ogr = require('ogr2ogr')
 var fs = require('fs')
 var urlencoded = require('body-parser').urlencoded
+var join = require('path').join
 
 function enableCors(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
@@ -35,13 +36,13 @@ exports.createServer = function(opts) {
   if (!opts) opts = {}
 
   var app = express()
-  app.set('views', __dirname + '/views')
-  app.set('view engine', 'jade')
+  app.set('views', join(__dirname, '/views'))
+  app.set('view engine', 'pug')
 
   app.options('/convert', enableCors, optionsHandler('POST'))
   app.options('/convertJson', enableCors, optionsHandler('POST'))
 
-  app.use(express.static(__dirname + '/public'))
+  app.use(express.static(join(__dirname, '/public')))
   app.get('/', function(req, res) {
     res.render('home')
   })
@@ -87,7 +88,7 @@ exports.createServer = function(opts) {
       fs.unlink(req.files.upload.path)
 
       if (isOgreFailureError(er)) {
-        return res.status(400).json({errors: er.message.replace('\n\n','').split('\n')})
+        return res.status(400).json({errors: er.message.replace('\n\n', '').split('\n')})
       }
 
       if (er) return next(er)
@@ -130,7 +131,7 @@ exports.createServer = function(opts) {
     var format = req.body.format || 'shp'
 
     ogr.format(format).exec(function(er, buf) {
-      if (isOgreFailureError(er)) return res.status(400).json({errors: er.message.replace('\n\n','').split('\n')})
+      if (isOgreFailureError(er)) return res.status(400).json({errors: er.message.replace('\n\n', '').split('\n')})
       if (er) return next(er)
       res.header('Content-Type', 'application/zip')
       res.header('Content-Disposition', 'filename=' + (req.body.outputName || 'ogre.zip'))
