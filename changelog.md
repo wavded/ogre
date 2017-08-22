@@ -1,157 +1,134 @@
+# 1.3.0 / 2016-07-25
 
-1.2.0 / 2016-07-25
-==================
+- Upgrade dependencies
+- Add option to create RFC7946-compliant file for Mapbox upload [dericke]
 
-  * Add force download option
-  * Add 400 and 500 status codes [itjope]
-  * Add optional format option in convertJson [itjope]
-  * Expose Content-Disposition header [btfou]
-  * Add extra param to name shp files in zip [btfou]
+# 1.2.0 / 2016-07-25
 
-1.1.0 / 2015-06-17
-==================
+- Add force download option
+- Add 400 and 500 status codes [itjope]
+- Add optional format option in convertJson [itjope]
+- Expose Content-Disposition header [btfou]
+- Add extra param to name shp files in zip [btfou]
 
-  * add; ability to configure timeout
+# 1.1.0 / 2015-06-17
 
-1.0.1 / 2015-01-05
-==================
+- add; ability to configure timeout
 
-  * mod; urlencoded limit bump
+# 1.0.1 / 2015-01-05
 
-1.0.0 / 2014-11-21
-==================
+- mod; urlencoded limit bump
 
-  * add; skip failures as an option (not default) [breaking]
+# 1.0.0 / 2014-11-21
 
-0.8.0 / 2014-11-04
-==================
+- add; skip failures as an option (not default) [breaking]
 
-  * deps; update
-  * mod; switch to jenkins
+# 0.8.0 / 2014-11-04
 
-0.7.1 / 2014-06-19
-==================
+- deps; update
+- mod; switch to jenkins
 
- * mod; switch to utf8 responses
- * add; docker support
- * mod; readme to link to wiki
+# 0.7.1 / 2014-06-19
 
-0.6.6 / 2014-01-25
-==================
+- mod; switch to utf8 responses
+- add; docker support
+- mod; readme to link to wiki
 
- * add; respond to OPTIONS requests with CORS headers to allow preflighted requests [bilts](https://github.com/bilts)
+# 0.6.6 / 2014-01-25
 
-0.6.5 / 2014-01-12
-==================
+- add; respond to OPTIONS requests with CORS headers to allow preflighted requests [bilts](https://github.com/bilts)
 
- * bump; deps (ogr2ogr)
+# 0.6.5 / 2014-01-12
 
-0.6.4 / 2014-01-06 
-==================
+- bump; deps (ogr2ogr)
 
- * update; deps
+# 0.6.4 / 2014-01-06
 
-0.6.3 / 2013-11-20 
-==================
+- update; deps
 
- * add; forcePlainText option
+# 0.6.3 / 2013-11-20
 
-0.6.2 / 2013-11-15 
-==================
+- add; forcePlainText option
 
- * update; ogr2ogr dep
+# 0.6.2 / 2013-11-15
 
-0.6.1 / 2013-11-12 
-==================
+- update; ogr2ogr dep
 
- * update; ogr2ogr dep
+# 0.6.1 / 2013-11-12
 
-0.6.0 / 2013-11-11 
-==================
+- update; ogr2ogr dep
 
- * update; broke ogr2ogr wrapper into a separate project
- * add; source/target srs reprojection
+# 0.6.0 / 2013-11-11
 
-0.5.1 / 2013-09-06 
-==================
+- update; broke ogr2ogr wrapper into a separate project
+- add; source/target srs reprojection
 
- * enable CORS on convert routes [rclark]
- * added; npm badge
+# 0.5.1 / 2013-09-06
 
-0.5.0 / 2013-07-10 
-==================
+- enable CORS on convert routes [rclark]
+- added; npm badge
 
- * updated; jade compatability
- * updated; adjust temp dir location to use os.tmpDir()
- * removed; support for node 0.6
- * added; allow a jsonUrl to be POSTed. Get the URL content and then continue
+# 0.5.0 / 2013-07-10
 
-0.4.0 / 2013-04-09 
-==================
+- updated; jade compatability
+- updated; adjust temp dir location to use os.tmpDir()
+- removed; support for node 0.6
+- added; allow a jsonUrl to be POSTed. Get the URL content and then continue
 
-  * updated; express 3
-  * updated; app dependencies
-  * added; node 0.10 travis support
+# 0.4.0 / 2013-04-09
 
-0.3.5 / 2013-03-22 
-==================
+- updated; express 3
+- updated; app dependencies
+- added; node 0.10 travis support
 
-  * removed; stylus as a dependency
+# 0.3.5 / 2013-03-22
 
-0.3.4 / 2012-07-09 
-==================
+- removed; stylus as a dependency
 
-  * removed; support for 0.4.x
-  * added; testing for 0.8.x
+# 0.3.4 / 2012-07-09
 
-0.3.3 / 2012-04-27 
-==================
+- removed; support for 0.4.x
+- added; testing for 0.8.x
 
-  * updated; force express 2.x
-  * fixed; stdout changed, csv parsing of "
+# 0.3.3 / 2012-04-27
 
-0.3.1 / 2012-03-02 
-==================
+- updated; force express 2.x
+- fixed; stdout changed, csv parsing of "
 
-  * updated; dependencies
-  * updated; bootstrap
+# 0.3.1 / 2012-03-02
 
-0.3.0 / 2012-01-13 
-==================
+- updated; dependencies
+- updated; bootstrap
 
-  * updated; version lockdown for deps
-  * added; Travis CI
+# 0.3.0 / 2012-01-13
 
-0.2.5 / 2011-11-12 
-==================
+- updated; version lockdown for deps
+- added; Travis CI
 
-  * node 0.6 support
-  * failing test cleanup
+# 0.2.5 / 2011-11-12
 
-0.2.4 / 2011-09-17 
-==================
+- node 0.6 support
+- failing test cleanup
 
-  * Invalid package in package.json
+# 0.2.4 / 2011-09-17
 
-0.2.3 / 2011-09-17 
-==================
+- Invalid package in package.json
 
-  * Updated UI look and feel
+# 0.2.3 / 2011-09-17
 
-0.2.2 / 2011-09-08 
-==================
+- Updated UI look and feel
 
-  * Added optional output name to geojson to shp
-  * Added note about convert to shapefile
+# 0.2.2 / 2011-09-08
 
-0.2.1 / 2011-08-24 
-==================
+- Added optional output name to geojson to shp
+- Added note about convert to shapefile
 
-  * Strict automatic csv parsing
+# 0.2.1 / 2011-08-24
 
-0.2.0 / 2011-08-12 
-==================
+- Strict automatic csv parsing
 
-  * Added more conversion formats to GeoJSON
-  * Added convert GeoJSON to Shapefile
-  * Revamped look and feel
+# 0.2.0 / 2011-08-12
+
+- Added more conversion formats to GeoJSON
+- Added convert GeoJSON to Shapefile
+- Revamped look and feel
