@@ -1,15 +1,12 @@
-ogre [![Build Status](https://jenkins.adc4gis.com/buildStatus/icon?job=ogre)](https://jenkins.adc4gis.com/job/ogre/)
-====================================================================================================================
+# ogre [![Build Status](https://jenkins.adc4gis.com/buildStatus/icon?job=ogre)](https://jenkins.adc4gis.com/job/ogre/)
 
 The instructions below are only if you are interested in running the project locally. For help on how to use the web service, visit the [Ogre homepage](http://ogre.adc4gis.com). Ogre makes use of the [ogr2ogr](https://github.com/wavded/ogr2ogr) module.
 
-Requirements
-------------
+## Requirements
 
-ogr2ogr requires the command line tool *ogr2ogr* - [gdal install page](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries). It is recommended to use the latest version.
+ogr2ogr requires the command line tool _ogr2ogr_ - [gdal install page](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries). It is recommended to use the latest version.
 
-Installation
-------------
+## Installation
 
 ```
 npm install -g ogre
@@ -19,8 +16,7 @@ npm install -g ogre
 
 For specific OS installation help, see the [wiki](https://github.com/wavded/ogre/wiki).
 
-Running
--------
+## Running
 
 To run the app:
 
@@ -46,12 +42,11 @@ Options:
  -t, --timeout   timeout before ogre kills a job in ms (default 15000)
 ```
 
-License
--------
+## License
 
 (The MIT License)
 
-Copyright (c) 2016 Marc Harter &lt;wavded@gmail.com&gt;
+Copyright (c) 2016 Marc Harter <wavded@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
