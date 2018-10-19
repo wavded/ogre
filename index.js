@@ -47,8 +47,8 @@ exports.createServer = function(opts) {
     res.render('home')
   })
 
-  app.use(urlencoded({extended: false, limit: 3000000}))
-  app.use(multiparty())
+  app.use(urlencoded({extended: false, limit: 3000000})) // 3mb
+  app.use(multiparty({maxFilesSize: 100000000})) // 100mb
 
   app.post('/convert', enableCors, function(req, res, next) {
     if (!req.files.upload || !req.files.upload.name) {
