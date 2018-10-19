@@ -1,3 +1,8 @@
+# 1.3.1 / 2018-10-19
+
+- Upgrade dependencies. Ignore yarn-error
+- Limit total upload file size to 100mb
+
 # 1.3.0 / 2016-07-25
 
 - Upgrade dependencies
