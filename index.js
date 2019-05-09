@@ -32,6 +32,8 @@ function safelyParseJson(json) {
   }
 }
 
+function noop() {}
+
 exports.createServer = function(opts) {
   if (!opts) opts = {}
 
@@ -85,7 +87,7 @@ exports.createServer = function(opts) {
     }
 
     ogr.exec(function(er, data) {
-      fs.unlink(req.files.upload.path)
+      fs.unlink(req.files.upload.path, noop)
 
       if (isOgreFailureError(er)) {
         return res.status(400).json({errors: er.message.replace('\n\n', '').split('\n')})
