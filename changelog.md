@@ -1,3 +1,7 @@
+# 2.0.0 / 2020-02-17
+
+- Breaking change: Support Node >= 10
+
 # 1.3.1 / 2018-10-19
 
 - Upgrade dependencies. Ignore yarn-error
