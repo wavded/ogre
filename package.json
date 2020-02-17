@@ -18,18 +18,24 @@
   },
   "scripts": {
     "start": "node run.js",
-    "test": "tape \"test/*-test.js\""
+    "test": "tape \"test/*-test.js\"",
+    "lint": "eslint --max-warnings 0 bin test *.js",
+    "fmt": "prettier --write \"**/*.{html,js,json,md}\""
   },
   "main": "./index.js",
   "dependencies": {
     "body-parser": "^1.9.2",
     "connect-multiparty": "^2.0.0",
     "express": "^4.10.2",
-    "ogr2ogr": "^1.2.0",
+    "ogr2ogr": "^2.0.0",
     "pug": "^2.0.0-rc.3"
   },
   "devDependencies": {
-    "supertest": "^3.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1",
+    "supertest": "^4.0.2",
     "tape": "^4.8.0"
   },
   "engines": {

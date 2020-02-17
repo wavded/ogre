@@ -1,9 +1,9 @@
-var express = require('express')
-var multiparty = require('connect-multiparty')
-var ogr2ogr = require('ogr2ogr')
-var fs = require('fs')
-var urlencoded = require('body-parser').urlencoded
-var join = require('path').join
+const express = require('express')
+const multiparty = require('connect-multiparty')
+const ogr2ogr = require('ogr2ogr')
+const fs = require('fs')
+const urlencoded = require('body-parser').urlencoded
+const join = require('path').join
 
 function enableCors(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
@@ -37,7 +37,7 @@ function noop() {}
 exports.createServer = function(opts) {
   if (!opts) opts = {}
 
-  var app = express()
+  let app = express()
   app.set('views', join(__dirname, '/views'))
   app.set('view engine', 'pug')
 
@@ -58,7 +58,7 @@ exports.createServer = function(opts) {
       return
     }
 
-    var ogr = ogr2ogr(req.files.upload.path)
+    let ogr = ogr2ogr(req.files.upload.path)
 
     if (req.body.targetSrs) {
       ogr.project(req.body.targetSrs, req.body.sourceSrs)
@@ -76,7 +76,8 @@ exports.createServer = function(opts) {
       ogr.timeout(opts.timeout)
     }
 
-    res.header('Content-Type',
+    res.header(
+      'Content-Type',
       'forcePlainText' in req.body
         ? 'text/plain; charset=utf-8'
         : 'application/json; charset=utf-8'
@@ -90,7 +91,9 @@ exports.createServer = function(opts) {
       fs.unlink(req.files.upload.path, noop)
 
       if (isOgreFailureError(er)) {
-        return res.status(400).json({errors: er.message.replace('\n\n', '').split('\n')})
+        return res
+          .status(400)
+          .json({errors: er.message.replace('\n\n', '').split('\n')})
       }
 
       if (er) return next(er)
@@ -103,18 +106,19 @@ exports.createServer = function(opts) {
   })
 
   app.post('/convertJson', enableCors, function(req, res, next) {
-    if (!req.body.jsonUrl && !req.body.json) return res.status(400).json({error: true, msg: 'No json provided'})
+    if (!req.body.jsonUrl && !req.body.json)
+      return res.status(400).json({error: true, msg: 'No json provided'})
 
-    var json = safelyParseJson(req.body.json)
+    let json = safelyParseJson(req.body.json)
 
-    if (req.body.json && !json) return res.status(400).json({error: true, msg: 'Invalid json provided'})
+    if (req.body.json && !json)
+      return res.status(400).json({error: true, msg: 'Invalid json provided'})
 
-    var ogr
+    let ogr
 
     if (req.body.jsonUrl) {
       ogr = ogr2ogr(req.body.jsonUrl)
-    }
-    else {
+    } else {
       ogr = ogr2ogr(json)
     }
 
@@ -130,13 +134,19 @@ exports.createServer = function(opts) {
       ogr.timeout(opts.timeout)
     }
 
-    var format = req.body.format || 'shp'
+    let format = req.body.format || 'shp'
 
     ogr.format(format).exec(function(er, buf) {
-      if (isOgreFailureError(er)) return res.status(400).json({errors: er.message.replace('\n\n', '').split('\n')})
+      if (isOgreFailureError(er))
+        return res
+          .status(400)
+          .json({errors: er.message.replace('\n\n', '').split('\n')})
       if (er) return next(er)
       res.header('Content-Type', 'application/zip')
-      res.header('Content-Disposition', 'filename=' + (req.body.outputName || 'ogre.zip'))
+      res.header(
+        'Content-Disposition',
+        'filename=' + (req.body.outputName || 'ogre.zip')
+      )
       res.end(buf)
     })
   })

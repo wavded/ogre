@@ -1,4 +1,4 @@
-# ogre [![Build Status](https://jenkins.adc4gis.com/buildStatus/icon?job=ogre)](https://jenkins.adc4gis.com/job/ogre/)
+[![Build Status](https://jenkins.adc4gis.com/buildStatus/icon?job=ogre)](https://jenkins.adc4gis.com/job/ogre/) [![NPM](https://img.shields.io/npm/v/ogre.svg)](https://npmjs.com/package/ogre) ![NPM Downloads](https://img.shields.io/npm/dt/ogre.svg)
 
 The instructions below are only if you are interested in running the project locally. For help on how to use the web service, visit the [Ogre homepage](http://ogre.adc4gis.com). Ogre makes use of the [ogr2ogr](https://github.com/wavded/ogr2ogr) module.
 
@@ -11,8 +11,6 @@ ogr2ogr requires the command line tool _ogr2ogr_ - [gdal install page](http://tr
 ```
 npm install -g ogre
 ```
-
-[![NPM](https://nodei.co/npm/ogre.png?downloads=true)](https://nodei.co/npm/ogre)
 
 For specific OS installation help, see the [wiki](https://github.com/wavded/ogre/wiki).
 
