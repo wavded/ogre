@@ -3,3 +3,4 @@ npm_debug.log
 .DS_Store
 .tern-port
 yarn-error.log
+yarn.lock
