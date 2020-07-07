@@ -4,7 +4,7 @@ const request = require('supertest')
 const join = require('path').join
 let server
 
-test('create server', function(t) {
+test('create server', function (t) {
   let app = ogre.createServer()
   t.ok(app.request, 'is express')
   server = app.listen(9876)
@@ -12,13 +12,13 @@ test('create server', function(t) {
   t.end()
 })
 
-test('convert', function(t) {
+test('convert', function (t) {
   t.plan(7)
 
   request(server)
     .post('/convert')
     .attach('upload', join(__dirname, '/samples/sample.shp.zip'))
-    .end(function(er, res) {
+    .end(function (er, res) {
       if (er) throw er
 
       let data = res.body
@@ -31,7 +31,7 @@ test('convert', function(t) {
     .field('targetSrs', 'EPSG:3857')
     .attach('upload', join(__dirname, '/samples/sample.shp.zip'))
     .expect('Content-Type', 'application/json; charset=utf-8')
-    .end(function(er, res) {
+    .end(function (er, res) {
       t.notOk(er, 'no error', {error: er})
       if (res.body.crs)
         // testable on gdal 0.10.x or greater
@@ -44,7 +44,7 @@ test('convert', function(t) {
     .field('forcePlainText', '')
     .attach('upload', join(__dirname, '/samples/sample.shp.zip'))
     .expect('Content-Type', 'text/plain; charset=utf-8')
-    .end(function(er) {
+    .end(function (er) {
       t.notOk(er, 'no error', {error: er})
     })
 
@@ -56,7 +56,7 @@ test('convert', function(t) {
     .expect('Allow', 'POST')
     .expect('Content-Type', 'text/html; charset=utf-8')
     .expect('POST')
-    .end(function(er, res) {
+    .end(function (er, res) {
       if (er) throw er
       t.ok(res, 'responded')
     })
@@ -65,7 +65,7 @@ test('convert', function(t) {
     .post('/convert')
     .expect('Content-Type', 'application/json; charset=utf-8')
     .expect(400, {error: true, msg: 'No file provided'})
-    .end(function(er, res) {
+    .end(function (er, res) {
       if (er) throw er
       t.ok(res, 'bad request when no file uploaded')
     })
@@ -75,13 +75,13 @@ test('convert', function(t) {
     .attach('upload', join(__dirname, '/samples/sample.bad'))
     .expect('Content-Type', 'application/json; charset=utf-8')
     .expect(400)
-    .end(function(er, res) {
+    .end(function (er, res) {
       if (er) throw er
       t.ok(res.body.errors.length > 0, 'bad request on failure')
     })
 })
 
-test('convertJson', function(t) {
+test('convertJson', function (t) {
   t.plan(5)
   request(server)
     .post('/convertJson')
@@ -90,7 +90,7 @@ test('convertJson', function(t) {
       jsonUrl:
         'https://gist.github.com/wavded/7376428/raw/6dd3ad3de8157956b40f1cf09633e78bbdb1af18/test-single.geojson',
     })
-    .end(function(er, res) {
+    .end(function (er, res) {
       if (er) throw er
 
       let buf = res.text
@@ -105,7 +105,7 @@ test('convertJson', function(t) {
     .expect('Allow', 'POST')
     .expect('Content-Type', 'text/html; charset=utf-8')
     .expect('POST')
-    .end(function(er, res) {
+    .end(function (er, res) {
       if (er) throw er
       t.ok(res, 'responded')
     })
@@ -114,7 +114,7 @@ test('convertJson', function(t) {
     .post('/convertJson')
     .expect('Content-Type', 'application/json; charset=utf-8')
     .expect(400, {error: true, msg: 'No json provided'})
-    .end(function(er, res) {
+    .end(function (er, res) {
       if (er) throw er
       t.ok(res, 'bad request when no json sent')
     })
@@ -125,7 +125,7 @@ test('convertJson', function(t) {
     .send({json: '{'})
     .expect('Content-Type', 'application/json; charset=utf-8')
     .expect(400, {error: true, msg: 'Invalid json provided'})
-    .end(function(er, res) {
+    .end(function (er, res) {
       if (er) throw er
       t.ok(res, 'bad request on invalid json')
     })
@@ -136,14 +136,14 @@ test('convertJson', function(t) {
     .send({json: '{ "invalid": "geojson" }'})
     .expect('Content-Type', 'application/json; charset=utf-8')
     .expect(400)
-    .end(function(er, res) {
+    .end(function (er, res) {
       if (er) throw er
       t.ok(res.body.errors.length > 0, 'bad request on failure')
     })
 })
 
-test('close server', function(t) {
-  server.close(function() {
+test('close server', function (t) {
+  server.close(function () {
     t.end()
   })
 })
