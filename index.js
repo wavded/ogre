@@ -14,7 +14,7 @@ function enableCors(req, res, next) {
 }
 
 function optionsHandler(methods) {
-  return function(req, res) {
+  return function (req, res) {
     res.header('Allow', methods)
     res.send(methods)
   }
@@ -34,7 +34,7 @@ function safelyParseJson(json) {
 
 function noop() {}
 
-exports.createServer = function(opts) {
+exports.createServer = function (opts) {
   if (!opts) opts = {}
 
   let app = express()
@@ -45,14 +45,14 @@ exports.createServer = function(opts) {
   app.options('/convertJson', enableCors, optionsHandler('POST'))
 
   app.use(express.static(join(__dirname, '/public')))
-  app.get('/', function(req, res) {
+  app.get('/', function (req, res) {
     res.render('home')
   })
 
   app.use(urlencoded({extended: false, limit: 3000000})) // 3mb
   app.use(multiparty({maxFilesSize: 100000000})) // 100mb
 
-  app.post('/convert', enableCors, function(req, res, next) {
+  app.post('/convert', enableCors, function (req, res, next) {
     if (!req.files.upload || !req.files.upload.name) {
       res.status(400).json({error: true, msg: 'No file provided'})
       return
@@ -87,7 +87,7 @@ exports.createServer = function(opts) {
       res.attachment()
     }
 
-    ogr.exec(function(er, data) {
+    ogr.exec(function (er, data) {
       fs.unlink(req.files.upload.path, noop)
 
       if (isOgreFailureError(er)) {
@@ -105,7 +105,7 @@ exports.createServer = function(opts) {
     })
   })
 
-  app.post('/convertJson', enableCors, function(req, res, next) {
+  app.post('/convertJson', enableCors, function (req, res, next) {
     if (!req.body.jsonUrl && !req.body.json)
       return res.status(400).json({error: true, msg: 'No json provided'})
 
@@ -136,7 +136,7 @@ exports.createServer = function(opts) {
 
     let format = req.body.format || 'shp'
 
-    ogr.format(format).exec(function(er, buf) {
+    ogr.format(format).exec(function (er, buf) {
       if (isOgreFailureError(er))
         return res
           .status(400)
@@ -152,7 +152,7 @@ exports.createServer = function(opts) {
   })
 
   /* eslint no-unused-vars: [0, { "args": "none" }] */
-  app.use(function(er, req, res, next) {
+  app.use(function (er, req, res, next) {
     console.error(er.stack)
     res.header('Content-Type', 'application/json')
     res.status(500).json({error: true, msg: er.message})

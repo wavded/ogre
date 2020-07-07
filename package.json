@@ -28,15 +28,16 @@
     "connect-multiparty": "^2.0.0",
     "express": "^4.10.2",
     "ogr2ogr": "^2.0.0",
-    "pug": "^2.0.0-rc.3"
+    "pug": "^3.0.0"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
+    "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "prettier": "^1.19.1",
+    "nyc": "^15.1.0",
+    "prettier": "^2.0.5",
     "supertest": "^4.0.2",
-    "tape": "^4.8.0"
+    "tape": "^5.0.1"
   },
   "engines": {
     "node": ">=10"
