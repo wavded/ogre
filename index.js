@@ -32,7 +32,7 @@ function safelyParseJson(json) {
   }
 }
 
-function noop() { }
+function noop() {}
 
 exports.createServer = function (opts) {
   if (!opts) opts = {}
@@ -49,12 +49,12 @@ exports.createServer = function (opts) {
     res.render('home')
   })
 
-  app.use(urlencoded({ extended: false, limit: 3000000 })) // 3mb
-  app.use(multiparty({ maxFilesSize: 100000000 })) // 100mb
+  app.use(urlencoded({extended: false, limit: 3000000})) // 3mb
+  app.use(multiparty({maxFilesSize: 100000000})) // 100mb
 
   app.post('/convert', enableCors, function (req, res, next) {
     if (!req.files.upload || !req.files.upload.name) {
-      res.status(400).json({ error: true, msg: 'No file provided' })
+      res.status(400).json({error: true, msg: 'No file provided'})
       return
     }
 
@@ -93,7 +93,7 @@ exports.createServer = function (opts) {
       if (isOgreFailureError(er)) {
         return res
           .status(400)
-          .json({ errors: er.message.replace('\n\n', '').split('\n') })
+          .json({errors: er.message.replace('\n\n', '').split('\n')})
       }
 
       if (er) return next(er)
@@ -107,7 +107,7 @@ exports.createServer = function (opts) {
 
   app.post('/convertJson', enableCors, async function (req, res, next) {
     if (!req.body.jsonUrl && !req.body.json)
-      return res.status(400).json({ error: true, msg: 'No json provided' })
+      return res.status(400).json({error: true, msg: 'No json provided'})
 
     let json = safelyParseJson(req.body.json)
 
@@ -186,7 +186,7 @@ exports.createServer = function (opts) {
   app.use(function (er, req, res, next) {
     console.error(er.stack)
     res.header('Content-Type', 'application/json')
-    res.status(500).json({ error: true, msg: er.message })
+    res.status(500).json({error: true, msg: er.message})
   })
 
   return app
