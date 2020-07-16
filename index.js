@@ -112,7 +112,7 @@ exports.createServer = function (opts) {
     let json = safelyParseJson(req.body.json)
 
     if (req.body.json && !json)
-      return res.status(400).json({ error: true, msg: 'Invalid json provided' })
+      return res.status(400).json({error: true, msg: 'Invalid json provided'})
 
     let ogr
 
