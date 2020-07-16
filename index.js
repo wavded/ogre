@@ -105,7 +105,7 @@ exports.createServer = function (opts) {
     })
   })
 
-  app.post('/convertJson', enableCors, function (req, res, next) {
+  app.post('/convertJson', enableCors, async function (req, res, next) {
     if (!req.body.jsonUrl && !req.body.json)
       return res.status(400).json({error: true, msg: 'No json provided'})
 
@@ -136,19 +136,44 @@ exports.createServer = function (opts) {
 
     let format = req.body.format || 'shp'
 
-    ogr.format(format).exec(function (er, buf) {
-      if (isOgreFailureError(er))
-        return res
-          .status(400)
-          .json({errors: er.message.replace('\n\n', '').split('\n')})
-      if (er) return next(er)
+    ogr.format(format)
+
+    const sendResponse = (buf) => {
+
       res.header('Content-Type', 'application/zip')
       res.header(
         'Content-Disposition',
         'filename=' + (req.body.outputName || 'ogre.zip')
       )
       res.end(buf)
-    })
+
+    }
+
+    try {
+
+      // dxf must be treated using .destination
+      if (format.toLowerCase() === 'dxf') {
+
+        let tmpDestination = join(__dirname, '/tmp')
+        await ogr.destination(tmpDestination).promise()
+
+        let buf = await fs.promises.readFile(tmpDestination, 'utf8')
+        fs.unlink(tmpDestination, noop)
+        
+        sendResponse(buf)
+
+      } else {
+        let buf = await ogr.promise()
+        sendResponse(buf)
+      }
+
+    } catch (er) {
+      if (isOgreFailureError(er))
+        return res
+          .status(400)
+          .json({ errors: er.message.replace('\n\n', '').split('\n') })
+      if (er) return next(er)
+    }
   })
 
   /* eslint no-unused-vars: [0, { "args": "none" }] */
