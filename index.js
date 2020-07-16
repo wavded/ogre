@@ -152,7 +152,7 @@ exports.createServer = function (opts) {
     try {
 
       switch (format) {
-        // This formats must use .destination
+        // These formats must use .destination
         case 'dxf':
         case 'dgn':
         case 'txt':
@@ -164,14 +164,13 @@ exports.createServer = function (opts) {
 
           let bufD = await fs.promises.readFile(tmpDestination, 'utf8')
           fs.unlink(tmpDestination, noop)
-
           sendResponse(bufD)
           break;
 
         default:
           let buf = await ogr.promise()
           sendResponse(buf)
-          break;
+          break;        
       }
 
     } catch (er) {
