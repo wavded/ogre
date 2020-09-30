@@ -122,8 +122,8 @@ exports.createServer = function (opts) {
       ogr = ogr2ogr(json)
     }
 
-    if (req.body.fileName) {
-      ogr.options(['-nln', req.body.fileName])
+    if (req.body.outputName) {
+      ogr.options(['-nln', req.body.outputName])
     }
 
     if ('skipFailures' in req.body) {
