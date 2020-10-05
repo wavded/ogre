@@ -159,7 +159,10 @@ exports.createServer = function (opts) {
         case 'gxt':
         case 'gmt':
           
-          let tmpDestination = join(__dirname, `/tmp.${format}`)
+          // Random string to prevent multiple request being overwritten
+          let randomId = Math.random().toString(36).substring(7);
+
+          let tmpDestination = join(__dirname, `/tmp-${randomId}.${format}`)
           await ogr.destination(tmpDestination).promise()
 
           let bufD = await fs.promises.readFile(tmpDestination, 'utf8')
