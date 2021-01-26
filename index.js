@@ -167,8 +167,13 @@ exports.createServer = function (opts) {
           await ogr.destination(tmpDestination).promise()
 
           let bufD = await fs.promises.readFile(tmpDestination, 'utf8')
-          fs.unlink(tmpDestination, noop)
-          sendResponse(bufD)
+          let errUnlink = await fs.promises.unlink(tmpDestination)
+
+          if (errUnlink) {
+            throw errUnlink
+          } else {
+            sendResponse(bufD)
+          }          
           break;
 
         default:
