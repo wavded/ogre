@@ -4,7 +4,7 @@ const ogr2ogr = require('ogr2ogr')
 const fs = require('fs')
 const urlencoded = require('body-parser').urlencoded
 const join = require('path').join
-const tmpdir = require('os').tmpdir;
+const tmpdir = require('os').tmpdir
 
 function enableCors(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
@@ -144,50 +144,44 @@ exports.createServer = function (opts) {
     ogr.format(format)
 
     const sendResponse = (buf) => {
-
       res.header('Content-Type', 'application/zip')
       res.header(
         'Content-Disposition',
         'filename=' + (req.body.outputName || 'ogre.zip')
       )
       res.end(buf)
-
     }
 
     try {
-
       switch (format) {
         // These formats must use .destination
         case 'dxf':
         case 'dgn':
         case 'txt':
         case 'gxt':
-        case 'gmt':
-
+        case 'gmt': {
           // Random string to prevent multiple request being overwritten
-          let randomId = Math.random().toString(36).substring(7);
+          let randomId = Math.random().toString(36).substring(7)
 
           let tmpDestination = join(tmpdir(), `/ogre-${randomId}.${format}`)
           await ogr.destination(tmpDestination).promise()
 
           let bufD = await fs.promises.readFile(tmpDestination, 'utf8')
           await fs.promises.unlink(tmpDestination)
-
           sendResponse(bufD)
-                    
-          break;
-
-        default:
+          break
+        }
+        default: {
           let buf = await ogr.promise()
           sendResponse(buf)
-          break;        
+          break
+        }
       }
-
     } catch (er) {
       if (isOgreFailureError(er))
         return res
           .status(400)
-          .json({ errors: er.message.replace('\n\n', '').split('\n') })
+          .json({errors: er.message.replace('\n\n', '').split('\n')})
       if (er) return next(er)
     }
   })
