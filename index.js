@@ -4,6 +4,7 @@ const ogr2ogr = require('ogr2ogr')
 const fs = require('fs')
 const urlencoded = require('body-parser').urlencoded
 const join = require('path').join
+const tmpdir = require('os').tmpdir;
 
 function enableCors(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
@@ -105,7 +106,7 @@ exports.createServer = function (opts) {
     })
   })
 
-  app.post('/convertJson', enableCors, function (req, res, next) {
+  app.post('/convertJson', enableCors, async function (req, res, next) {
     if (!req.body.jsonUrl && !req.body.json)
       return res.status(400).json({error: true, msg: 'No json provided'})
 
@@ -122,8 +123,8 @@ exports.createServer = function (opts) {
       ogr = ogr2ogr(json)
     }
 
-    if (req.body.fileName) {
-      ogr.options(['-nln', req.body.fileName])
+    if (req.body.outputName) {
+      ogr.options(['-nln', req.body.outputName])
     }
 
     if ('skipFailures' in req.body) {
@@ -138,21 +139,57 @@ exports.createServer = function (opts) {
       ogr.timeout(opts.timeout)
     }
 
-    let format = req.body.format || 'shp'
+    let format = req.body.format.toLowerCase() || 'shp'
 
-    ogr.format(format).exec(function (er, buf) {
-      if (isOgreFailureError(er))
-        return res
-          .status(400)
-          .json({errors: er.message.replace('\n\n', '').split('\n')})
-      if (er) return next(er)
+    ogr.format(format)
+
+    const sendResponse = (buf) => {
+
       res.header('Content-Type', 'application/zip')
       res.header(
         'Content-Disposition',
         'filename=' + (req.body.outputName || 'ogre.zip')
       )
       res.end(buf)
-    })
+
+    }
+
+    try {
+
+      switch (format) {
+        // These formats must use .destination
+        case 'dxf':
+        case 'dgn':
+        case 'txt':
+        case 'gxt':
+        case 'gmt':
+
+          // Random string to prevent multiple request being overwritten
+          let randomId = Math.random().toString(36).substring(7);
+
+          let tmpDestination = join(tmpdir(), `/ogre-${randomId}.${format}`)
+          await ogr.destination(tmpDestination).promise()
+
+          let bufD = await fs.promises.readFile(tmpDestination, 'utf8')
+          await fs.promises.unlink(tmpDestination)
+
+          sendResponse(bufD)
+                    
+          break;
+
+        default:
+          let buf = await ogr.promise()
+          sendResponse(buf)
+          break;        
+      }
+
+    } catch (er) {
+      if (isOgreFailureError(er))
+        return res
+          .status(400)
+          .json({ errors: er.message.replace('\n\n', '').split('\n') })
+      if (er) return next(er)
+    }
   })
 
   /* eslint no-unused-vars: [0, { "args": "none" }] */
