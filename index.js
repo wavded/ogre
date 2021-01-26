@@ -130,6 +130,10 @@ exports.createServer = function (opts) {
       ogr.skipfailures()
     }
 
+    if ('forceUTF8' in req.body) {
+      ogr.options(['-lco', 'ENCODING=UTF-8'])
+    }
+
     if (opts.timeout) {
       ogr.timeout(opts.timeout)
     }
