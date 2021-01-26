@@ -139,7 +139,7 @@ exports.createServer = function (opts) {
       ogr.timeout(opts.timeout)
     }
 
-    let format = req.body.format.toLowerCase() || 'shp'
+    let format = (req.body.format || 'shp').toLowerCase()
 
     ogr.format(format)
 
