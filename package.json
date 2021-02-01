@@ -25,7 +25,7 @@
   "main": "./index.js",
   "dependencies": {
     "body-parser": "^1.9.2",
-    "connect-multiparty": "^2.0.0",
+    "connect-multiparty": "^2.2.0",
     "express": "^4.10.2",
     "ogr2ogr": "^2.0.0",
     "pug": "^3.0.0"
