@@ -20,7 +20,8 @@
     "start": "node run.js",
     "test": "tape \"test/*-test.js\"",
     "lint": "eslint --max-warnings 0 bin test *.js",
-    "fmt": "prettier --write \"**/*.{html,js,json,md}\""
+    "fmt": "prettier --write \"**/*.{html,js,json,css,md}\"",
+    "fmt-check": "prettier --check \"**/*.{html,js,html,css,md}\""
   },
   "main": "./index.js",
   "dependencies": {
@@ -32,11 +33,10 @@
   },
   "devDependencies": {
     "eslint": "^7.4.0",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-config-prettier": "^7.2.0",
     "nyc": "^15.1.0",
     "prettier": "^2.0.5",
-    "supertest": "^4.0.2",
+    "supertest": "^6.1.3",
     "tape": "^5.0.1"
   },
   "engines": {

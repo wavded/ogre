@@ -14,5 +14,6 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: sudo apt-get install gdal-bin
       - run: yarn install
+      - run: yarn fmt-check
       - run: yarn lint
       - run: yarn test
