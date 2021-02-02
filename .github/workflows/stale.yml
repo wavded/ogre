@@ -1,7 +1,8 @@
 name: stale-issues-prs
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '30 1 * * *'
+    - cron: '0 0 * * *'
 
 jobs:
   stale:
