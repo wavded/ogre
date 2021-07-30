@@ -13,7 +13,7 @@ import multer, {diskStorage} from 'multer'
 import ogr2ogr from 'ogr2ogr'
 import {join} from 'path'
 
-export interface OgreOpts {
+interface OgreOpts {
   port?: number
   timeout?: number
 }

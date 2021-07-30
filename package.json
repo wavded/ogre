@@ -14,16 +14,16 @@
   },
   "homepage": "http://github.com/wavded/ogre",
   "bin": {
-    "ogre": "./dist/cli.js"
+    "ogre": "dist/cli.js"
   },
-  "main": "./dist/index.js",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "prepublishOnly": "tsc",
     "build": "tsc",
     "start": "ts-node cli.ts",
-    "test": "nyc ts-node node_modules/.bin/blue-tape \"**/*_test.ts\"",
-    "lint": "tsc --noEmit && eslint --ext ts *.ts",
+    "test": "nyc ts-node node_modules/.bin/blue-tape index_test.ts",
+    "lint": "tsc --noEmit && eslint --ext ts .",
     "fmt": "prettier --write \"**/*.{html,js,json,css,md}\"",
     "fmt-check": "prettier --check \"**/*.{html,js,html,css,md}\""
   },
