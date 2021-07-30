@@ -12,10 +12,12 @@ let usage =
   ' -h, --help      help\n' +
   ' -p, --port      port number (default 3000)\n' +
   ' -v, --version   version number\n' +
-  ' -t, --timeout   timeout before ogre kills a job in ms (default 15000)\n'
+  ' -t, --timeout   timeout before ogre kills a job in ms (default 15000)\n' +
+  ' -l, --limit     byte limit for uploads (default 50000000)\n'
 
 let port = 3000
 let timeout = 15000
+let limit = 50000000
 
 let arg
 while (args.length) {
@@ -43,10 +45,15 @@ while (args.length) {
       timeout = Number(args.shift())
       break
 
+    case '-l':
+    case '--limit':
+      limit = Number(args.shift())
+      break
+
     default:
   }
 }
 
-let ogre = new Ogre({port, timeout})
+let ogre = new Ogre({port, timeout, limit})
 ogre.start()
-console.log('Ogre (%s) ready. Port %d. Timeout %d', version, port, timeout)
+console.log('Ogre (%s) ready. Port %d', version, port)

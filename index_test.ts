@@ -1,11 +1,10 @@
 import test from 'blue-tape'
 import request from 'supertest'
-import Ogre from './'
+import Ogre, {OgreOpts} from './'
 
 test(async (t) => {
-  let ogre = new Ogre()
-
   let table: {
+    opts?: OgreOpts
     method?: string
     url: string
     status: number
@@ -22,6 +21,13 @@ test(async (t) => {
       method: 'POST',
       url: '/convert',
       status: 200,
+      upload: './testdata/sample.shp.zip',
+    },
+    {
+      opts: {limit: 5},
+      method: 'POST',
+      url: '/convert',
+      status: 500,
       upload: './testdata/sample.shp.zip',
     },
 
@@ -41,9 +47,26 @@ test(async (t) => {
         ],
       })}`,
     },
+    {
+      opts: {limit: 5},
+      method: 'POST',
+      url: '/convertJson',
+      status: 500,
+      body: `json=${JSON.stringify({
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            geometry: {type: 'Point', coordinates: [102.0, 0.5]},
+            properties: {prop0: 'value0'},
+          },
+        ],
+      })}`,
+    },
   ]
 
   for (let tt of table) {
+    let ogre = new Ogre(tt.opts)
     let req
 
     switch (tt.method) {

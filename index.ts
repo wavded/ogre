@@ -13,19 +13,26 @@ import multer, {diskStorage} from 'multer'
 import ogr2ogr from 'ogr2ogr'
 import {join} from 'path'
 
-interface OgreOpts {
+export interface OgreOpts {
   port?: number
   timeout?: number
+  limit?: number
 }
 
 class Ogre {
   app: Application
   private timeout: number
   private port: number
+  private limit: number
 
-  constructor({port = 3000, timeout = 150000}: OgreOpts = {}) {
+  constructor({
+    port = 3000,
+    timeout = 150000,
+    limit = 50000000,
+  }: OgreOpts = {}) {
     this.port = port
     this.timeout = timeout
+    this.limit = limit
 
     this.app = express()
     this.app.use(express.static(join(__dirname, '/public')))
@@ -42,8 +49,9 @@ class Ogre {
           )
         },
       }),
+      limits: {fileSize: this.limit},
     })
-    let encoded = urlencoded({extended: false})
+    let encoded = urlencoded({extended: false, limit: this.limit})
 
     router.options('/', this.heartbeat())
     router.use(cors())
