@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ogre - ogr2ogr web client</title>
+    <link href="//fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/css?family=Rock+Salt" rel="stylesheet" />
+    <link
+      href="//netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.0/lumen/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <img class="ogre" src="ogre.svg" />
+      <h1>
+        <a href="/">Ogre</a>
+      </h1>
+      <p>
+        Ogre is a web client (service) that translates spatial files into
+        <a href="http://geojson.org">GeoJSON</a> using the
+        <a href="http://www.gdal.org/ogr2ogr.html">ogr2ogr</a> command line tool
+        for use in web applications and frameworks.
+      </p>
+      <br />
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Convert to GeoJSON</h3>
+            </div>
+            <div class="panel-body">
+              <form
+                class="form-horizontal"
+                role="form"
+                action="/convert"
+                method="post"
+                enctype="multipart/form-data"
+              >
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="upload"
+                    >File*:</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      class="form-control"
+                      id="upload"
+                      type="file"
+                      name="upload"
+                    />
+                    <p class="help-block">
+                      Must be a supported format. See below.
+                    </p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="sourceSrs"
+                    >Source SRS:</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      class="form-control"
+                      id="sourceSrs"
+                      name="sourceSrs"
+                      placeholder="e.g. EPSG:4326"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="targetSrs"
+                    >Target SRS:</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      class="form-control"
+                      id="targetSrs"
+                      name="targetSrs"
+                      placeholder="e.g. EPSG:4326"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-9 col-sm-offset-3">
+                    <div class="checkbox">
+                      <label>
+                        <input name="rfc7946" type="checkbox" />
+                        Create Mapbox-compatible file (RFC7946)
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-9 col-sm-offset-3">
+                    <div class="checkbox">
+                      <label>
+                        <input name="forceDownload" type="checkbox" />
+                        Force download
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-9 col-sm-offset-3">
+                    <button class="btn btn-primary" name="convert">
+                      Convert to GeoJSON
+                    </button>
+                    <p class="help-block">
+                      Note: GeoJSON can only support one layer
+                    </p>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-warning">
+            <div class="panel-heading">
+              <h3 class="panel-title">Convert from GeoJSON</h3>
+            </div>
+            <div class="panel-body">
+              <form
+                class="form-horizontal"
+                role="form"
+                action="/convertJson"
+                method="post"
+              >
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="json"
+                    >GeoJSON:</label
+                  >
+                  <div class="col-sm-9">
+                    <textarea
+                      class="form-control"
+                      id="json"
+                      name="json"
+                      rows="6"
+                    >
+{"type": "FeatureCollection",
+    "features": [{
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [102.0, 0.5] },
+      "properties": { "prop0": "value0" }
+    }]
+}</textarea
+                    >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="jsonUrl"
+                    >GeoJSON URL:</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      class="form-control"
+                      id="jsonUrl"
+                      name="jsonUrl"
+                      type="url"
+                      placeholder="e.g. http://path.to/sample.json"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="name"
+                    >Format:</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      class="form-control"
+                      id="name"
+                      name="format"
+                      placeholder="e.g. ESRI Shapefile"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="name"
+                    >Output Name:</label
+                  >
+                  <div class="col-sm-9">
+                    <input
+                      class="form-control"
+                      id="name"
+                      name="outputName"
+                      placeholder="e.g. myfile"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-9 col-sm-offset-3">
+                    <div class="checkbox">
+                      <label>
+                        <input name="forceUTF8" type="checkbox" />
+                        Force UTF-8
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-9 col-sm-offset-3">
+                    <button class="btn btn-warning" name="convert">
+                      Convert to Shapefile
+                    </button>
+                    <p class="help-block">
+                      Note: Shapefiles can only support one geometry type
+                    </p>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3>Accessing Ogre using a POST request</h3>
+      <p>
+        You can perform Ogre transformations directly by making a HTTP POST
+        request:
+      </p>
+      <p>
+        <b>Convert to GeoJSON</b>
+      </p>
+      <p>
+        <code>http://ogre.adc4gis.com/convert</code> with the following params:
+      </p>
+      <ul>
+        <li>
+          <code>upload</code>
+          - the file being uploaded
+        </li>
+        <li>
+          <code>sourceSrs</code>
+          (optional) - the original projection
+        </li>
+        <li>
+          <code>targetSrs</code>
+          (optional) - the target projection
+        </li>
+        <li>
+          <code>forcePlainText</code>
+          (optional) - force `text/plain` instead of `application/json`
+        </li>
+        <li>
+          <code>rfc7946</code>
+          (optional) - Create Mapbox-compatible file (RFC7946)
+        </li>
+        <li>
+          <code>callback</code>
+          (optional) - a JSONP callback function name
+        </li>
+      </ul>
+      <p>
+        <b>Convert from GeoJSON to Shapefile (or specified format)</b>
+      </p>
+      <p>
+        <code>http://ogre.adc4gis.com/convertJson</code> with
+        <b>one of the following</b> params:
+      </p>
+      <ul>
+        <li>
+          <code>json</code>
+          - text of the GeoJSON file
+        </li>
+        <li>
+          <code>jsonUrl</code>
+          - the URL for a remote GeoJSON file
+        </li>
+        <li>
+          <code>outputName</code>
+          (optional) - the name for the resulting zip file
+        </li>
+        <li>
+          <code>forceUTF8</code>
+          (optional) - force utf-8
+        </li>
+        <li>
+          <code>format</code>
+          (optional) - File format supported by the
+          <a href="https://github.com/wavded/ogr2ogr">ogr2ogr wrapper</a>
+        </li>
+      </ul>
+      <h3>
+        Where can I watch the project status, report issues, contribute, or fork
+        the code?
+      </h3>
+      <p>
+        Issues and feature requests can be submitted
+        <a href="http://github.com/wavded/ogre/issues">here</a>
+        and to watch, fork and/or contribute to the project,
+        <a href="http://github.com/wavded/ogre">visit the github page</a>
+        .
+      </p>
+      <p class="text-muted">
+        "Orc Head" drawing by
+        <a href="http://www.openclipart.org/detail/71203">Jason J. Patterson</a>
+      </p>
+    </div>
+  </body>
+</html>

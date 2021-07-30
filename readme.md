@@ -1,32 +1,26 @@
 ![Build Status](https://github.com/wavded/ogre/workflows/build/badge.svg?branch=master) [![NPM](https://img.shields.io/npm/v/ogre.svg)](https://npmjs.com/package/ogre) ![NPM Downloads](https://img.shields.io/npm/dt/ogre.svg)
 
-The instructions below are only if you are interested in running the project locally. For help on how to use the web service, visit the [Ogre homepage](http://ogre.adc4gis.com). Ogre makes use of the [ogr2ogr](https://github.com/wavded/ogr2ogr) module.
-
-## Requirements
-
-ogr2ogr requires the command line tool _ogr2ogr_ - [gdal install page](http://trac.osgeo.org/gdal/wiki/DownloadingGdalBinaries). It is recommended to use the latest version.
+Ogre is a web frontend and API for the [ogr2ogr][2] module. See a [live demo here][3].
 
 ## Installation
 
-```
+1. [Install GDAL tools][1] (includes the `ogr2ogr` command line tool)
+
+2. Install package:
+
+```sh
 npm install -g ogre
 ```
 
-For specific OS installation help, see the [wiki](https://github.com/wavded/ogre/wiki).
-
-## Running
+## Usage
 
 To run the app:
 
-```
+```sh
 ogre -p 3000
 ```
 
-And visit the following url in a browser:
-
-```
-http://localhost:3000
-```
+Then visit <http://localhost:3000> in a your favorite browser.
 
 Options include:
 
@@ -38,16 +32,10 @@ Options:
  -p, --port      port number (default 3000)
  -v, --version   version number
  -t, --timeout   timeout before ogre kills a job in ms (default 15000)
+ -l, --limit     byte limit for uploads (default 50000000)
 ```
 
-## License
-
-(The MIT License)
-
-Copyright (c) 2021 Marc Harter <wavded@gmail.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+[1]: https://gdal.org/download.html
+[2]: https://github.com/wavded/ogr2ogr
+[3]: https://ogre.adc4gis.com
+[4]: https://github.com/wavded/ogre/wiki

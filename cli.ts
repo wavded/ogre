@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-const ogre = require('../')
+import Ogre from './'
+import {version} from './package.json'
 
 let args = process.argv.slice(2)
-let version = require('../package.json').version
 
 let usage =
   '' +
@@ -12,10 +12,12 @@ let usage =
   ' -h, --help      help\n' +
   ' -p, --port      port number (default 3000)\n' +
   ' -v, --version   version number\n' +
-  ' -t, --timeout   timeout before ogre kills a job in ms (default 15000)\n'
+  ' -t, --timeout   timeout before ogre kills a job in ms (default 15000)\n' +
+  ' -l, --limit     byte limit for uploads (default 50000000)\n'
 
 let port = 3000
-let timeout
+let timeout = 15000
+let limit = 50000000
 
 let arg
 while (args.length) {
@@ -35,7 +37,7 @@ while (args.length) {
 
     case '-p':
     case '--port':
-      port = args.shift()
+      port = Number(args.shift())
       break
 
     case '-t':
@@ -43,9 +45,15 @@ while (args.length) {
       timeout = Number(args.shift())
       break
 
+    case '-l':
+    case '--limit':
+      limit = Number(args.shift())
+      break
+
     default:
   }
 }
 
-ogre.createServer({timeout: timeout}).listen(port)
-console.log('Ogre listening on port', port)
+let ogre = new Ogre({port, timeout, limit})
+ogre.start()
+console.log('Ogre (%s) ready. Port %d', version, port)
