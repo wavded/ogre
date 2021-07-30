@@ -1,6 +1,8 @@
 node_modules
 npm_debug.log
+ogr_*
 .DS_Store
-.tern-port
-yarn-error.log
+coverage
+.nyc_output
 yarn.lock
+dist

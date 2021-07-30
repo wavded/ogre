@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-const ogre = require('../')
+import Ogre from './'
+import {version} from './package.json'
 
 let args = process.argv.slice(2)
-let version = require('../package.json').version
 
 let usage =
   '' +
@@ -15,7 +15,7 @@ let usage =
   ' -t, --timeout   timeout before ogre kills a job in ms (default 15000)\n'
 
 let port = 3000
-let timeout
+let timeout = 15000
 
 let arg
 while (args.length) {
@@ -35,7 +35,7 @@ while (args.length) {
 
     case '-p':
     case '--port':
-      port = args.shift()
+      port = Number(args.shift())
       break
 
     case '-t':
@@ -47,5 +47,6 @@ while (args.length) {
   }
 }
 
-ogre.createServer({timeout: timeout}).listen(port)
-console.log('Ogre listening on port', port)
+let ogre = new Ogre({port, timeout})
+ogre.start()
+console.log('Ogre (%s) ready. Port %d. Timeout %d', version, port, timeout)

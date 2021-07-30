@@ -7,17 +7,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: osgeo/gdal:ubuntu-small-latest
     strategy:
       matrix:
-        node: ['10', '12', '14']
+        node: ['12', '14']
     name: Node v${{ matrix.node }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-      - run: sudo apt-get install gdal-bin
-      - run: yarn install
-      - run: yarn fmt-check
-      - run: yarn lint
-      - run: yarn test
+      - run: npm install
+      - run: npm run fmt-check
+      - run: npm run lint
+      - run: npm run test
