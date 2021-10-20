@@ -142,6 +142,7 @@ class Ogre {
     }
 
     let input = b.jsonUrl || data
+    let output = b.outputName || 'ogre'
 
     let opts = {
       format: (b.format || 'ESRI Shapefile').toLowerCase(),
@@ -153,7 +154,7 @@ class Ogre {
     if ('forceUTF8' in b) opts.options.push('-lco', 'ENCODING=UTF-8')
 
     let out = await ogr2ogr(input, opts)
-    res.attachment('ogre' + out.extname)
+    res.attachment(output + out.extname)
 
     if (out.stream) {
       out.stream.pipe(res)
