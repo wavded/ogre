@@ -1,6 +1,6 @@
-import test from 'blue-tape'
-import request from 'supertest'
-import Ogre, {OgreOpts} from './'
+import test from "blue-tape"
+import request from "supertest"
+import Ogre, {OgreOpts} from "./"
 
 test(async (t) => {
   let table: {
@@ -12,53 +12,53 @@ test(async (t) => {
     upload?: string
     contents?: RegExp
   }[] = [
-    {method: 'OPTIONS', url: '/', status: 200},
-    {url: '/not-found', status: 404},
-    {url: '/', status: 200},
+    {method: "OPTIONS", url: "/", status: 200},
+    {url: "/not-found", status: 404},
+    {url: "/", status: 200},
 
-    {method: 'POST', url: '/convert', status: 400, contents: /no file/i},
+    {method: "POST", url: "/convert", status: 400, contents: /no file/i},
     {
-      method: 'POST',
-      url: '/convert',
+      method: "POST",
+      url: "/convert",
       status: 200,
-      upload: './testdata/sample.shp.zip',
+      upload: "./testdata/sample.shp.zip",
     },
     {
       opts: {limit: 5},
-      method: 'POST',
-      url: '/convert',
+      method: "POST",
+      url: "/convert",
       status: 500,
-      upload: './testdata/sample.shp.zip',
+      upload: "./testdata/sample.shp.zip",
     },
 
-    {method: 'POST', url: '/convertJson', status: 400, contents: /no json/i},
+    {method: "POST", url: "/convertJson", status: 400, contents: /no json/i},
     {
-      method: 'POST',
-      url: '/convertJson',
+      method: "POST",
+      url: "/convertJson",
       status: 200,
       body: `json=${JSON.stringify({
-        type: 'FeatureCollection',
+        type: "FeatureCollection",
         features: [
           {
-            type: 'Feature',
-            geometry: {type: 'Point', coordinates: [102.0, 0.5]},
-            properties: {prop0: 'value0'},
+            type: "Feature",
+            geometry: {type: "Point", coordinates: [102.0, 0.5]},
+            properties: {prop0: "value0"},
           },
         ],
       })}`,
     },
     {
       opts: {limit: 5},
-      method: 'POST',
-      url: '/convertJson',
+      method: "POST",
+      url: "/convertJson",
       status: 500,
       body: `json=${JSON.stringify({
-        type: 'FeatureCollection',
+        type: "FeatureCollection",
         features: [
           {
-            type: 'Feature',
-            geometry: {type: 'Point', coordinates: [102.0, 0.5]},
-            properties: {prop0: 'value0'},
+            type: "Feature",
+            geometry: {type: "Point", coordinates: [102.0, 0.5]},
+            properties: {prop0: "value0"},
           },
         ],
       })}`,
@@ -70,10 +70,10 @@ test(async (t) => {
     let req
 
     switch (tt.method) {
-      case 'OPTIONS':
+      case "OPTIONS":
         req = request(ogre.app).options(tt.url)
         break
-      case 'POST':
+      case "POST":
         req = request(ogre.app).post(tt.url).send(tt.body)
         break
       default:
@@ -83,7 +83,7 @@ test(async (t) => {
     }
 
     if (tt.upload) {
-      req = req.attach('upload', tt.upload)
+      req = req.attach("upload", tt.upload)
     }
 
     let res = await req
