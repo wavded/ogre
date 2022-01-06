@@ -1,17 +1,17 @@
-import {urlencoded} from 'body-parser'
-import cors from 'cors'
-import {randomBytes} from 'crypto'
+import {urlencoded} from "body-parser"
+import cors from "cors"
+import {randomBytes} from "crypto"
 import express, {
   Application,
   ErrorRequestHandler,
   RequestHandler,
   Router,
-} from 'express'
-import PromiseRouter from 'express-promise-router'
-import {unlink} from 'fs'
-import multer, {diskStorage} from 'multer'
-import ogr2ogr from 'ogr2ogr'
-import {join} from 'path'
+} from "express"
+import PromiseRouter from "express-promise-router"
+import {unlink} from "fs"
+import multer, {diskStorage} from "multer"
+import ogr2ogr from "ogr2ogr"
+import {join} from "path"
 
 export interface OgreOpts {
   port?: number
@@ -35,7 +35,7 @@ class Ogre {
     this.limit = limit
 
     this.app = express()
-    this.app.use(express.static(join(__dirname, '/public')))
+    this.app.use(express.static(join(__dirname, "/public")))
     this.app.use(this.router())
   }
 
@@ -45,7 +45,7 @@ class Ogre {
       storage: diskStorage({
         filename(req, file, cb) {
           randomBytes(16, (err, raw) =>
-            cb(err, raw.toString('hex') + file.originalname)
+            cb(err, raw.toString("hex") + file.originalname)
           )
         },
       }),
@@ -53,10 +53,10 @@ class Ogre {
     })
     let encoded = urlencoded({extended: false, limit: this.limit})
 
-    router.options('/', this.heartbeat())
+    router.options("/", this.heartbeat())
     router.use(cors())
-    router.post('/convert', upload.single('upload'), this.convert())
-    router.post('/convertJson', encoded, this.convertJson())
+    router.post("/convert", upload.single("upload"), this.convert())
+    router.post("/convertJson", encoded, this.convertJson())
     router.use(this.notFound())
     router.use(this.serverError())
 
@@ -70,8 +70,8 @@ class Ogre {
       server.close(() => process.exit())
       setTimeout(process.exit, 30 * 1000)
     }
-    process.on('SIGINT', handler)
-    process.on('SIGTERM', handler)
+    process.on("SIGINT", handler)
+    process.on("SIGTERM", handler)
   }
 
   private heartbeat = (): RequestHandler => (_req, res) => {
@@ -79,7 +79,7 @@ class Ogre {
   }
 
   private notFound = (): RequestHandler => (_req, res) => {
-    res.status(404).send({error: 'Not found'})
+    res.status(404).send({error: "Not found"})
   }
 
   private serverError = (): ErrorRequestHandler => (er, _req, res, _next) => {
@@ -89,7 +89,7 @@ class Ogre {
 
   private convert = (): RequestHandler => async (req, res) => {
     if (!req.file) {
-      res.status(400).json({error: true, msg: 'No file provided'})
+      res.status(400).json({error: true, msg: "No file provided"})
       return
     }
 
@@ -99,27 +99,27 @@ class Ogre {
       options: [] as string[],
     }
 
-    if (b.targetSrs) opts.options.push('-t_srs', b.targetSrs)
-    if (b.sourceSrs) opts.options.push('-s_srs', b.sourceSrs)
-    if ('rfc7946' in b) opts.options.push('-lco', 'RFC7946=YES')
+    if (b.targetSrs) opts.options.push("-t_srs", b.targetSrs)
+    if (b.sourceSrs) opts.options.push("-s_srs", b.sourceSrs)
+    if ("rfc7946" in b) opts.options.push("-lco", "RFC7946=YES")
 
     res.header(
-      'Content-Type',
-      'forcePlainText' in b
-        ? 'text/plain; charset=utf-8'
-        : 'application/json; charset=utf-8'
+      "Content-Type",
+      "forcePlainText" in b
+        ? "text/plain; charset=utf-8"
+        : "application/json; charset=utf-8"
     )
-    if ('forceDownload' in b) res.attachment()
+    if ("forceDownload" in b) res.attachment()
 
     try {
       let {data} = await ogr2ogr(req.file.path, opts)
-      if (b.callback) res.write(b.callback + '(')
+      if (b.callback) res.write(b.callback + "(")
       res.write(JSON.stringify(data))
-      if (b.callback) res.write(')')
+      if (b.callback) res.write(")")
       res.end()
     } finally {
       unlink(req.file.path, (er) => {
-        if (er) console.error('unlink file error', er.message)
+        if (er) console.error("unlink file error", er.message)
       })
     }
   }
@@ -127,7 +127,7 @@ class Ogre {
   private convertJson = (): RequestHandler => async (req, res) => {
     let b = req.body
     if (!b.jsonUrl && !b.json) {
-      res.status(400).json({error: true, msg: 'No json provided'})
+      res.status(400).json({error: true, msg: "No json provided"})
       return
     }
 
@@ -136,22 +136,22 @@ class Ogre {
       try {
         data = JSON.parse(b.json)
       } catch (er) {
-        res.status(400).json({error: true, msg: 'Invalid json provided'})
+        res.status(400).json({error: true, msg: "Invalid json provided"})
         return
       }
     }
 
     let input = b.jsonUrl || data
-    let output = b.outputName || 'ogre'
+    let output = b.outputName || "ogre"
 
     let opts = {
-      format: (b.format || 'ESRI Shapefile').toLowerCase(),
+      format: (b.format || "ESRI Shapefile").toLowerCase(),
       timeout: this.timeout,
       options: [] as string[],
     }
 
-    if (b.outputName) opts.options.push('-nln', b.outputName)
-    if ('forceUTF8' in b) opts.options.push('-lco', 'ENCODING=UTF-8')
+    if (b.outputName) opts.options.push("-nln", b.outputName)
+    if ("forceUTF8" in b) opts.options.push("-lco", "ENCODING=UTF-8")
 
     let out = await ogr2ogr(input, opts)
     res.attachment(output + out.extname)
