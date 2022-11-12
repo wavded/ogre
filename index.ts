@@ -97,6 +97,7 @@ class Ogre {
     let opts = {
       timeout: this.timeout,
       options: [] as string[],
+      maxBuffer: this.limit * 10,
     }
 
     if (b.targetSrs) opts.options.push("-t_srs", b.targetSrs)
@@ -148,6 +149,7 @@ class Ogre {
       format: (b.format || "ESRI Shapefile").toLowerCase(),
       timeout: this.timeout,
       options: [] as string[],
+      maxBuffer: this.limit * 10,
     }
 
     if (b.outputName) opts.options.push("-nln", b.outputName)
