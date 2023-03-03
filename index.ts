@@ -43,7 +43,7 @@ class Ogre {
     let router = PromiseRouter()
     let upload = multer({
       storage: diskStorage({
-        filename(req, file, cb) {
+        filename(_req, file, cb) {
           randomBytes(16, (err, raw) =>
             cb(err, raw.toString("hex") + file.originalname)
           )
