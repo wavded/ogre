@@ -8,15 +8,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: osgeo/gdal:ubuntu-small-latest
+      image: ghcr.io/osgeo/gdal:ubuntu-small-latest
       options: --user 1001
     strategy:
       matrix:
-        node: ["14", "16", "18"]
+        node: ["16", "18", "20"]
     name: Node v${{ matrix.node }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
       - run: npm install

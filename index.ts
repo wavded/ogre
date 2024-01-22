@@ -45,7 +45,7 @@ class Ogre {
       storage: diskStorage({
         filename(_req, file, cb) {
           randomBytes(16, (err, raw) =>
-            cb(err, raw.toString("hex") + file.originalname)
+            cb(err, raw.toString("hex") + file.originalname),
           )
         },
       }),
@@ -108,7 +108,7 @@ class Ogre {
       "Content-Type",
       "forcePlainText" in b
         ? "text/plain; charset=utf-8"
-        : "application/json; charset=utf-8"
+        : "application/json; charset=utf-8",
     )
     if ("forceDownload" in b) res.attachment()
 
