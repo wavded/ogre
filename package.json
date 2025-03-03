@@ -16,47 +16,68 @@
   "bin": {
     "ogre": "dist/cli.js"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "type": "module",
+  "types": "./dist/ogre.d.ts",
+  "main": "./dist/ogre.cjs",
+  "module": "./dist/ogre.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/ogre.d.ts",
+        "default": "./dist/ogre.js"
+      },
+      "require": {
+        "types": "./dist/ogre.d.cts",
+        "default": "./dist/ogre.cjs"
+      }
+    }
+  },
   "scripts": {
-    "prepublishOnly": "rm -rf dist && tsc && cp -rf public dist",
-    "build": "rm -rf dist && tsc && cp -rf public dist",
-    "start": "ts-node cli.ts",
-    "test": "nyc ts-node node_modules/.bin/blue-tape index_test.ts",
-    "lint": "tsc --noEmit && eslint --ext ts .",
+    "prepublishOnly": "vite build",
+    "build": "vite build",
+    "start": "tsx cli.ts",
+    "test": "vitest run --silent --coverage",
+    "lint": "tsc --noEmit && eslint .",
     "fmt": "prettier --write .",
     "fmt-check": "prettier --check ."
   },
   "dependencies": {
-    "body-parser": "^1.20.2",
+    "@hono/node-server": "^1.13.8",
+    "body-parser": "^1.20.3",
     "connect-multiparty": "^2.2.0",
     "cors": "^2.8.5",
-    "express": "^4.18.2",
+    "express": "^4.21.2",
     "express-promise-router": "^4.1.1",
+    "hono": "^4.7.2",
     "multer": "1.4.5-lts.1",
-    "ogr2ogr": "^5.0.0"
+    "ogr2ogr": "^5.1.0",
+    "tsx": "^4.19.3"
   },
   "devDependencies": {
-    "@types/blue-tape": "^0.1.36",
+    "@eslint/js": "^9.21.0",
+    "@types/archiver": "^6.0.3",
     "@types/body-parser": "^1.19.5",
     "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
-    "@types/multer": "^1.4.11",
-    "@types/node": "^20.11.5",
+    "@types/express": "^5.0.0",
+    "@types/geojson": "^7946.0.16",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.13.8",
     "@types/supertest": "^6.0.2",
-    "@typescript-eslint/eslint-plugin": "^6.19.1",
-    "@typescript-eslint/parser": "^6.19.1",
-    "blue-tape": "^1.0.0",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "nyc": "^15.1.0",
-    "prettier": "^3.2.4",
-    "prettier-plugin-organize-imports": "^3.2.4",
-    "supertest": "^6.3.4",
+    "@vitest/coverage-v8": "^3.0.7",
+    "eslint": "^9.21.0",
+    "eslint-config-prettier": "^10.0.2",
+    "eslint-plugin-prettier": "^5.2.3",
+    "prettier": "^3.5.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "supertest": "^7.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.0",
+    "vite": "^6.2.0",
+    "vite-plugin-dts": "^4.5.3",
+    "vitest": "^3.0.7"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   }
 }

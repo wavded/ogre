@@ -1,8 +1,9 @@
-import test from "blue-tape"
+import {serve} from "@hono/node-server"
 import request from "supertest"
+import {assert, test} from "vitest"
 import Ogre, {OgreOpts} from "./"
 
-test(async (t) => {
+test(async () => {
   let table: {
     opts?: OgreOpts
     method?: string
@@ -67,18 +68,19 @@ test(async (t) => {
 
   for (let tt of table) {
     let ogre = new Ogre(tt.opts)
+    let app = serve({fetch: ogre.app.fetch})
     let req
 
     switch (tt.method) {
       case "OPTIONS":
-        req = request(ogre.app).options(tt.url)
+        req = request(app).options(tt.url)
         break
       case "POST":
-        req = request(ogre.app).post(tt.url).send(tt.body)
+        req = request(app).post(tt.url).send(tt.body)
         break
       default:
         // 'GET'
-        req = request(ogre.app).get(tt.url)
+        req = request(app).get(tt.url)
         break
     }
 
@@ -88,9 +90,9 @@ test(async (t) => {
 
     let res = await req
 
-    t.equal(res.status, tt.status, tt.url)
+    assert.equal(res.status, tt.status, tt.url)
     if (tt.contents) {
-      t.match(res.text, tt.contents)
+      assert.match(res.text, tt.contents)
     }
   }
 })

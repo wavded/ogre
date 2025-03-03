@@ -1,17 +1,14 @@
-import {urlencoded} from "body-parser"
-import cors from "cors"
-import {randomBytes} from "crypto"
-import express, {
-  Application,
-  ErrorRequestHandler,
-  RequestHandler,
-  Router,
-} from "express"
-import PromiseRouter from "express-promise-router"
-import {unlink} from "fs"
-import multer, {diskStorage} from "multer"
+import {serve} from "@hono/node-server"
+import {serveStatic} from "@hono/node-server/serve-static"
+import {ErrorHandler, Handler, Hono, NotFoundHandler} from "hono"
+import {bodyLimit} from "hono/body-limit"
+import {cors} from "hono/cors"
+import {BlankEnv, BlankSchema} from "hono/types"
+import {randomBytes} from "node:crypto"
+import {unlink, writeFile} from "node:fs/promises"
+import {tmpdir} from "node:os"
+import {Readable} from "node:stream"
 import ogr2ogr from "ogr2ogr"
-import {join} from "path"
 
 export interface OgreOpts {
   port?: number
@@ -19,8 +16,21 @@ export interface OgreOpts {
   limit?: number
 }
 
+interface UploadOpts {
+  [key: string]: string | File
+  targetSrs: string
+  upload: File
+  sourceSrs: string
+  rfc7946: string
+  forcePlainText: string
+  forceDownload: string
+  callback: string
+}
+
+const TMP_DIR = tmpdir()
+
 class Ogre {
-  app: Application
+  app: Hono<BlankEnv, BlankSchema, "">
   private timeout: number
   private port: number
   private limit: number
@@ -34,37 +44,23 @@ class Ogre {
     this.timeout = timeout
     this.limit = limit
 
-    this.app = express()
-    this.app.use(express.static(join(__dirname, "/public")))
-    this.app.use(this.router())
-  }
+    let app = (this.app = new Hono())
+    app.notFound(this.notFound())
+    app.onError(this.serverError())
 
-  router(): Router {
-    let router = PromiseRouter()
-    let upload = multer({
-      storage: diskStorage({
-        filename(_req, file, cb) {
-          randomBytes(16, (err, raw) =>
-            cb(err, raw.toString("hex") + file.originalname),
-          )
-        },
-      }),
-      limits: {fileSize: this.limit},
-    })
-    let encoded = urlencoded({extended: false, limit: this.limit})
+    app.options("/", this.heartbeat())
+    app.use(cors(), bodyLimit({maxSize: this.limit}))
+    app.post("/convert", this.convert())
+    app.post("/convertJson", this.convertJson())
 
-    router.options("/", this.heartbeat())
-    router.use(cors())
-    router.post("/convert", upload.single("upload"), this.convert())
-    router.post("/convertJson", encoded, this.convertJson())
-    router.use(this.notFound())
-    router.use(this.serverError())
-
-    return router
+    app.use("*", serveStatic({root: "./public"}))
   }
 
   start(): void {
-    let server = this.app.listen(this.port)
+    let server = serve({
+      fetch: this.app.fetch,
+      port: this.port,
+    })
 
     let handler = (): void => {
       server.close(() => process.exit())
@@ -74,97 +70,110 @@ class Ogre {
     process.on("SIGTERM", handler)
   }
 
-  private heartbeat = (): RequestHandler => (_req, res) => {
-    res.sendStatus(200)
+  private notFound = (): NotFoundHandler => (c) => {
+    return c.json({error: "Not found"}, 404)
   }
 
-  private notFound = (): RequestHandler => (_req, res) => {
-    res.status(404).send({error: "Not found"})
-  }
-
-  private serverError = (): ErrorRequestHandler => (er, _req, res, _next) => {
+  private serverError = (): ErrorHandler => (er, c) => {
     console.error(er.stack)
-    res.status(500).send({error: true, message: er.message})
+    return c.json({error: true, message: er.message}, 500)
   }
 
-  private convert = (): RequestHandler => async (req, res) => {
-    if (!req.file) {
-      res.status(400).json({error: true, msg: "No file provided"})
-      return
+  private heartbeat = (): Handler => () => new Response()
+
+  private convert = (): Handler => async (c) => {
+    let {
+      upload,
+      targetSrs,
+      sourceSrs,
+      rfc7946,
+      forcePlainText,
+      forceDownload,
+      callback,
+    }: UploadOpts = await c.req.parseBody()
+    if (!upload) {
+      return c.json({error: true, msg: "No file provided"}, 400)
     }
 
-    let b = req.body
     let opts = {
       timeout: this.timeout,
       options: [] as string[],
       maxBuffer: this.limit * 10,
     }
 
-    if (b.targetSrs) opts.options.push("-t_srs", b.targetSrs)
-    if (b.sourceSrs) opts.options.push("-s_srs", b.sourceSrs)
-    if ("rfc7946" in b) opts.options.push("-lco", "RFC7946=YES")
+    if (targetSrs) opts.options.push("-t_srs", targetSrs)
+    if (sourceSrs) opts.options.push("-s_srs", sourceSrs)
+    if (rfc7946 != null) opts.options.push("-lco", "RFC7946=YES")
 
-    res.header(
+    c.header(
       "Content-Type",
-      "forcePlainText" in b
+      forcePlainText != null
         ? "text/plain; charset=utf-8"
         : "application/json; charset=utf-8",
     )
-    if ("forceDownload" in b) res.attachment()
 
-    try {
-      let {data} = await ogr2ogr(req.file.path, opts)
-      if (b.callback) res.write(b.callback + "(")
-      res.write(JSON.stringify(data))
-      if (b.callback) res.write(")")
-      res.end()
-    } finally {
-      unlink(req.file.path, (er) => {
-        if (er) console.error("unlink file error", er.message)
-      })
+    if (forceDownload != null) {
+      c.header("content-disposition", "attachment;")
     }
+
+    let path = TMP_DIR + "/" + randomBytes(16).toString("hex") + upload.name
+    let body: string
+    try {
+      let buf = await upload.arrayBuffer()
+      await writeFile(path, Buffer.from(buf))
+      let {data} = await ogr2ogr(path, opts)
+      if (callback) {
+        body = callback + "(" + JSON.stringify(data) + ")"
+      } else {
+        body = JSON.stringify(data)
+      }
+    } finally {
+      unlink(path).catch((er) => console.error("unlink error", er.message))
+    }
+    return c.body(body)
   }
 
-  private convertJson = (): RequestHandler => async (req, res) => {
-    let b = req.body
-    if (!b.jsonUrl && !b.json) {
-      res.status(400).json({error: true, msg: "No json provided"})
-      return
+  private convertJson = (): Handler => async (c) => {
+    let {jsonUrl, json, outputName, format, forceUTF8}: Record<string, string> =
+      await c.req.parseBody()
+    if (!jsonUrl && !json) {
+      return c.json({error: true, msg: "No json provided"}, 400)
     }
 
     let data
-    if (b.json) {
+    if (json) {
       try {
-        data = JSON.parse(b.json)
-      } catch (er) {
-        res.status(400).json({error: true, msg: "Invalid json provided"})
-        return
+        data = JSON.parse(json)
+      } catch (_er) {
+        return c.json({error: true, msg: "Invalid json provided"}, 400)
       }
     }
 
-    let input = b.jsonUrl || data
-    let output = b.outputName || "ogre"
+    let input = jsonUrl || data
+    let output = outputName || "ogre"
 
     let opts = {
-      format: (b.format || "ESRI Shapefile").toLowerCase(),
+      format: (format || "ESRI Shapefile").toLowerCase(),
       timeout: this.timeout,
       options: [] as string[],
       maxBuffer: this.limit * 10,
     }
 
-    if (b.outputName) opts.options.push("-nln", b.outputName)
-    if ("forceUTF8" in b) opts.options.push("-lco", "ENCODING=UTF-8")
+    if (outputName) opts.options.push("-nln", outputName)
+    if (forceUTF8 != null) opts.options.push("-lco", "ENCODING=UTF-8")
 
     let out = await ogr2ogr(input, opts)
-    res.attachment(output + out.extname)
+    c.header(
+      "content-disposition",
+      "attachment; filename=" + output + out.extname,
+    )
 
     if (out.stream) {
-      out.stream.pipe(res)
-      return
+      return c.body(Readable.toWeb(out.stream) as ReadableStream)
     } else if (out.text) {
-      res.send(out.text)
+      return c.text(out.text)
     } else {
-      res.send(out.data)
+      return c.json(out.data)
     }
   }
 }
