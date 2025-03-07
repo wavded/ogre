@@ -1,4 +1,4 @@
-![Build Status](https://github.com/wavded/ogre/workflows/build/badge.svg?branch=master) [![NPM](https://img.shields.io/npm/v/ogre.svg)](https://npmjs.com/package/ogre) ![NPM Downloads](https://img.shields.io/npm/dt/ogre.svg)
+[![build](https://github.com/wavded/ogre/actions/workflows/build.yml/badge.svg)](https://github.com/wavded/ogre/actions/workflows/build.yml) [![NPM](https://img.shields.io/npm/v/ogre.svg)](https://npmjs.com/package/ogre) ![NPM Downloads](https://img.shields.io/npm/dt/ogre.svg)
 
 Ogre is a web frontend and API for the [ogr2ogr][2] module. See a [live demo here][3].
 
