@@ -29,7 +29,7 @@ interface UploadOpts {
 
 const TMP_DIR = tmpdir()
 
-class Ogre {
+export class Ogre {
   app: Hono<BlankEnv, BlankSchema, "">
   private timeout: number
   private port: number
@@ -177,5 +177,3 @@ class Ogre {
     }
   }
 }
-
-export default Ogre

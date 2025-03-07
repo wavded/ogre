@@ -1,6 +1,6 @@
 {
   "name": "ogre",
-  "version": "4.0.0",
+  "version": "5.0.0-rc.1",
   "description": "ogr2ogr web client",
   "keywords": [
     "ogr2ogr",
@@ -41,8 +41,7 @@
   "dependencies": {
     "@hono/node-server": "^1.13.8",
     "hono": "^4.7.4",
-    "ogr2ogr": "6.0.0-rc.2",
-    "tsx": "^4.19.3"
+    "ogr2ogr": "6.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
@@ -56,6 +55,7 @@
     "prettier-plugin-organize-imports": "^4.1.0",
     "supertest": "^7.0.0",
     "tsup": "^8.4.0",
+    "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.0",
     "vitest": "^3.0.8"

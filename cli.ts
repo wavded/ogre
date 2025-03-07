@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import Ogre from "./"
+import {Ogre} from "./dist"
 import {version} from "./package.json"
 
 let args = process.argv.slice(2)
