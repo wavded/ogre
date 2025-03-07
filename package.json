@@ -14,7 +14,7 @@
   },
   "homepage": "http://github.com/wavded/ogre",
   "bin": {
-    "ogre": "dist/cli.js"
+    "ogre": "dist/cli.cjs"
   },
   "type": "module",
   "exports": {
@@ -31,7 +31,7 @@
   },
   "scripts": {
     "prepublishOnly": "pnpm build",
-    "build": "tsup index.ts --format esm,cjs --dts --clean",
+    "build": "tsup index.ts --format esm,cjs --dts --clean && tsup cli.ts",
     "start": "tsx cli.ts",
     "test": "vitest run --silent",
     "lint": "tsc --noEmit && eslint .",
