@@ -8,7 +8,7 @@ import {randomBytes} from "node:crypto"
 import {unlink, writeFile} from "node:fs/promises"
 import {tmpdir} from "node:os"
 import {Readable} from "node:stream"
-import ogr2ogr from "ogr2ogr"
+import {ogr2ogr} from "ogr2ogr"
 
 export interface OgreOpts {
   port?: number
