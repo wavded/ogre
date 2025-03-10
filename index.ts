@@ -68,7 +68,7 @@ export class Ogre {
     return c.json({error: true, message: er.message}, 500)
   }
 
-  private heartbeat = (): Handler => async (c) => c.body(null, 204)
+  private heartbeat = (): Handler => async (c) => c.text("")
 
   private index = (): Handler => async (c) => c.html(index)
 
