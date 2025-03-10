@@ -9,7 +9,7 @@ import {unlink, writeFile} from "node:fs/promises"
 import {tmpdir} from "node:os"
 import {Readable} from "node:stream"
 import {ogr2ogr} from "ogr2ogr"
-import index from "./index.html"
+import index from "./index.html?raw"
 
 export interface OgreOpts {
   port?: number
