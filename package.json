@@ -17,18 +17,6 @@
     "ogre": "dist/cli.cjs"
   },
   "type": "module",
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      }
-    }
-  },
   "scripts": {
     "prepublishOnly": "pnpm build",
     "build": "tsup-node cli.ts",
