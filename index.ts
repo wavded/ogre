@@ -1,5 +1,4 @@
 import {serve} from "@hono/node-server"
-import {serveStatic} from "@hono/node-server/serve-static"
 import {ErrorHandler, Handler, Hono, NotFoundHandler} from "hono"
 import {bodyLimit} from "hono/body-limit"
 import {cors} from "hono/cors"
@@ -50,12 +49,10 @@ export class Ogre {
     app.onError(this.serverError())
 
     app.options("/", this.heartbeat())
-    app.use(cors(), bodyLimit({maxSize: this.limit}))
     app.get("/", this.index())
+    app.use(cors(), bodyLimit({maxSize: this.limit}))
     app.post("/convert", this.convert())
     app.post("/convertJson", this.convertJson())
-
-    app.use("*", serveStatic({root: "./public"}))
   }
 
   start(): void {
@@ -71,7 +68,7 @@ export class Ogre {
     return c.json({error: true, message: er.message}, 500)
   }
 
-  private heartbeat = (): Handler => () => new Response()
+  private heartbeat = (): Handler => async () => new Response()
 
   private index = (): Handler => async (c) => c.html(index)
 
@@ -100,7 +97,7 @@ export class Ogre {
     if (rfc7946 != null) opts.options.push("-lco", "RFC7946=YES")
 
     c.header(
-      "Content-Type",
+      "content-type",
       forcePlainText != null
         ? "text/plain; charset=utf-8"
         : "application/json; charset=utf-8",
