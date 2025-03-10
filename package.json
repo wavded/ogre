@@ -50,11 +50,11 @@
     "ogr2ogr": "6.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
+    "@eslint/js": "^9.22.0",
     "@types/archiver": "^6.0.3",
-    "@types/node": "^22.13.9",
+    "@types/node": "^22.13.10",
     "@types/supertest": "^6.0.2",
-    "eslint": "^9.21.0",
+    "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.3",
     "prettier": "^3.5.3",
@@ -63,10 +63,15 @@
     "tsup": "^8.4.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.0",
+    "typescript-eslint": "^8.26.1",
     "vitest": "^3.0.8"
   },
   "engines": {
     "node": ">=18"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }
