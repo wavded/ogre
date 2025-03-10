@@ -31,12 +31,18 @@
   },
   "scripts": {
     "prepublishOnly": "pnpm build",
-    "build": "tsup index.ts --format esm,cjs --dts --clean && tsup cli.ts",
-    "start": "tsx cli.ts",
+    "build": "tsup-node cli.ts",
+    "start": "pnpm build && dist/cli.cjs",
     "test": "vitest run --silent",
     "lint": "tsc --noEmit && eslint .",
     "fmt": "prettier --write .",
     "fmt-check": "prettier --check ."
+  },
+  "tsup": {
+    "loader": {
+      ".html": "text"
+    },
+    "clean": true
   },
   "dependencies": {
     "@hono/node-server": "^1.13.8",
