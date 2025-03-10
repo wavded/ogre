@@ -1,6 +1,6 @@
 {
   "name": "ogre",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "ogr2ogr web client",
   "keywords": [
     "ogr2ogr",
@@ -17,26 +17,20 @@
     "ogre": "dist/cli.cjs"
   },
   "type": "module",
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      }
-    }
-  },
   "scripts": {
     "prepublishOnly": "pnpm build",
-    "build": "tsup index.ts --format esm,cjs --dts --clean && tsup cli.ts",
-    "start": "tsx cli.ts",
+    "build": "tsup-node cli.ts",
+    "start": "pnpm build && dist/cli.cjs",
     "test": "vitest run --silent",
     "lint": "tsc --noEmit && eslint .",
     "fmt": "prettier --write .",
     "fmt-check": "prettier --check ."
+  },
+  "tsup": {
+    "loader": {
+      ".html": "text"
+    },
+    "clean": true
   },
   "dependencies": {
     "@hono/node-server": "^1.13.8",
@@ -44,11 +38,11 @@
     "ogr2ogr": "6.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
+    "@eslint/js": "^9.22.0",
     "@types/archiver": "^6.0.3",
-    "@types/node": "^22.13.9",
+    "@types/node": "^22.13.10",
     "@types/supertest": "^6.0.2",
-    "eslint": "^9.21.0",
+    "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.3",
     "prettier": "^3.5.3",
@@ -57,10 +51,15 @@
     "tsup": "^8.4.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.0",
+    "typescript-eslint": "^8.26.1",
     "vitest": "^3.0.8"
   },
   "engines": {
     "node": ">=18"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }

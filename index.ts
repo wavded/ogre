@@ -9,6 +9,7 @@ import {unlink, writeFile} from "node:fs/promises"
 import {tmpdir} from "node:os"
 import {Readable} from "node:stream"
 import {ogr2ogr} from "ogr2ogr"
+import index from "./index.html?raw"
 
 export interface OgreOpts {
   port?: number
@@ -50,6 +51,7 @@ export class Ogre {
 
     app.options("/", this.heartbeat())
     app.use(cors(), bodyLimit({maxSize: this.limit}))
+    app.get("/", this.index())
     app.post("/convert", this.convert())
     app.post("/convertJson", this.convertJson())
 
@@ -57,17 +59,7 @@ export class Ogre {
   }
 
   start(): void {
-    let server = serve({
-      fetch: this.app.fetch,
-      port: this.port,
-    })
-
-    let handler = (): void => {
-      server.close(() => process.exit())
-      setTimeout(process.exit, 30 * 1000)
-    }
-    process.on("SIGINT", handler)
-    process.on("SIGTERM", handler)
+    serve({fetch: this.app.fetch, port: this.port})
   }
 
   private notFound = (): NotFoundHandler => (c) => {
@@ -80,6 +72,8 @@ export class Ogre {
   }
 
   private heartbeat = (): Handler => () => new Response()
+
+  private index = (): Handler => async (c) => c.html(index)
 
   private convert = (): Handler => async (c) => {
     let {
