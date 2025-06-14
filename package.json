@@ -2,11 +2,7 @@
   "name": "ogre",
   "version": "5.0.3",
   "description": "ogr2ogr web client",
-  "keywords": [
-    "ogr2ogr",
-    "GIS",
-    "GeoJSON"
-  ],
+  "keywords": ["ogr2ogr", "GIS", "GeoJSON"],
   "author": "Marc Harter <wavded@gmail.com>",
   "repository": {
     "type": "git",
@@ -22,9 +18,8 @@
     "build": "tsup-node cli.ts",
     "start": "pnpm build && dist/cli.cjs",
     "test": "vitest run --silent",
-    "lint": "tsc --noEmit && eslint .",
-    "fmt": "prettier --write .",
-    "fmt-check": "prettier --check ."
+    "lint": "tsc --noEmit && biome check .",
+    "fix": "biome check --write ."
   },
   "tsup": {
     "loader": {
@@ -38,28 +33,17 @@
     "ogr2ogr": "6.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.24.0",
+    "@biomejs/biome": "^1.9.4",
     "@types/archiver": "^6.0.3",
     "@types/node": "^22.14.1",
     "@types/supertest": "^6.0.3",
-    "eslint": "^9.24.0",
-    "eslint-config-prettier": "^10.1.2",
-    "eslint-plugin-prettier": "^5.2.6",
-    "prettier": "^3.5.3",
-    "prettier-plugin-organize-imports": "^4.1.0",
     "supertest": "^7.1.0",
     "tsup": "^8.4.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.30.1",
     "vitest": "^3.1.1"
   },
   "engines": {
     "node": ">=18"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
   }
 }

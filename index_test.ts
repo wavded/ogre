@@ -1,7 +1,7 @@
 import {serve} from "@hono/node-server"
 import request from "supertest"
 import {assert, test} from "vitest"
-import {Ogre, OgreOpts} from "./"
+import {Ogre, type OgreOpts} from "./"
 
 test(async () => {
   let table: {

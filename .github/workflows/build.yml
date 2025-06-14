@@ -12,7 +12,7 @@ jobs:
       options: --user 1001
     strategy:
       matrix:
-        node: ["18", "20", "22"]
+        node: ["18", "20", "22", "24"]
     name: Node v${{ matrix.node }}
     steps:
       - uses: actions/checkout@v3
@@ -20,6 +20,5 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: npm install
-      - run: npm run fmt-check
       - run: npm run lint
       - run: npm run test

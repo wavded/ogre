@@ -1,12 +1,12 @@
-import {serve} from "@hono/node-server"
-import {ErrorHandler, Handler, Hono, NotFoundHandler} from "hono"
-import {bodyLimit} from "hono/body-limit"
-import {cors} from "hono/cors"
-import {BlankEnv, BlankSchema} from "hono/types"
 import {randomBytes} from "node:crypto"
 import {unlink, writeFile} from "node:fs/promises"
 import {tmpdir} from "node:os"
 import {Readable} from "node:stream"
+import {serve} from "@hono/node-server"
+import {type ErrorHandler, type Handler, Hono, type NotFoundHandler} from "hono"
+import {bodyLimit} from "hono/body-limit"
+import {cors} from "hono/cors"
+import type {BlankEnv, BlankSchema} from "hono/types"
 import {ogr2ogr} from "ogr2ogr"
 import index from "./index.html?raw"
 
@@ -44,7 +44,9 @@ export class Ogre {
     this.timeout = timeout
     this.limit = limit
 
-    let app = (this.app = new Hono())
+    let app = new Hono()
+    this.app = app
+
     app.notFound(this.notFound())
     app.onError(this.serverError())
 
@@ -161,10 +163,10 @@ export class Ogre {
 
     if (out.stream) {
       return c.body(Readable.toWeb(out.stream) as ReadableStream)
-    } else if (out.text) {
-      return c.text(out.text)
-    } else {
-      return c.json(out.data)
     }
+    if (out.text) {
+      return c.text(out.text)
+    }
+    return c.json(out.data)
   }
 }
