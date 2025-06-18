@@ -4,4 +4,5 @@ ogr_*
 coverage
 dist
 pnpm-lock.yaml
+pnpm-workspace.yaml
 package-lock.json
