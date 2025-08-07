@@ -34,7 +34,7 @@
   "dependencies": {
     "@hono/node-server": "^1.18.1",
     "hono": "^4.8.12",
-    "ogr2ogr": "6.0.0"
+    "ogr2ogr": "6.0.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.1.4",
