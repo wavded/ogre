@@ -162,6 +162,7 @@ export class Ogre {
     )
 
     if (out.stream) {
+      c.header("content-type", "application/octet-stream")
       return c.body(Readable.toWeb(out.stream) as ReadableStream)
     }
     if (out.text) {
