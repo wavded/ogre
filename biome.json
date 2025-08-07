@@ -1,6 +1,12 @@
 {
   "files": {
-    "ignore": ["dist", "pnpm-*.yaml", "coverage", "testdata"]
+    "includes": [
+      "**",
+      "!**/dist",
+      "!**/pnpm-*.yaml",
+      "!**/coverage",
+      "!**/testdata"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -10,22 +16,20 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "a11y": {
-        "all": false
-      },
+      "a11y": "off",
       "style": {
         "useConst": "off",
         "useTemplate": "off",
-        "noParameterAssign": "off",
-        "useSingleVarDeclarator": "off"
+        "noUselessElse": "error"
       },
       "correctness": {
-        "noUnusedImports": "error"
+        "noUndeclaredVariables": "error"
       },
       "suspicious": {
         "noExplicitAny": "off",
         "noArrayIndexKey": "off",
-        "noImplicitAnyLet": "off"
+        "noImplicitAnyLet": "off",
+        "noThenProperty": "off"
       }
     }
   },
@@ -34,7 +38,5 @@
       "semicolons": "asNeeded"
     }
   },
-  "organizeImports": {
-    "enabled": true
-  }
+  "assist": {"actions": {"source": {"organizeImports": "on"}}}
 }

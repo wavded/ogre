@@ -2,7 +2,11 @@
   "name": "ogre",
   "version": "5.0.3",
   "description": "ogr2ogr web client",
-  "keywords": ["ogr2ogr", "GIS", "GeoJSON"],
+  "keywords": [
+    "ogr2ogr",
+    "GIS",
+    "GeoJSON"
+  ],
   "author": "Marc Harter <wavded@gmail.com>",
   "repository": {
     "type": "git",
@@ -28,20 +32,20 @@
     "clean": true
   },
   "dependencies": {
-    "@hono/node-server": "^1.14.1",
-    "hono": "^4.7.7",
+    "@hono/node-server": "^1.18.1",
+    "hono": "^4.8.12",
     "ogr2ogr": "6.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
+    "@biomejs/biome": "^2.1.4",
     "@types/archiver": "^6.0.3",
-    "@types/node": "^22.14.1",
+    "@types/node": "^24.2.0",
     "@types/supertest": "^6.0.3",
-    "supertest": "^7.1.0",
-    "tsup": "^8.4.0",
-    "tsx": "^4.19.3",
-    "typescript": "^5.8.3",
-    "vitest": "^3.1.1"
+    "supertest": "^7.1.4",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
   },
   "engines": {
     "node": ">=18"
