@@ -1,4 +1,4 @@
-declare module "*.html?raw" {
+declare module "*.html" {
   const value: string
   export default value
 }
