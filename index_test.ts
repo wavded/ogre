@@ -1,9 +1,10 @@
 import {serve} from "@hono/node-server"
 import request from "supertest"
 import {assert, test} from "vitest"
+
 import {Ogre, type OgreOpts} from "./"
 
-test(async () => {
+test("Ogre", async () => {
   let table: {
     opts?: OgreOpts
     method?: string
@@ -68,7 +69,7 @@ test(async () => {
 
   for (let tt of table) {
     let ogre = new Ogre(tt.opts)
-    let app = serve({fetch: ogre.app.fetch})
+    let app = serve({fetch: ogre.app.fetch, port: 0})
     let req
 
     switch (tt.method) {
@@ -89,6 +90,7 @@ test(async () => {
     }
 
     let res = await req
+    app.close()
 
     assert.equal(res.status, tt.status, tt.url)
     if (tt.contents) {

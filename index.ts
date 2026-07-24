@@ -2,13 +2,15 @@ import {randomBytes} from "node:crypto"
 import {unlink, writeFile} from "node:fs/promises"
 import {tmpdir} from "node:os"
 import {Readable} from "node:stream"
+
 import {serve} from "@hono/node-server"
 import {type ErrorHandler, type Handler, Hono, type NotFoundHandler} from "hono"
 import {bodyLimit} from "hono/body-limit"
 import {cors} from "hono/cors"
 import type {BlankEnv, BlankSchema} from "hono/types"
 import {ogr2ogr} from "ogr2ogr"
-import index from "./index.html?raw"
+
+import index from "./index.html"
 
 export interface OgreOpts {
   port?: number
