@@ -18,7 +18,7 @@ test("Ogre", async () => {
   }[] = [
     {method: "OPTIONS", url: "/", status: 200},
     {url: "/not-found", status: 404},
-    {url: "/", status: 200},
+    {url: "/", status: 200, contents: /<!doctype html>/i},
 
     {method: "POST", url: "/convert", status: 400, contents: /no file/i},
     {
@@ -72,8 +72,8 @@ test("Ogre", async () => {
   for (let tt of table) {
     let ogre = new Ogre(tt.opts)
     let body: BodyInit | undefined = tt.body
-    let headers: Record<string, string> = {}
-    if (tt.body) headers["content-type"] = "application/x-www-form-urlencoded"
+      ? new URLSearchParams(tt.body)
+      : undefined
     if (tt.upload) {
       let form = new FormData()
       form.append("upload", file(tt.upload), basename(tt.upload))
@@ -83,12 +83,12 @@ test("Ogre", async () => {
     let res = await ogre.app.request(tt.url, {
       method: tt.method || "GET",
       body,
-      headers,
     })
 
+    let text = await res.text()
     assert.equal(res.status, tt.status, tt.url)
     if (tt.contents) {
-      assert.match(await res.text(), tt.contents)
+      assert.match(text, tt.contents)
     }
   }
 })
