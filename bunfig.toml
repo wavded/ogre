@@ -1,0 +1,9 @@
+[fmt]
+ignorePatterns = ["dist/**", "coverage/**", "testdata/**", "pnpm-*.yaml"]
+printWidth = 80
+semi = false
+bracketSpacing = false
+sortPackageJson = true
+
+[fmt.sortImports]
+newlinesBetween = true
