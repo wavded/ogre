@@ -1,6 +1,8 @@
-import {serve} from "@hono/node-server"
-import request from "supertest"
-import {assert, test} from "vitest"
+import {test} from "bun:test"
+import assert from "node:assert/strict"
+import {basename} from "node:path"
+
+import {file} from "bun"
 
 import {Ogre, type OgreOpts} from "./"
 
@@ -69,32 +71,24 @@ test("Ogre", async () => {
 
   for (let tt of table) {
     let ogre = new Ogre(tt.opts)
-    let app = serve({fetch: ogre.app.fetch, port: 0})
-    let req
-
-    switch (tt.method) {
-      case "OPTIONS":
-        req = request(app).options(tt.url)
-        break
-      case "POST":
-        req = request(app).post(tt.url).send(tt.body)
-        break
-      default:
-        // 'GET'
-        req = request(app).get(tt.url)
-        break
-    }
-
+    let body: BodyInit | undefined = tt.body
+    let headers: Record<string, string> = {}
+    if (tt.body) headers["content-type"] = "application/x-www-form-urlencoded"
     if (tt.upload) {
-      req = req.attach("upload", tt.upload)
+      let form = new FormData()
+      form.append("upload", file(tt.upload), basename(tt.upload))
+      body = form
     }
 
-    let res = await req
-    app.close()
+    let res = await ogre.app.request(tt.url, {
+      method: tt.method || "GET",
+      body,
+      headers,
+    })
 
     assert.equal(res.status, tt.status, tt.url)
     if (tt.contents) {
-      assert.match(res.text, tt.contents)
+      assert.match(await res.text(), tt.contents)
     }
   }
 })
