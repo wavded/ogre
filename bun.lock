@@ -7,7 +7,7 @@
       "dependencies": {
         "@hono/node-server": "^2.1.8",
         "hono": "^4.13.19",
-        "ogr2ogr": "7.0.1",
+        "ogr2ogr": "8.0.0",
       },
       "devDependencies": {
         "@types/archiver": "^8.0.0",
@@ -130,7 +130,7 @@
 
     "normalize-path": ["normalize-path@3.0.0", "", {}, "sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA=="],
 
-    "ogr2ogr": ["ogr2ogr@7.0.1", "", { "dependencies": { "archiver": "^8.0.0" } }, "sha512-M4fIw6trHZ8b7mk3uzW3rpcU8qOHTisFozrmgvXOVyOuyaN/Ikb2GJYsh5iJ22GdQUPVcRhzGvhvoUrXzxJpJQ=="],
+    "ogr2ogr": ["ogr2ogr@8.0.0", "", { "dependencies": { "archiver": "^8.0.0" } }, "sha512-XZivIPJ/tKvbKOMdvoXBH0EHdLKnEYMAML073TdbqMD1KksrGtb6xsODR8Fz+RiaVR5h9OWBkRtLgyqmdp8wxQ=="],
 
     "oxlint": ["oxlint@1.94.0", "", { "optionalDependencies": { "@oxlint/binding-android-arm-eabi": "1.94.0", "@oxlint/binding-android-arm64": "1.94.0", "@oxlint/binding-darwin-arm64": "1.94.0", "@oxlint/binding-darwin-x64": "1.94.0", "@oxlint/binding-freebsd-x64": "1.94.0", "@oxlint/binding-linux-arm-gnueabihf": "1.94.0", "@oxlint/binding-linux-arm-musleabihf": "1.94.0", "@oxlint/binding-linux-arm64-gnu": "1.94.0", "@oxlint/binding-linux-arm64-musl": "1.94.0", "@oxlint/binding-linux-ppc64-gnu": "1.94.0", "@oxlint/binding-linux-riscv64-gnu": "1.94.0", "@oxlint/binding-linux-riscv64-musl": "1.94.0", "@oxlint/binding-linux-s390x-gnu": "1.94.0", "@oxlint/binding-linux-x64-gnu": "1.94.0", "@oxlint/binding-linux-x64-musl": "1.94.0", "@oxlint/binding-openharmony-arm64": "1.94.0", "@oxlint/binding-win32-arm64-msvc": "1.94.0", "@oxlint/binding-win32-ia32-msvc": "1.94.0", "@oxlint/binding-win32-x64-msvc": "1.94.0" }, "peerDependencies": { "oxlint-tsgolint": ">=7.0.2007", "vite-plus": "*" }, "optionalPeers": ["oxlint-tsgolint", "vite-plus"], "bin": { "oxlint": "bin/oxlint" } }, "sha512-Fnt+3wSKRhtLmvgRfxgRX0excSPCoyiXRol4eWKZLtXxWMQtwQ3KjKQUYXOw5loyinfnZfGzh4RCYf7opfL0vw=="],
 
