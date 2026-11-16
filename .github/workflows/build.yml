@@ -21,7 +21,7 @@ jobs:
           node-version: ${{ matrix.node }}
       - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: "1.4.4"
+          bun-version: latest
       - run: bun install --frozen-lockfile
       - run: bun run lint
       - run: bun run test

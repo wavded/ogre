@@ -14,34 +14,30 @@
     "url": "http://github.com/wavded/ogre.git"
   },
   "bin": {
-    "ogre": "dist/cli.cjs"
+    "ogre": "dist/cli.js"
   },
   "files": [
-    "dist"
+    "dist/cli.js"
   ],
   "type": "module",
   "scripts": {
     "prepack": "bun run build",
-    "build": "bun build ./cli.ts --target=node --format=cjs --packages=external --loader .html:text --outfile=dist/cli.cjs",
-    "start": "bun run build && node dist/cli.cjs",
-    "test": "vitest run --silent",
-    "lint": "tsc --noEmit && oxlint . && bun fmt --check",
+    "build": "bun build ./cli.ts --target=node --format=esm --packages=external --loader .html:text --outfile=dist/cli.js",
+    "start": "bun run build && node dist/cli.js",
+    "test": "bun test --timeout 30000",
+    "lint": "bun check && oxlint . && bun fmt --check",
     "fix": "oxlint --fix . && bun fmt"
   },
   "dependencies": {
-    "@hono/node-server": "^2.1.1",
-    "hono": "^4.13.7",
-    "ogr2ogr": "7.0.0"
+    "@hono/node-server": "^2.1.8",
+    "hono": "^4.13.19",
+    "ogr2ogr": "8.0.0"
   },
   "devDependencies": {
     "@types/archiver": "^8.0.0",
-    "@types/node": "^26.5.0",
-    "@types/supertest": "^7.2.1",
-    "oxlint": "^1.82.0",
-    "supertest": "^7.2.2",
-    "typescript": "^7.0.2",
-    "vite": "^8.2.2",
-    "vitest": "^5.0.0"
+    "@types/bun": "^1.4.4",
+    "@types/node": "^26.6.6",
+    "oxlint": "^1.94.0"
   },
   "engines": {
     "node": "^22.18.0 || ^24.11.0 || >=26.0.0"

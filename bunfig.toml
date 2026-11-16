@@ -1,3 +1,6 @@
+[loader]
+".html" = "text"
+
 [fmt]
 ignorePatterns = ["dist/**", "coverage/**", "testdata/**", "pnpm-*.yaml"]
 printWidth = 80

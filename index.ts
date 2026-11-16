@@ -74,7 +74,7 @@ export class Ogre {
 
   private heartbeat = (): Handler => async () => new Response()
 
-  private index = (): Handler => async (c) => c.html(index)
+  private index = (): Handler => async (c) => c.html(index as unknown as string)
 
   private convert = (): Handler => async (c) => {
     let {
@@ -165,7 +165,7 @@ export class Ogre {
 
     if (out.stream) {
       c.header("content-type", "application/octet-stream")
-      return c.body(Readable.toWeb(out.stream) as ReadableStream)
+      return c.body(Readable.toWeb(out.stream) as unknown as ReadableStream)
     }
     if (out.text) {
       return c.text(out.text)
