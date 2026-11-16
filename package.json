@@ -14,18 +14,18 @@
     "url": "http://github.com/wavded/ogre.git"
   },
   "bin": {
-    "ogre": "dist/cli.cjs"
+    "ogre": "dist/cli.js"
   },
   "files": [
-    "dist"
+    "dist/cli.js"
   ],
   "type": "module",
   "scripts": {
     "prepack": "bun run build",
-    "build": "bun build ./cli.ts --target=node --format=cjs --packages=external --loader .html:text --outfile=dist/cli.cjs",
-    "start": "bun run build && node dist/cli.cjs",
+    "build": "bun build ./cli.ts --target=node --format=esm --packages=external --loader .html:text --outfile=dist/cli.js",
+    "start": "bun run build && node dist/cli.js",
     "test": "bun test --timeout 30000",
-    "lint": "tsc --noEmit && oxlint . && bun fmt --check",
+    "lint": "bun check && oxlint . && bun fmt --check",
     "fix": "oxlint --fix . && bun fmt"
   },
   "dependencies": {
@@ -37,8 +37,7 @@
     "@types/archiver": "^8.0.0",
     "@types/bun": "^1.4.4",
     "@types/node": "^26.6.6",
-    "oxlint": "^1.94.0",
-    "typescript": "^7.0.2"
+    "oxlint": "^1.94.0"
   },
   "engines": {
     "node": "^22.18.0 || ^24.11.0 || >=26.0.0"

@@ -49,7 +49,7 @@ bun run start
 ```
 
 Run `npm pack` to build and package the CLI. Bun bundles the TypeScript into
-`dist/cli.cjs` for Node.js and embeds the HTML frontend. Package users need Node.js
+`dist/cli.js` as an ES module for Node.js and embeds the HTML frontend. Package users need Node.js
 and GDAL, not Bun.
 
 [1]: https://gdal.org/download.html
