@@ -4,25 +4,17 @@ Ogre is a web frontend and API for the [ogr2ogr][2] module.
 
 ![Ogre interface](ogre.png)
 
-## Installation
-
-1. [Install GDAL tools][1] (includes the `ogr2ogr` command line tool)
-
-2. Install package:
-
-```sh
-npm install -g ogre
-```
-
 ## Usage
 
-To run the app:
+Install [GDAL tools][1] (includes the `ogr2ogr` command line tool).
+
+Then run,
 
 ```sh
-ogre -p 3000
+npx ogre -p 3000
 ```
 
-Then visit <http://localhost:3000> in a your favorite browser.
+Then visit <http://localhost:3000> in your favorite browser.
 
 Options include:
 
@@ -49,8 +41,7 @@ bun run start
 ```
 
 Run `npm pack` to build and package the CLI. Bun bundles the TypeScript into
-`dist/cli.js` as an ES module for Node.js and embeds the HTML frontend. Package users need Node.js
-and GDAL, not Bun.
+`dist/cli.js` as an ES module for Node.js and embeds the HTML frontend. Package users need Node.js and GDAL, not Bun.
 
 [1]: https://gdal.org/download.html
 [2]: https://github.com/wavded/ogr2ogr
