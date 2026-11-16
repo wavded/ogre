@@ -2,6 +2,8 @@
 
 Ogre is a web frontend and API for the [ogr2ogr][2] module.
 
+![Ogre interface](ogre.png)
+
 ## Installation
 
 1. [Install GDAL tools][1] (includes the `ogr2ogr` command line tool)
