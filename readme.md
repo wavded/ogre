@@ -35,6 +35,23 @@ Options:
  -l, --limit     byte limit for uploads (default 50000000)
 ```
 
+## Development
+
+Install Bun 1.4.4 and the GDAL tools, then run:
+
+```sh
+bun install
+bun run lint
+bun run test
+bun run start
+```
+
+Use `bun run test`, not `bun test`, to run the Vitest suite under Node.js.
+
+Run `npm pack` to build and package the CLI. Bun bundles the TypeScript into
+`dist/cli.cjs` for Node.js and embeds the HTML frontend. Package users need Node.js
+and GDAL, not Bun.
+
 [1]: https://gdal.org/download.html
 [2]: https://github.com/wavded/ogr2ogr
 [3]: https://ogre.adc4gis.com
